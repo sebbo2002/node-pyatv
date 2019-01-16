@@ -143,14 +143,13 @@ class NodePyATVInstance {
 
         let debugRequestId = null;
         if (options.debug) {
-            for (const i = 0; true; i += 1) {
-                debugRequestId = i.toString(36).toUpperCase();
-                if (globalDebugIndex.indexOf(debugRequestId) > -1) {
-                    continue;
-                }
 
-                globalDebugIndex.push(debugRequestId);
-                break;
+            for (let i = 0; true; i += 1) {
+                debugRequestId = i.toString(36).toUpperCase();
+                if (globalDebugIndex.indexOf(debugRequestId) === -1) {
+                    globalDebugIndex.push(debugRequestId);
+                    break;
+                }
             }
 
             (options.log || console.log).apply(this, [`[node-pyatv][${debugRequestId}] New request`]);
@@ -338,7 +337,8 @@ class NodePyATVInstance {
 
         const relevant = parts.pop();
         const result = {};
-        const lines = relevant
+
+        relevant
             .split('\n')
             .map(l => {
                 const kv = l.split(':');

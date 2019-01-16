@@ -78,8 +78,8 @@ pyatv
         <tr>
             <td>timeout</td>
             <td>Timeout in seconds for scanning</td>
-            <th>Nothing, atvremove's default is 3</th>
-            <th>No</th>
+            <td>Nothing, atvremove's default is 3</td>
+            <td>No</td>
         </tr>
     </tbody>
 </table>

@@ -84,7 +84,7 @@ class NodePyATVInstance {
      * @param {boolean} [options.debug]
      * @returns {NodePyATVInstance}
      */
-    static connect (address, loginId, options = {}) {
+    static connect(address, loginId, options = {}) {
         return new NodePyATVInstance(Object.assign({
             address,
             loginId
@@ -196,7 +196,9 @@ class NodePyATVInstance {
         cmds.forEach(cmd => parameters.push(cmd));
 
         if (options.debug) {
-            console.log('[node-pyatv][%s] Command: %s %s', debugRequestId, unbufferBinary, parameters.join(' '));
+            (options.log || console.log).apply(this, [
+                `[node-pyatv][${debugRequestId}] Command: ${unbufferBinary} ${parameters.join(' ')}`
+            ]);
         }
         if (options.childProcess) {
             const child = spawn(unbufferBinary, parameters, {
@@ -205,23 +207,23 @@ class NodePyATVInstance {
 
             child.stdout.on('data', data => {
                 if (options.debug) {
-                    console.log('[node-pyatv][%s] stdout: %s', debugRequestId, data);
+                    (options.log || console.log).apply(this, [`[node-pyatv][${debugRequestId}] stdout: ${data}`]);
                 }
             });
             child.stderr.on('data', data => {
                 if (options.debug) {
-                    console.log('[node-pyatv][%s] stderr: %s', debugRequestId, data);
+                    (options.log || console.log).apply(this, [`[node-pyatv][${debugRequestId}] stderr: ${data}`]);
                 }
             });
 
             child.on('error', error => {
                 if (options.debug) {
-                    console.log('[node-pyatv][%s] Error: %s', debugRequestId, error);
+                    (options.log || console.log).apply(this, [`[node-pyatv][${debugRequestId}] Error: ${error}`]);
                 }
             });
             child.on('close', code => {
                 if (options.debug) {
-                    console.log('[node-pyatv][%s] pyatv exited with code: %s', debugRequestId, code);
+                    (options.log || console.log).apply(this, [`[node-pyatv][${debugRequestId}] pyatv exited with code: ${code}`]);
                 }
 
                 if (globalDebugIndex.indexOf(debugRequestId) > -1) {
@@ -247,7 +249,7 @@ class NodePyATVInstance {
                 result.result += data.toString();
 
                 if (options.debug) {
-                    console.log('[node-pyatv][%s] stdout: %s', debugRequestId, data);
+                    (options.log || console.log).apply(this, [`[node-pyatv][${debugRequestId}] stdout: ${data}`]);
                 }
             });
             pyatv.stderr.on('data', data => {
@@ -258,7 +260,7 @@ class NodePyATVInstance {
                 }
 
                 if (options.debug) {
-                    console.log('[node-pyatv][%s] stderr: %s', debugRequestId, data);
+                    (options.log || console.log).apply(this, [`[node-pyatv][${debugRequestId}] stderr: ${data}`]);
                 }
             });
 
@@ -266,7 +268,7 @@ class NodePyATVInstance {
                 result.errors.push(error);
 
                 if (options.debug) {
-                    console.log('[node-pyatv][%s] Error: %s', debugRequestId, error);
+                    (options.log || console.log).apply(this, [`[node-pyatv][${debugRequestId}] Error: ${error}`]);
                 }
             });
             pyatv.on('close', code => {
@@ -275,7 +277,9 @@ class NodePyATVInstance {
                 }
 
                 if (options.debug) {
-                    console.log('[node-pyatv][%s] pyatv exited with code: %s', debugRequestId, code);
+                    (options.log || console.log).apply(this, [
+                        `[node-pyatv][${debugRequestId}] pyatv exited with code: ${code}`
+                    ]);
                 }
                 if (globalDebugIndex.indexOf(debugRequestId) > -1) {
                     globalDebugIndex.splice(globalDebugIndex.indexOf(debugRequestId), 1);
@@ -640,7 +644,7 @@ class NodePyATVInstance {
 
 
     toString() {
-        console.log('[node-pytv Instance %s]', JSON.stringify(this._options));
+        return '[node-pytv Instance %s]' + JSON.stringify(this._options);
     }
 }
 

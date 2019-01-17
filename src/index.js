@@ -207,12 +207,12 @@ class NodePyATVInstance {
 
             child.stdout.on('data', data => {
                 if (options.debug) {
-                    (options.log || console.log).apply(this, [`[node-pyatv][${debugRequestId}] stdout: ${data}`]);
+                    (options.log || console.log).apply(this, [`[node-pyatv][${debugRequestId}] stdout: ${data.toString().trim()}`]);
                 }
             });
             child.stderr.on('data', data => {
                 if (options.debug) {
-                    (options.log || console.log).apply(this, [`[node-pyatv][${debugRequestId}] stderr: ${data}`]);
+                    (options.log || console.log).apply(this, [`[node-pyatv][${debugRequestId}] stderr: ${data.toString().trim()}`]);
                 }
             });
 
@@ -249,7 +249,7 @@ class NodePyATVInstance {
                 result.result += data.toString();
 
                 if (options.debug) {
-                    (options.log || console.log).apply(this, [`[node-pyatv][${debugRequestId}] stdout: ${data}`]);
+                    (options.log || console.log).apply(this, [`[node-pyatv][${debugRequestId}] stdout: ${data.toString().trim()}`]);
                 }
             });
             pyatv.stderr.on('data', data => {
@@ -379,6 +379,7 @@ class NodePyATVInstance {
             result.shuffle = false;
         }
 
+        delete result.pressENTERToStop;
         return result;
     }
 
@@ -486,7 +487,7 @@ class NodePyATVInstance {
      * @returns {Promise<string>}
      */
     async artworkUrl(options = {}) {
-        await this._request('artwork_url', options);
+        return this._request('artwork_url', options);
     }
 
     /**
@@ -495,7 +496,7 @@ class NodePyATVInstance {
      * @returns {Promise<string>}
      */
     async deviceId(options = {}) {
-        await this._request('device_id', options);
+        return this._request('device_id', options);
     }
 
     /**
@@ -612,7 +613,11 @@ class NodePyATVInstance {
         pyatv.stdout.on('data', data => {
             const str = data.toString();
             response.emit('data', str);
-            response.emit('state', this._parsePlayingStr(str));
+
+            const playing = this._parsePlayingStr(str);
+            if (playing) {
+                response.emit('state', playing);
+            }
         });
         pyatv.stderr.on('data', data => {
             response.emit('error', new Error(
@@ -635,9 +640,10 @@ class NodePyATVInstance {
 
         response.close = () => {
             pyatv.stdin.write('\n');
+            pyatv.kill();
         };
 
-        pyatv.stdin.write('a');
+        pyatv.stdin.write('');
 
         return response;
     }

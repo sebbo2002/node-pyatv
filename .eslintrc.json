@@ -1,40 +1,46 @@
 {
     "env": {
+        "node": true,
         "commonjs": true,
         "es6": true,
-        "node": true,
         "mocha": true
     },
-    "extends": "eslint:recommended",
-    "parserOptions": {
-        "sourceType": "module",
-        "ecmaVersion": 2017
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended"
+    ],
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
     },
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": 2018
+    },
+    "plugins": [
+        "@typescript-eslint"
+    ],
     "rules": {
-        "indent": [
-            "error",
-            4
-        ],
-        "linebreak-style": [
-            "error",
-            "unix"
-        ],
+        "semi": "error",
         "quotes": [
             "error",
             "single"
         ],
-        "semi": [
+        "indent": [
             "error",
-            "always"
-        ],
-        "no-console": [
-            "error",
-            {
-                "allow": ["log"]
-            }
-        ],
-        "no-constant-condition": [
-            "warn"
+            4
         ]
-    }
+    },
+    "overrides": [
+        {
+            "files": [
+                "test/**/*.spec.ts"
+            ],
+            "rules": {
+                "@typescript-eslint/ban-ts-ignore": "off",
+                "@typescript-eslint/ban-ts-comment": "off"
+            }
+        }
+    ]
 }

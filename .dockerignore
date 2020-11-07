@@ -1,0 +1,5 @@
+/.nyc_output
+/examples
+/node_modules
+/src
+/test-result

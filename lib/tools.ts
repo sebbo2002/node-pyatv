@@ -1,0 +1,197 @@
+'use strict';
+
+import {NodePyATVExecutableType, NodePyATVFindAndInstanceOptions, NodePyATVInstanceOptions} from './types';
+import {ChildProcess, spawn, SpawnOptions} from 'child_process';
+import {MockChildProcess} from 'spawn-mock';
+
+const requestIds: string[] = [];
+
+export function addRequestId(): string {
+    let id = '?';
+
+    for (let i = 0; i < 1000; i += 1) {
+        id = Math.round(Math.random() * (i + 6) * 36).toString(36).toUpperCase();
+        if (!requestIds.includes(id)) {
+            requestIds.push(id);
+            break;
+        }
+    }
+
+    return id;
+}
+
+export function removeRequestId(id: string | undefined): void {
+    if (id && requestIds.includes(id)) {
+        requestIds.splice(requestIds.indexOf(id), 1);
+    }
+}
+
+export function debug(id: string, message: string, options: NodePyATVInstanceOptions): void {
+    if (options.debug) {
+        const log = typeof options.debug === 'function' ? options.debug : console.log;
+        const enableColors = !process.env.NO_COLOR && !options.noColors;
+
+        const parts = [
+            enableColors ? '\x1b[0m' : '', // Color Reset
+            enableColors ? '\x1b[90m' : '', // Grey
+            '[node-pyatv][',
+            enableColors ? '\x1b[37m' : '', // Light Grey
+            id,
+            enableColors ? '\x1b[90m' : '', // Grey
+            '] ',
+            enableColors ? '\x1b[0m' : '', // Color Reset
+            message
+        ];
+
+        log.apply(null, [parts.join('')]);
+    }
+}
+
+export function getExecutable(executable: NodePyATVExecutableType, options: NodePyATVInstanceOptions): string {
+    if (executable === NodePyATVExecutableType.atvremote && typeof options.atvremotePath === 'string') {
+        return options.atvremotePath;
+    } else if (executable === NodePyATVExecutableType.atvscript && typeof options.atvscriptPath === 'string') {
+        return options.atvscriptPath;
+    } else {
+        return executable;
+    }
+}
+
+export function execute(
+    requestId: string,
+    executableType: NodePyATVExecutableType,
+    parameters: string[],
+    options: NodePyATVInstanceOptions
+): ChildProcess | MockChildProcess {
+    const executable = getExecutable(executableType, options);
+    const mySpawn: ((command: string, args: Array<string>, options: SpawnOptions) => (ChildProcess | MockChildProcess)) = typeof options.spawn === 'function' ? options.spawn : spawn;
+
+    debug(requestId, `${executable} ${parameters.join(' ')}`, options);
+    const child = mySpawn(executable, parameters, {
+        env: process.env
+    });
+
+    /* eslint-disable @typescript-eslint/no-explicit-any*/
+    const onStdOut = (data: any) => debug(requestId, `stdout: ${String(data).trim()}`, options);
+    const onStdErr = (data: any) => debug(requestId, `stderr: ${String(data).trim()}`, options);
+    const onError = (data: any) => debug(requestId, `error: ${String(data).trim()}`, options);
+    /* eslint-enable @typescript-eslint/no-explicit-any*/
+
+    const onClose = (code: number) => {
+        debug(requestId, `${executable} exited with code: ${code}`, options);
+
+        if(child.stdout) {
+            child.stdout.off('data', onStdOut);
+        }
+        if(child.stderr) {
+            child.stderr.off('data', onStdErr);
+        }
+
+        child.off('error', onError);
+        child.off('close', onClose);
+    };
+
+    if(child.stdout) {
+        child.stdout.on('data', onStdOut);
+    }
+    if(child.stderr) {
+        child.stderr.on('data', onStdErr);
+    }
+
+    child.on('error', onError);
+    child.on('close', onClose);
+
+    return child;
+}
+
+export async function request(
+    requestId: string,
+    executableType: NodePyATVExecutableType,
+    parameters: string[],
+    options: NodePyATVInstanceOptions
+): Promise<string> {
+    const result = {
+        stdout: '',
+        stderr: '',
+        code: 0
+    };
+
+    await new Promise((resolve, reject) => {
+        const pyatv = execute(requestId, executableType, parameters, options);
+
+        /* eslint-disable @typescript-eslint/no-explicit-any*/
+        const onStdOut = (data: any) => result.stdout += String(data).trim();
+        const onStdErr = (data: any) => result.stderr += String(data).trim();
+        const onError = (data: any) => reject(data instanceof Error ? data : new Error(String(data)));
+        /* eslint-enable @typescript-eslint/no-explicit-any*/
+
+        const onClose = (code: number) => {
+            result.code = code;
+
+            if(pyatv.stdout) {
+                pyatv.stdout.off('data', onStdOut);
+            }
+            if(pyatv.stderr) {
+                pyatv.stderr.off('data', onStdErr);
+            }
+
+            pyatv.off('error', onError);
+            pyatv.off('close', onClose);
+            resolve();
+        };
+
+        if(pyatv.stdout) {
+            pyatv.stdout.on('data', onStdOut);
+        }
+        if(pyatv.stderr) {
+            pyatv.stderr.on('data', onStdErr);
+        }
+
+        pyatv.on('error', onError);
+        pyatv.on('close', onClose);
+    });
+
+    if (result.stderr.length > 0) {
+        const msg = `Unable to execute request ${requestId}: ${result.stderr}`;
+        debug(requestId, msg, options);
+        throw new Error(msg);
+    }
+    if (executableType === NodePyATVExecutableType.atvscript) {
+        try {
+            return JSON.parse(result.stdout);
+        } catch (error) {
+            const msg = `Unable to parse result ${requestId} json: ${error}`;
+            debug(requestId, msg, options);
+            throw new Error(msg);
+        }
+    }
+
+    return result.stdout;
+}
+
+export function getParamters(options: NodePyATVFindAndInstanceOptions = {}): string[] {
+    const parameters: string[] = [];
+
+    if (options.hosts) {
+        parameters.push('-s', options.hosts.join(','));
+    } else if (options.host) {
+        parameters.push('-s', options.host);
+    }
+    if (options.id) {
+        parameters.push('-i', options.id);
+    }
+    if (options.protocol) {
+        parameters.push('--protocol', options.protocol);
+    }
+    if (options.dmapCredentials) {
+        parameters.push('--dmap-credentials', options.dmapCredentials);
+    }
+    if (options.mrpCredentials) {
+        parameters.push('--mrp-credentials', options.mrpCredentials);
+    }
+    if (options.airplayCredentials) {
+        parameters.push('--airplay-credentials', options.airplayCredentials);
+    }
+
+    return parameters;
+}

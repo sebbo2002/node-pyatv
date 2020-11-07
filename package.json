@@ -12,30 +12,34 @@
     "url": "http://github.com/sebbo2002/node-pyatv.git"
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=10.0.0"
   },
   "devDependencies": {
-    "eslint": "^5.12.0",
-    "mocha": "^5.2.0",
-    "mochawesome": "^3.1.1",
-    "npm-check": "^5.9.0",
-    "nyc": "^13.1.0"
+    "@types/mocha": "^8.0.3",
+    "@types/node": "^14.14.5",
+    "@types/semver": "^7.3.4",
+    "@typescript-eslint/eslint-plugin": "^4.6.0",
+    "@typescript-eslint/parser": "^4.6.0",
+    "eslint": "^7.12.1",
+    "mocha": "^8.2.0",
+    "nyc": "^15.1.0",
+    "spawn-mock": "^1.0.0",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.5"
   },
   "peerDependencies": {
-    "@types/node": ">= 8.0.0"
+    "@types/node": ">= 10.0.0"
   },
   "scripts": {
-    "all": "npm run check && npm run tests",
-    "check": "npm run check:eslint && npm run check:npm && npm run check:nsp",
-    "check:eslint": "eslint ./examples ./src ./test",
-    "check:quick": "npm run check:eslint",
-    "check:nsp": "npm_config_audit_level=moderate npm audit",
-    "check:npm": "npm-check -s",
-    "tests": "npm run test && npm run coverage",
-    "test": "mocha -c --reporter mochawesome --reporter-options reportDir=test-result/test,reportFilename=report,json=false ./test/*.js",
-    "coverage": "nyc --reporter=html --reporter=text --report-dir ./test-result/coverage --check-coverage mocha -c ./test/*.js",
-    "bump": "jq -M \".version=\\\"$CI_COMMIT_TAG\\\"\" package.json|sponge package.json"
+    "build": "tsc",
+    "lint": "eslint . --ext .ts",
+    "test": "mocha",
+    "coverage": "nyc mocha",
+    "postinstall": "node ./dist/bin/check.js"
   },
   "preferGlobal": false,
-  "main": "./src/index.js"
+  "main": "./dist/lib/instance.js",
+  "dependencies": {
+    "semver": "^7.3.2"
+  }
 }

@@ -1,6 +1,14 @@
 'use strict';
 
-import {NodePyATVExecutableType, NodePyATVFindAndInstanceOptions, NodePyATVInstanceOptions} from './types';
+import {
+    NodePyATVDeviceState,
+    NodePyATVExecutableType,
+    NodePyATVFindAndInstanceOptions,
+    NodePyATVInstanceOptions,
+    NodePyATVInternalState,
+    NodePyATVMediaType, NodePyATVRepeatState, NodePyATVShuffleState,
+    NodePyATVState
+} from './types';
 import {ChildProcess, spawn, SpawnOptions} from 'child_process';
 import {MockChildProcess} from 'spawn-mock';
 
@@ -50,9 +58,11 @@ export function debug(id: string, message: string, options: NodePyATVInstanceOpt
 export function getExecutable(executable: NodePyATVExecutableType, options: NodePyATVInstanceOptions): string {
     if (executable === NodePyATVExecutableType.atvremote && typeof options.atvremotePath === 'string') {
         return options.atvremotePath;
-    } else if (executable === NodePyATVExecutableType.atvscript && typeof options.atvscriptPath === 'string') {
+    }
+    else if (executable === NodePyATVExecutableType.atvscript && typeof options.atvscriptPath === 'string') {
         return options.atvscriptPath;
-    } else {
+    }
+    else {
         return executable;
     }
 }
@@ -80,10 +90,10 @@ export function execute(
     const onClose = (code: number) => {
         debug(requestId, `${executable} exited with code: ${code}`, options);
 
-        if(child.stdout) {
+        if (child.stdout) {
             child.stdout.off('data', onStdOut);
         }
-        if(child.stderr) {
+        if (child.stderr) {
             child.stderr.off('data', onStdErr);
         }
 
@@ -91,10 +101,10 @@ export function execute(
         child.off('close', onClose);
     };
 
-    if(child.stdout) {
+    if (child.stdout) {
         child.stdout.on('data', onStdOut);
     }
-    if(child.stderr) {
+    if (child.stderr) {
         child.stderr.on('data', onStdErr);
     }
 
@@ -109,7 +119,7 @@ export async function request(
     executableType: NodePyATVExecutableType,
     parameters: string[],
     options: NodePyATVInstanceOptions
-): Promise<string> {
+): Promise<string|Record<string,unknown>> {
     const result = {
         stdout: '',
         stderr: '',
@@ -128,10 +138,10 @@ export async function request(
         const onClose = (code: number) => {
             result.code = code;
 
-            if(pyatv.stdout) {
+            if (pyatv.stdout) {
                 pyatv.stdout.off('data', onStdOut);
             }
-            if(pyatv.stderr) {
+            if (pyatv.stderr) {
                 pyatv.stderr.off('data', onStdErr);
             }
 
@@ -140,10 +150,10 @@ export async function request(
             resolve();
         };
 
-        if(pyatv.stdout) {
+        if (pyatv.stdout) {
             pyatv.stdout.on('data', onStdOut);
         }
-        if(pyatv.stderr) {
+        if (pyatv.stderr) {
             pyatv.stderr.on('data', onStdErr);
         }
 
@@ -159,7 +169,8 @@ export async function request(
     if (executableType === NodePyATVExecutableType.atvscript) {
         try {
             return JSON.parse(result.stdout);
-        } catch (error) {
+        }
+        catch (error) {
             const msg = `Unable to parse result ${requestId} json: ${error}`;
             debug(requestId, msg, options);
             throw new Error(msg);
@@ -174,7 +185,8 @@ export function getParamters(options: NodePyATVFindAndInstanceOptions = {}): str
 
     if (options.hosts) {
         parameters.push('-s', options.hosts.join(','));
-    } else if (options.host) {
+    }
+    else if (options.host) {
         parameters.push('-s', options.host);
     }
     if (options.id) {
@@ -194,4 +206,145 @@ export function getParamters(options: NodePyATVFindAndInstanceOptions = {}): str
     }
 
     return parameters;
+}
+
+function parseStateStringAttr(
+    input: NodePyATVInternalState,
+    output: NodePyATVState,
+    inputAttr: ('hash' | 'title' | 'album' | 'artist' | 'genre' | 'app' | 'app_id'),
+    outputAttr: ('hash' | 'title' | 'album' | 'artist' | 'genre' | 'app' | 'appId'),
+    d: (msg: string) => void
+): void {
+    if (typeof input[inputAttr] === 'string') {
+        output[outputAttr] = input[inputAttr] as string;
+        return;
+    }
+
+    d(`No ${outputAttr} value found in input (${JSON.stringify(input)})`);
+}
+
+export function parseState(input: NodePyATVInternalState, id: string, options: NodePyATVInstanceOptions): NodePyATVState {
+    const d = (msg: string) => debug(id, msg, options);
+    const result: NodePyATVState = {
+        dateTime: null,
+        hash: null,
+        mediaType: null,
+        deviceState: null,
+        title: null,
+        artist: null,
+        album: null,
+        genre: null,
+        totalTime: null,
+        position: null,
+        shuffle: null,
+        repeat: null,
+        app: null,
+        appId: null
+    };
+    if (!input || typeof input !== 'object') {
+        return result;
+    }
+
+    // datetime
+    if (typeof input.datetime === 'string') {
+        const date = new Date(input.datetime);
+        if (!isNaN(date.getTime())) {
+            result.dateTime = date;
+        }
+        else {
+            d(`Invalid datetime value ${input.datetime}, ignore attribute`);
+        }
+    }
+    else {
+        d(`No datetime value found in input (${JSON.stringify(input)})`);
+    }
+
+    // hash
+    parseStateStringAttr(input, result, 'hash', 'hash', d);
+
+    // mediaType
+    if(typeof input.media_type === 'string') {
+        const validValues = Object.keys(NodePyATVMediaType).map(o => String(o));
+        if (validValues.includes(input.media_type)) {
+            result.mediaType = NodePyATVMediaType[input.media_type as NodePyATVMediaType];
+        }
+        else {
+            d(`Unsupported mediaType value ${input.media_type}, ignore attribute`);
+        }
+    } else {
+        d(`No mediaType value found in input (${JSON.stringify(input)})`);
+    }
+
+    // deviceState
+    if(typeof input.device_state === 'string') {
+        const validValues = Object.keys(NodePyATVDeviceState).map(o => String(o));
+        if (validValues.includes(input.device_state)) {
+            result.deviceState = NodePyATVDeviceState[input.device_state as NodePyATVDeviceState];
+        }
+        else {
+            d(`Unsupported deviceState value ${input.device_state}, ignore attribute`);
+        }
+    } else {
+        d(`No deviceState value found in input (${JSON.stringify(input)})`);
+    }
+
+    // title
+    parseStateStringAttr(input, result, 'title', 'title', d);
+
+    // artist
+    parseStateStringAttr(input, result, 'artist', 'artist', d);
+
+    // album
+    parseStateStringAttr(input, result, 'album', 'album', d);
+
+    // genre
+    parseStateStringAttr(input, result, 'genre', 'genre', d);
+
+    // totalTime
+    if (typeof input.total_time === 'number') {
+        result.totalTime = input.total_time;
+    }
+    else {
+        d(`No totalTime value found in input (${JSON.stringify(input)})`);
+    }
+
+    // position
+    if (typeof input.position === 'number') {
+        result.position = input.position;
+    }
+    else {
+        d(`No position value found in input (${JSON.stringify(input)})`);
+    }
+
+    // shuffle
+    if(typeof input.shuffle === 'string') {
+        const validValues = Object.keys(NodePyATVShuffleState).map(o => String(o));
+        if (validValues.includes(input.shuffle)) {
+            result.shuffle = NodePyATVShuffleState[input.shuffle as NodePyATVShuffleState];
+        }
+        else {
+            d(`Unsupported shuffle value ${input.shuffle}, ignore attribute`);
+        }
+    } else {
+        d(`No shuffle value found in input (${JSON.stringify(input)})`);
+    }
+
+    // repeat
+    if(typeof input.repeat === 'string') {
+        const validValues = Object.keys(NodePyATVRepeatState).map(o => String(o));
+        if (validValues.includes(input.repeat)) {
+            result.repeat = NodePyATVRepeatState[input.repeat as NodePyATVRepeatState];
+        }
+        else {
+            d(`Unsupported repeat value ${input.repeat}, ignore attribute`);
+        }
+    } else {
+        d(`No repeat value found in input (${JSON.stringify(input)})`);
+    }
+
+    // app
+    parseStateStringAttr(input, result, 'app', 'app', d);
+    parseStateStringAttr(input, result, 'app_id', 'appId', d);
+
+    return result;
 }

@@ -1,8 +1,15 @@
 'use strict';
 
 import assert from 'assert';
-import {addRequestId, debug, getExecutable, getParamters, removeRequestId} from '../lib/tools';
-import {NodePyATVExecutableType, NodePyATVProtocol} from '../lib/types';
+import {addRequestId, debug, getExecutable, getParamters, parseState, removeRequestId} from '../lib/tools';
+import {
+    NodePyATVDeviceState,
+    NodePyATVExecutableType,
+    NodePyATVMediaType,
+    NodePyATVProtocol,
+    NodePyATVRepeatState,
+    NodePyATVShuffleState
+} from '../lib/types';
 
 describe('Tools', function () {
     describe('addRequestId() / removeRequestId()', function () {
@@ -106,6 +113,166 @@ describe('Tools', function () {
                 '--mrp-credentials', '****',
                 '--airplay-credentials', '****'
             ]);
+        });
+    });
+
+    describe('parseState()', function () {
+        it('should work with empty data', function () {
+            const input = {};
+            const result = parseState(input, '', {});
+            assert.deepStrictEqual(result, {
+                dateTime: null,
+                hash: null,
+                mediaType: null,
+                deviceState: null,
+                title: null,
+                artist: null,
+                album: null,
+                genre: null,
+                totalTime: null,
+                position: null,
+                shuffle: null,
+                repeat: null,
+                app: null,
+                appId: null
+            });
+        });
+        it('should work without data', function () {
+            // @ts-ignore
+            const result = parseState(null, '', {});
+            assert.deepStrictEqual(result, {
+                dateTime: null,
+                hash: null,
+                mediaType: null,
+                deviceState: null,
+                title: null,
+                artist: null,
+                album: null,
+                genre: null,
+                totalTime: null,
+                position: null,
+                shuffle: null,
+                repeat: null,
+                app: null,
+                appId: null
+            });
+        });
+        it('should work with example data', function () {
+            const input = {
+                result: 'success',
+                datetime: '2020-11-07T22:38:43.608030+01:00',
+                hash: '100e0ab6-6ff5-4199-9c04-a7107ff78712',
+                media_type: 'video',
+                device_state: 'playing',
+                title: 'Solo: A Star Wars Story',
+                artist: null,
+                album: null,
+                genre: null,
+                total_time: 8097,
+                position: 27,
+                shuffle: 'off',
+                repeat: 'off',
+                app: 'Disney+',
+                app_id: 'com.disney.disneyplus'
+            };
+            const result = parseState(input, '', {});
+            assert.deepStrictEqual(result, {
+                dateTime: new Date('2020-11-07T22:38:43.608030+01:00'),
+                hash: '100e0ab6-6ff5-4199-9c04-a7107ff78712',
+                mediaType: NodePyATVMediaType.video,
+                deviceState: NodePyATVDeviceState.playing,
+                title: 'Solo: A Star Wars Story',
+                artist: null,
+                album: null,
+                genre: null,
+                totalTime: 8097,
+                position: 27,
+                shuffle: NodePyATVShuffleState.off,
+                repeat: NodePyATVRepeatState.off,
+                app: 'Disney+',
+                appId: 'com.disney.disneyplus'
+            });
+        });
+        it('should ignore date if it\'s an invalid date', function () {
+            const input = {datetime: 'today'};
+            const result = parseState(input, '', {});
+            assert.deepStrictEqual(result, {
+                dateTime: null,
+                hash: null,
+                mediaType: null,
+                deviceState: null,
+                title: null,
+                artist: null,
+                album: null,
+                genre: null,
+                totalTime: null,
+                position: null,
+                shuffle: null,
+                repeat: null,
+                app: null,
+                appId: null
+            });
+        });
+        it('should ignore data if unsupported type', function () {
+            const input = {
+                result: 'success',
+                datetime: true,
+                hash: 1337,
+                media_type: false,
+                device_state: 43,
+                title: undefined,
+                artist: 90,
+                album: Infinity,
+                genre: Math.PI,
+                total_time: '23min',
+                position: '0:30.123',
+                shuffle: false,
+                repeat: true,
+                app: 0,
+                app_id: 891645381647289
+            };
+            const result = parseState(input, '', {});
+            assert.deepStrictEqual(result, {
+                dateTime: null,
+                hash: null,
+                mediaType: null,
+                deviceState: null,
+                title: null,
+                artist: null,
+                album: null,
+                genre: null,
+                totalTime: null,
+                position: null,
+                shuffle: null,
+                repeat: null,
+                app: null,
+                appId: null
+            });
+        });
+        it('should ignore enums with unsupported valid', function () {
+            const input = {
+                media_type: '3d-experience',
+                device_state: 'initiating',
+                shuffle: 'everything',
+                repeat: 'nothing'
+            };
+            const result = parseState(input, '', {});
+            assert.deepStrictEqual(result, {
+                dateTime: null,
+                hash: null,
+                mediaType: null,
+                deviceState: null,
+                title: null,
+                artist: null,
+                album: null,
+                genre: null,
+                totalTime: null,
+                position: null,
+                shuffle: null,
+                repeat: null,
+                app: null,
+                appId: null
+            });
         });
     });
 });

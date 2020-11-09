@@ -10,7 +10,7 @@ import {
     NodePyATVVersionResponse
 } from './types';
 
-import {addRequestId, debug, removeRequestId, request, getParamters} from './tools';
+import {addRequestId, debug, getParamters, removeRequestId, request} from './tools';
 import NodePyATVDevice from './device';
 
 export default class NodePyATVInstance {
@@ -39,7 +39,7 @@ export default class NodePyATVInstance {
         let module = null;
 
         try {
-            pyatv = await request(id, NodePyATVExecutableType.atvremote, ['--version'], options);
+            pyatv = await request(id, NodePyATVExecutableType.atvremote, ['--version'], options) as string;
         }
         catch (error) {
             debug(id, `Unable to get pyatv version due to ${error}`, options);
@@ -48,7 +48,7 @@ export default class NodePyATVInstance {
         if (pyatv && pyatv.substr(0, 10) === 'atvremote ') {
             pyatv = pyatv.substr(10);
         }
-        if (pyatv && !semver.valid(pyatv)) {
+        if (!semver.valid(pyatv)) {
             debug(id, `String "${pyatv}" is not a valid pyatv version, set it to null`, options);
             pyatv = null;
         }

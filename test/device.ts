@@ -1,8 +1,17 @@
 'use strict';
 
 import assert from 'assert';
+import {mockSpawn} from 'spawn-mock';
 import NodePyATVDevice from '../lib/device';
-import {NodePyATVProtocol} from '../lib/types';
+import {
+    NodePyATVDeviceState,
+    NodePyATVKeys,
+    NodePyATVMediaType,
+    NodePyATVProtocol,
+    NodePyATVRepeatState,
+    NodePyATVShuffleState
+} from '../lib/types';
+import NodePyATVInstance from '../lib/instance';
 
 describe('NodePyATVDevice', function () {
     describe('get name()', function () {
@@ -63,7 +72,8 @@ describe('NodePyATVDevice', function () {
         });
         it('should return fn if set to custom function', function () {
             // eslint-disable-next-line @typescript-eslint/no-empty-function
-            const fn = () => {};
+            const fn = () => {
+            };
 
             const device = new NodePyATVDevice({
                 name: 'My Testdevice',
@@ -123,7 +133,8 @@ describe('NodePyATVDevice', function () {
             });
 
             // eslint-disable-next-line @typescript-eslint/no-empty-function
-            const fn = () => {};
+            const fn = () => {
+            };
 
             assert.strictEqual(device.debug, undefined);
             device.debug = fn;
@@ -171,4 +182,457 @@ describe('NodePyATVDevice', function () {
             assert.strictEqual(device.toString(), 'NodePyATVDevice(My Testdevice, 192.168.178.2)');
         });
     });
+
+    describe('getState()', function () {
+        it('should work [L]', async function () {
+            this.timeout(12000);
+
+            const devices = await NodePyATVInstance.find();
+            assert.ok(devices.length > 0, 'Device(s) found');
+
+            const device = devices[0];
+            await device.getState();
+        });
+        it('should work', async function () {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: mockSpawn(cp => {
+                    cp.stdout.write(JSON.stringify({
+                        result: 'success',
+                        datetime: '2020-11-07T22:38:43.608030+01:00',
+                        hash: '100e0ab6-6ff5-4199-9c04-a7107ff78712',
+                        media_type: 'video',
+                        device_state: 'playing',
+                        title: 'Solo: A Star Wars Story',
+                        artist: null,
+                        album: null,
+                        genre: null,
+                        total_time: 8097,
+                        position: 27,
+                        shuffle: 'off',
+                        repeat: 'off',
+                        app: 'Disney+',
+                        app_id: 'com.disney.disneyplus'
+                    }));
+                    cp.kill('', 0);
+                })
+            });
+
+            const result = await device.getState();
+            assert.deepStrictEqual(result, {
+                dateTime: new Date('2020-11-07T22:38:43.608030+01:00'),
+                hash: '100e0ab6-6ff5-4199-9c04-a7107ff78712',
+                mediaType: NodePyATVMediaType.video,
+                deviceState: NodePyATVDeviceState.playing,
+                title: 'Solo: A Star Wars Story',
+                artist: null,
+                album: null,
+                genre: null,
+                totalTime: 8097,
+                position: 27,
+                shuffle: NodePyATVShuffleState.off,
+                repeat: NodePyATVRepeatState.off,
+                app: 'Disney+',
+                appId: 'com.disney.disneyplus'
+            });
+        });
+        it('should cache requests for a bit', async function () {
+            let executions = 0;
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: mockSpawn(cp => {
+                    executions++;
+                    cp.stdout.write(JSON.stringify({
+                        result: 'success',
+                        datetime: new Date().toJSON(),
+                        hash: '100e0ab6-6ff5-4199-9c04-a7107ff78712',
+                        media_type: 'video',
+                        device_state: 'playing',
+                        title: 'Solo: A Star Wars Story',
+                        artist: null,
+                        album: null,
+                        genre: null,
+                        total_time: 8097,
+                        position: 27,
+                        shuffle: 'off',
+                        repeat: 'off',
+                        app: 'Disney+',
+                        app_id: 'com.disney.disneyplus'
+                    }));
+                    cp.kill('', 0);
+                })
+            });
+
+            const firstResult = await device.getState();
+            const secondResult = await device.getState();
+
+            assert.strictEqual(firstResult.dateTime, secondResult.dateTime);
+            assert.strictEqual(executions, 1);
+        });
+        it('should update the position if cache was used', async function () {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: mockSpawn(cp => {
+                    cp.stdout.write(JSON.stringify({
+                        result: 'success',
+                        datetime: new Date(new Date().getTime() - 1000).toJSON(),
+                        hash: '100e0ab6-6ff5-4199-9c04-a7107ff78712',
+                        media_type: 'video',
+                        device_state: 'playing',
+                        title: 'Solo: A Star Wars Story',
+                        artist: null,
+                        album: null,
+                        genre: null,
+                        total_time: 8097,
+                        position: 27,
+                        shuffle: 'off',
+                        repeat: 'off',
+                        app: 'Disney+',
+                        app_id: 'com.disney.disneyplus'
+                    }));
+                    cp.kill('', 0);
+                })
+            });
+
+            const firstResult = await device.getState();
+            assert.strictEqual(firstResult.position, 27);
+
+            const secondResult = await device.getState();
+            assert.ok(secondResult.position);
+            assert.ok(secondResult.position > 27, `Position should be > 27, was ${secondResult.position}`);
+            assert.ok(secondResult.position < 30, `Position should be > 27, was ${secondResult.position}`);
+        });
+    });
+
+    describe('getDateTime()', function () {
+        it('should work', async function () {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: mockSpawn(cp => {
+                    cp.stdout.write(JSON.stringify({
+                        result: 'success',
+                        datetime: new Date().toJSON()
+                    }));
+                    cp.kill('', 0);
+                })
+            });
+
+            const result = await device.getDateTime();
+            assert.ok(result instanceof Date);
+        });
+    });
+
+    describe('getHash()', function () {
+        it('should work', async function () {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: mockSpawn(cp => {
+                    cp.stdout.write(JSON.stringify({
+                        result: 'success',
+                        hash: '12345'
+                    }));
+                    cp.kill('', 0);
+                })
+            });
+
+            const result = await device.getHash();
+            assert.strictEqual(result, '12345');
+        });
+    });
+
+    describe('getMediaType()', function () {
+        it('should work', async function () {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: mockSpawn(cp => {
+                    cp.stdout.write(JSON.stringify({
+                        result: 'success',
+                        media_type: 'video'
+                    }));
+                    cp.kill('', 0);
+                })
+            });
+
+            const result = await device.getMediaType();
+            assert.deepStrictEqual(result, NodePyATVMediaType.video);
+            assert.deepStrictEqual(result, 'video');
+        });
+    });
+
+    describe('getDeviceState()', function () {
+        it('should work', async function () {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: mockSpawn(cp => {
+                    cp.stdout.write(JSON.stringify({
+                        result: 'success',
+                        device_state: 'seeking'
+                    }));
+                    cp.kill('', 0);
+                })
+            });
+
+            const result = await device.getDeviceState();
+            assert.deepStrictEqual(result, NodePyATVDeviceState.seeking);
+            assert.deepStrictEqual(result, 'seeking');
+        });
+    });
+
+    describe('getTitle()', function () {
+        it('should work', async function () {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: mockSpawn(cp => {
+                    cp.stdout.write(JSON.stringify({
+                        result: 'success',
+                        title: 'My Movie'
+                    }));
+                    cp.kill('', 0);
+                })
+            });
+
+            const result = await device.getTitle();
+            assert.strictEqual(result, 'My Movie');
+        });
+    });
+
+    describe('getArtist()', function () {
+        it('should work', async function () {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: mockSpawn(cp => {
+                    cp.stdout.write(JSON.stringify({
+                        result: 'success',
+                        artist: 'My Artist'
+                    }));
+                    cp.kill('', 0);
+                })
+            });
+
+            const result = await device.getArtist();
+            assert.strictEqual(result, 'My Artist');
+        });
+    });
+
+    describe('getAlbum()', function () {
+        it('should work', async function () {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: mockSpawn(cp => {
+                    cp.stdout.write(JSON.stringify({
+                        result: 'success',
+                        album: 'My ALbum'
+                    }));
+                    cp.kill('', 0);
+                })
+            });
+
+            const result = await device.getAlbum();
+            assert.strictEqual(result, 'My ALbum');
+        });
+    });
+
+    describe('getGenre()', function () {
+        it('should work', async function () {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: mockSpawn(cp => {
+                    cp.stdout.write(JSON.stringify({
+                        result: 'success',
+                        genre: 'My Genre'
+                    }));
+                    cp.kill('', 0);
+                })
+            });
+
+            const result = await device.getGenre();
+            assert.strictEqual(result, 'My Genre');
+        });
+    });
+
+    describe('getTotalTime()', function () {
+        it('should work', async function () {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: mockSpawn(cp => {
+                    cp.stdout.write(JSON.stringify({
+                        result: 'success',
+                        total_time: 45
+                    }));
+                    cp.kill('', 0);
+                })
+            });
+
+            const result = await device.getTotalTime();
+            assert.strictEqual(result, 45);
+        });
+    });
+
+    describe('getPosition()', function () {
+        it('should work', async function () {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: mockSpawn(cp => {
+                    cp.stdout.write(JSON.stringify({
+                        result: 'success',
+                        position: 30
+                    }));
+                    cp.kill('', 0);
+                })
+            });
+
+            const result = await device.getPosition();
+            assert.strictEqual(result, 30);
+        });
+    });
+
+    describe('getShuffle()', function () {
+        it('should work', async function () {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: mockSpawn(cp => {
+                    cp.stdout.write(JSON.stringify({
+                        result: 'success',
+                        shuffle: 'songs'
+                    }));
+                    cp.kill('', 0);
+                })
+            });
+
+            const result = await device.getShuffle();
+            assert.deepStrictEqual(result, NodePyATVShuffleState.songs);
+            assert.deepStrictEqual(result, 'songs');
+        });
+    });
+
+    describe('getRepeat()', function () {
+        it('should work', async function () {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: mockSpawn(cp => {
+                    cp.stdout.write(JSON.stringify({
+                        result: 'success',
+                        repeat: 'all'
+                    }));
+                    cp.kill('', 0);
+                })
+            });
+
+            const result = await device.getRepeat();
+            assert.deepStrictEqual(result, NodePyATVRepeatState.all);
+            assert.deepStrictEqual(result, 'all');
+        });
+    });
+
+    describe('getApp()', function () {
+        it('should work', async function () {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: mockSpawn(cp => {
+                    cp.stdout.write(JSON.stringify({
+                        result: 'success',
+                        app: 'My App'
+                    }));
+                    cp.kill('', 0);
+                })
+            });
+
+            const result = await device.getApp();
+            assert.strictEqual(result, 'My App');
+        });
+    });
+
+    describe('getAppId()', function () {
+        it('should work', async function () {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: mockSpawn(cp => {
+                    cp.stdout.write(JSON.stringify({
+                        result: 'success',
+                        app_id: 'app.example.com'
+                    }));
+                    cp.kill('', 0);
+                })
+            });
+
+            const result = await device.getAppId();
+            assert.strictEqual(result, 'app.example.com');
+        });
+    });
+
+    describe('pressKey()', function () {
+        it('should work with valid key', async function () {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: mockSpawn(cp => {
+                    cp.stdout.write('{"result":"success"}');
+                    cp.kill('', 0);
+                })
+            });
+
+            await device.pressKey(NodePyATVKeys.home);
+        });
+        it('should throw error with invalid key', async function () {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2'
+            });
+
+            await assert.rejects(async () => {
+                // @ts-ignore
+                await device.pressKey('foo');
+            }, /Unsupported key value foo/);
+        });
+        it('should throw error if pyatv result is not success', async function () {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: mockSpawn(cp => {
+                    cp.stdout.write('{"result":"failure"}');
+                    cp.kill('', 0);
+                })
+            });
+
+            await assert.rejects(async () => {
+                await device.pressKey(NodePyATVKeys.home);
+            }, /Unable to parse pyatv response/);
+        });
+    });
+
+    Object.keys(NodePyATVKeys).forEach(key => {
+        describe(key + '()', function () {
+            it('should work', async function () {
+                const device = new NodePyATVDevice({
+                    name: 'My Testdevice',
+                    host: '192.168.178.2',
+                    spawn: mockSpawn(cp => {
+                        cp.stdout.write('{"result":"success"}');
+                        cp.kill('', 0);
+                    })
+                });
+
+                // @ts-ignore
+                await device[key]();
+            });
+        });
+    });
+
 });

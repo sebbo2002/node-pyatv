@@ -1,7 +1,6 @@
 'use strict';
 
 import assert from 'assert';
-import NodePyATVDeviceEvents from '../lib/device-events';
 import NodePyATVDevice from '../lib/device';
 import {createFakeSpawn} from '../lib/fake-spawn';
 import NodePyATVDeviceEvent from '../lib/device-event';
@@ -250,7 +249,7 @@ describe('NodePyATVDeviceEvents', function () {
                 })
             });
 
-            const listener = (event: NodePyATVDeviceEvent) => {
+            const listener = () => {
                 // empty listener
             };
             device.addListener('update', listener);

@@ -15,7 +15,7 @@ export function createFakeSpawn(callback: ((cp: FakeChildProcessController) => v
 }
 
 export class FakeChildProcessStdIn extends EventEmitter {
-    write (data: string) {
+    write (data: string): void {
         this.emit('data', Buffer.from(data));
     }
 }

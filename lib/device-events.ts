@@ -35,6 +35,7 @@ export default class NodePyATVDeviceEvents extends EventEmitter {
 
     applyStateAndEmitEvents(newState: NodePyATVState): void {
         Object.keys(this.state).forEach((key: string) => {
+
             // @ts-ignore
             const oldValue = this.state[key];
 
@@ -63,6 +64,27 @@ export default class NodePyATVDeviceEvents extends EventEmitter {
                 this.emit('error', error);
             }
         });
+    }
+
+    private parsePushUpdate(reqId: string, data: string): void {
+        let json: NodePyATVInternalState;
+
+        try {
+            json = JSON.parse(data);
+        }
+        catch(error) {
+            const msg = `Unable to parse stdout json: ${error}`;
+            debug(reqId, msg, this.options);
+            this.emit('error', new Error(msg));
+            return;
+        }
+
+        this.applyPushUpdate(json, reqId);
+
+        if(this.listenerState === NodePyATVListenerState.starting) {
+            this.listenerState = NodePyATVListenerState.started;
+            this.checkListener();
+        }
     }
 
     private applyPushUpdate(update: NodePyATVInternalState, reqId: string): void {
@@ -117,24 +139,11 @@ export default class NodePyATVDeviceEvents extends EventEmitter {
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const onStdOut = (data: any) => {
-            let json: NodePyATVInternalState;
-
-            try {
-                json = JSON.parse(String(data).trim());
-            }
-            catch(error) {
-                const msg = `Unable to parse stdout json: ${error}`;
-                debug(reqId, msg, this.options);
-                this.emit('error', new Error(msg));
-                return;
-            }
-
-            this.applyPushUpdate(json, reqId);
-
-            if(this.listenerState === NodePyATVListenerState.starting) {
-                this.listenerState = NodePyATVListenerState.started;
-                this.checkListener();
-            }
+            String(data)
+                .split('\n')
+                .map(s => s.trim())
+                .filter(Boolean)
+                .forEach(s => this.parsePushUpdate(reqId, s));
         };
         const onClose = (code: number) => {
             if(this.pyatv === undefined) {
@@ -199,6 +208,7 @@ export default class NodePyATVDeviceEvents extends EventEmitter {
         }
 
         if(this.pyatv.stdin) {
+            debug(reqId, 'Press enter to close atvscript…', this.options);
             this.pyatv.stdin.write('\n');
         }
 

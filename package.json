@@ -31,6 +31,7 @@
   },
   "scripts": {
     "build": "tsc",
+    "example": "node ./dist/examples/push.js",
     "lint": "eslint . --ext .ts",
     "test": "mocha",
     "coverage": "nyc mocha",

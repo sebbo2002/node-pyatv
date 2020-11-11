@@ -1,9 +1,7 @@
 'use strict';
 
-// import pyatv from '@sebbo2002/node-pyatv';
-import pyatv from '../lib/instance';
-
-import NodePyATVDeviceEvent from '../lib/device-event';
+// import pyatv, {NodePyATVDeviceEvent} from '@sebbo2002/node-pyatv';
+import pyatv, {NodePyATVDeviceEvent} from '../lib/instance';
 
 (async () => {
     const devices = await pyatv.find(/*{debug: true}*/);

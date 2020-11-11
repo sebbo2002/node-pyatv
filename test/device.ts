@@ -1,7 +1,6 @@
 'use strict';
 
 import assert from 'assert';
-import {mockSpawn} from 'spawn-mock';
 import NodePyATVDevice from '../lib/device';
 import {
     NodePyATVDeviceState,
@@ -12,6 +11,7 @@ import {
     NodePyATVShuffleState
 } from '../lib/types';
 import NodePyATVInstance from '../lib/instance';
+import {createFakeSpawn} from '../lib/fake-spawn';
 
 describe('NodePyATVDevice', function () {
     describe('get name()', function () {
@@ -184,7 +184,7 @@ describe('NodePyATVDevice', function () {
     });
 
     describe('getState()', function () {
-        it('should work [L]', async function () {
+        it('should work [I]', process.env.ENABLE_INTEGRATION ? async function () {
             this.timeout(12000);
 
             const devices = await NodePyATVInstance.find();
@@ -192,13 +192,13 @@ describe('NodePyATVDevice', function () {
 
             const device = devices[0];
             await device.getState();
-        });
+        } : undefined);
         it('should work', async function () {
             const device = new NodePyATVDevice({
                 name: 'My Testdevice',
                 host: '192.168.178.2',
-                spawn: mockSpawn(cp => {
-                    cp.stdout.write(JSON.stringify({
+                spawn: createFakeSpawn(cp => {
+                    cp.end({
                         result: 'success',
                         datetime: '2020-11-07T22:38:43.608030+01:00',
                         hash: '100e0ab6-6ff5-4199-9c04-a7107ff78712',
@@ -214,8 +214,7 @@ describe('NodePyATVDevice', function () {
                         repeat: 'off',
                         app: 'Disney+',
                         app_id: 'com.disney.disneyplus'
-                    }));
-                    cp.kill('', 0);
+                    });
                 })
             });
 
@@ -242,9 +241,9 @@ describe('NodePyATVDevice', function () {
             const device = new NodePyATVDevice({
                 name: 'My Testdevice',
                 host: '192.168.178.2',
-                spawn: mockSpawn(cp => {
+                spawn: createFakeSpawn(cp => {
                     executions++;
-                    cp.stdout.write(JSON.stringify({
+                    cp.end({
                         result: 'success',
                         datetime: new Date().toJSON(),
                         hash: '100e0ab6-6ff5-4199-9c04-a7107ff78712',
@@ -260,8 +259,7 @@ describe('NodePyATVDevice', function () {
                         repeat: 'off',
                         app: 'Disney+',
                         app_id: 'com.disney.disneyplus'
-                    }));
-                    cp.kill('', 0);
+                    });
                 })
             });
 
@@ -275,8 +273,8 @@ describe('NodePyATVDevice', function () {
             const device = new NodePyATVDevice({
                 name: 'My Testdevice',
                 host: '192.168.178.2',
-                spawn: mockSpawn(cp => {
-                    cp.stdout.write(JSON.stringify({
+                spawn: createFakeSpawn(cp => {
+                    cp.end({
                         result: 'success',
                         datetime: new Date(new Date().getTime() - 1000).toJSON(),
                         hash: '100e0ab6-6ff5-4199-9c04-a7107ff78712',
@@ -292,8 +290,7 @@ describe('NodePyATVDevice', function () {
                         repeat: 'off',
                         app: 'Disney+',
                         app_id: 'com.disney.disneyplus'
-                    }));
-                    cp.kill('', 0);
+                    });
                 })
             });
 
@@ -307,17 +304,40 @@ describe('NodePyATVDevice', function () {
         });
     });
 
+    describe('clearState()', function () {
+        it('should work', async function () {
+            let executions = 0;
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: createFakeSpawn(cp => {
+                    executions++;
+                    cp.end({
+                        result: 'success',
+                        datetime: '2020-11-07T22:38:43.608030+01:00',
+                        title: 'Solo: A Star Wars Story'
+                    });
+                })
+            });
+
+            assert.deepStrictEqual(await device.getTitle(), 'Solo: A Star Wars Story');
+
+            device.clearState();
+            assert.deepStrictEqual(await device.getTitle(), 'Solo: A Star Wars Story');
+            assert.strictEqual(executions, 2);
+        });
+    });
+
     describe('getDateTime()', function () {
         it('should work', async function () {
             const device = new NodePyATVDevice({
                 name: 'My Testdevice',
                 host: '192.168.178.2',
-                spawn: mockSpawn(cp => {
-                    cp.stdout.write(JSON.stringify({
+                spawn: createFakeSpawn(cp => {
+                    cp.end({
                         result: 'success',
                         datetime: new Date().toJSON()
-                    }));
-                    cp.kill('', 0);
+                    });
                 })
             });
 
@@ -331,12 +351,11 @@ describe('NodePyATVDevice', function () {
             const device = new NodePyATVDevice({
                 name: 'My Testdevice',
                 host: '192.168.178.2',
-                spawn: mockSpawn(cp => {
-                    cp.stdout.write(JSON.stringify({
+                spawn: createFakeSpawn(cp => {
+                    cp.end({
                         result: 'success',
                         hash: '12345'
-                    }));
-                    cp.kill('', 0);
+                    });
                 })
             });
 
@@ -350,12 +369,11 @@ describe('NodePyATVDevice', function () {
             const device = new NodePyATVDevice({
                 name: 'My Testdevice',
                 host: '192.168.178.2',
-                spawn: mockSpawn(cp => {
-                    cp.stdout.write(JSON.stringify({
+                spawn: createFakeSpawn(cp => {
+                    cp.end({
                         result: 'success',
                         media_type: 'video'
-                    }));
-                    cp.kill('', 0);
+                    });
                 })
             });
 
@@ -370,12 +388,11 @@ describe('NodePyATVDevice', function () {
             const device = new NodePyATVDevice({
                 name: 'My Testdevice',
                 host: '192.168.178.2',
-                spawn: mockSpawn(cp => {
-                    cp.stdout.write(JSON.stringify({
+                spawn: createFakeSpawn(cp => {
+                    cp.end({
                         result: 'success',
                         device_state: 'seeking'
-                    }));
-                    cp.kill('', 0);
+                    });
                 })
             });
 
@@ -390,12 +407,11 @@ describe('NodePyATVDevice', function () {
             const device = new NodePyATVDevice({
                 name: 'My Testdevice',
                 host: '192.168.178.2',
-                spawn: mockSpawn(cp => {
-                    cp.stdout.write(JSON.stringify({
+                spawn: createFakeSpawn(cp => {
+                    cp.end({
                         result: 'success',
                         title: 'My Movie'
-                    }));
-                    cp.kill('', 0);
+                    });
                 })
             });
 
@@ -409,12 +425,11 @@ describe('NodePyATVDevice', function () {
             const device = new NodePyATVDevice({
                 name: 'My Testdevice',
                 host: '192.168.178.2',
-                spawn: mockSpawn(cp => {
-                    cp.stdout.write(JSON.stringify({
+                spawn: createFakeSpawn(cp => {
+                    cp.end({
                         result: 'success',
                         artist: 'My Artist'
-                    }));
-                    cp.kill('', 0);
+                    });
                 })
             });
 
@@ -428,12 +443,11 @@ describe('NodePyATVDevice', function () {
             const device = new NodePyATVDevice({
                 name: 'My Testdevice',
                 host: '192.168.178.2',
-                spawn: mockSpawn(cp => {
-                    cp.stdout.write(JSON.stringify({
+                spawn: createFakeSpawn(cp => {
+                    cp.end({
                         result: 'success',
                         album: 'My ALbum'
-                    }));
-                    cp.kill('', 0);
+                    });
                 })
             });
 
@@ -447,12 +461,11 @@ describe('NodePyATVDevice', function () {
             const device = new NodePyATVDevice({
                 name: 'My Testdevice',
                 host: '192.168.178.2',
-                spawn: mockSpawn(cp => {
-                    cp.stdout.write(JSON.stringify({
+                spawn: createFakeSpawn(cp => {
+                    cp.end({
                         result: 'success',
                         genre: 'My Genre'
-                    }));
-                    cp.kill('', 0);
+                    });
                 })
             });
 
@@ -466,12 +479,11 @@ describe('NodePyATVDevice', function () {
             const device = new NodePyATVDevice({
                 name: 'My Testdevice',
                 host: '192.168.178.2',
-                spawn: mockSpawn(cp => {
-                    cp.stdout.write(JSON.stringify({
+                spawn: createFakeSpawn(cp => {
+                    cp.end({
                         result: 'success',
                         total_time: 45
-                    }));
-                    cp.kill('', 0);
+                    });
                 })
             });
 
@@ -485,12 +497,11 @@ describe('NodePyATVDevice', function () {
             const device = new NodePyATVDevice({
                 name: 'My Testdevice',
                 host: '192.168.178.2',
-                spawn: mockSpawn(cp => {
-                    cp.stdout.write(JSON.stringify({
+                spawn: createFakeSpawn(cp => {
+                    cp.end({
                         result: 'success',
                         position: 30
-                    }));
-                    cp.kill('', 0);
+                    });
                 })
             });
 
@@ -504,12 +515,11 @@ describe('NodePyATVDevice', function () {
             const device = new NodePyATVDevice({
                 name: 'My Testdevice',
                 host: '192.168.178.2',
-                spawn: mockSpawn(cp => {
-                    cp.stdout.write(JSON.stringify({
+                spawn: createFakeSpawn(cp => {
+                    cp.end({
                         result: 'success',
                         shuffle: 'songs'
-                    }));
-                    cp.kill('', 0);
+                    });
                 })
             });
 
@@ -524,12 +534,11 @@ describe('NodePyATVDevice', function () {
             const device = new NodePyATVDevice({
                 name: 'My Testdevice',
                 host: '192.168.178.2',
-                spawn: mockSpawn(cp => {
-                    cp.stdout.write(JSON.stringify({
+                spawn: createFakeSpawn(cp => {
+                    cp.end({
                         result: 'success',
                         repeat: 'all'
-                    }));
-                    cp.kill('', 0);
+                    });
                 })
             });
 
@@ -544,12 +553,11 @@ describe('NodePyATVDevice', function () {
             const device = new NodePyATVDevice({
                 name: 'My Testdevice',
                 host: '192.168.178.2',
-                spawn: mockSpawn(cp => {
-                    cp.stdout.write(JSON.stringify({
+                spawn: createFakeSpawn(cp => {
+                    cp.end({
                         result: 'success',
                         app: 'My App'
-                    }));
-                    cp.kill('', 0);
+                    });
                 })
             });
 
@@ -563,12 +571,11 @@ describe('NodePyATVDevice', function () {
             const device = new NodePyATVDevice({
                 name: 'My Testdevice',
                 host: '192.168.178.2',
-                spawn: mockSpawn(cp => {
-                    cp.stdout.write(JSON.stringify({
+                spawn: createFakeSpawn(cp => {
+                    cp.end({
                         result: 'success',
                         app_id: 'app.example.com'
-                    }));
-                    cp.kill('', 0);
+                    });
                 })
             });
 
@@ -582,9 +589,8 @@ describe('NodePyATVDevice', function () {
             const device = new NodePyATVDevice({
                 name: 'My Testdevice',
                 host: '192.168.178.2',
-                spawn: mockSpawn(cp => {
-                    cp.stdout.write('{"result":"success"}');
-                    cp.kill('', 0);
+                spawn: createFakeSpawn(cp => {
+                    cp.end('{"result":"success"}');
                 })
             });
 
@@ -605,9 +611,8 @@ describe('NodePyATVDevice', function () {
             const device = new NodePyATVDevice({
                 name: 'My Testdevice',
                 host: '192.168.178.2',
-                spawn: mockSpawn(cp => {
-                    cp.stdout.write('{"result":"failure"}');
-                    cp.kill('', 0);
+                spawn: createFakeSpawn(cp => {
+                    cp.end('{"result":"failure"}');
                 })
             });
 
@@ -623,9 +628,8 @@ describe('NodePyATVDevice', function () {
                 const device = new NodePyATVDevice({
                     name: 'My Testdevice',
                     host: '192.168.178.2',
-                    spawn: mockSpawn(cp => {
-                        cp.stdout.write('{"result":"success"}');
-                        cp.kill('', 0);
+                    spawn: createFakeSpawn(cp => {
+                        cp.end('{"result":"success"}');
                     })
                 });
 

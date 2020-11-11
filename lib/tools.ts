@@ -9,8 +9,9 @@ import {
     NodePyATVMediaType, NodePyATVRepeatState, NodePyATVShuffleState,
     NodePyATVState
 } from './types';
+
 import {ChildProcess, spawn, SpawnOptions} from 'child_process';
-import {MockChildProcess} from 'spawn-mock';
+import {FakeChildProcess} from './fake-spawn';
 
 const requestIds: string[] = [];
 
@@ -72,9 +73,9 @@ export function execute(
     executableType: NodePyATVExecutableType,
     parameters: string[],
     options: NodePyATVInstanceOptions
-): ChildProcess | MockChildProcess {
+): ChildProcess | FakeChildProcess {
     const executable = getExecutable(executableType, options);
-    const mySpawn: ((command: string, args: Array<string>, options: SpawnOptions) => (ChildProcess | MockChildProcess)) = typeof options.spawn === 'function' ? options.spawn : spawn;
+    const mySpawn: ((command: string, args: Array<string>, options: SpawnOptions) => (ChildProcess | FakeChildProcess)) = typeof options.spawn === 'function' ? options.spawn : spawn;
 
     debug(requestId, `${executable} ${parameters.join(' ')}`, options);
     const child = mySpawn(executable, parameters, {

@@ -12,15 +12,21 @@ import {
     NodePyATVShuffleState,
     NodePyATVState
 } from './types';
-import {addRequestId, getParamters, parseState, removeRequestId, request} from './tools';
 
-export default class NodePyATVDevice {
+import {addRequestId, getParamters, parseState, removeRequestId, request} from './tools';
+import NodePyATVDeviceEvents from './device-events';
+import NodePyATVDeviceEvent from './device-event';
+import { EventEmitter } from 'events';
+
+export default class NodePyATVDevice implements EventEmitter{
     private readonly options: NodePyATVDeviceOptions;
-    private state: NodePyATVState | undefined;
+    private readonly state: NodePyATVState;
+    private readonly events: NodePyATVDeviceEvents;
 
     constructor(options: NodePyATVDeviceOptions) {
         this.options = Object.assign({}, options);
-        this.clearState();
+        this.state = parseState({}, '', {});
+        this.events = new NodePyATVDeviceEvents(this.state, this, this.options);
 
         // @todo basic validation
     }
@@ -96,8 +102,7 @@ export default class NodePyATVDevice {
     }
 
     private applyState(newState: NodePyATVState): void {
-        // @todo events, etc.
-        this.state = Object.assign(this.state || {}, newState);
+        this.events.applyStateAndEmitEvents(newState);
     }
 
     async getDateTime(options: NodePyATVGetStateOptions = {}): Promise<Date | null> {
@@ -276,5 +281,76 @@ export default class NodePyATVDevice {
 
     async wakeup(): Promise<void> {
         await this._pressKey(NodePyATVInternalKeys.wakeup);
+    }
+
+    addListener(event: string | symbol, listener: (event: NodePyATVDeviceEvent) => void): this {
+        this.events.addListener(event, listener);
+        return this;
+    }
+
+    emit(event: string | symbol, payload: NodePyATVDeviceEvent): boolean {
+        return this.events.emit(event, payload);
+    }
+
+    eventNames(): Array<string | symbol> {
+        return this.events.eventNames();
+    }
+
+    getMaxListeners(): number {
+        return this.events.getMaxListeners();
+    }
+
+    listenerCount(event: string | symbol): number {
+        return this.events.listenerCount(event);
+    }
+
+    // eslint-disable-next-line @typescript-eslint/ban-types
+    listeners(event: string | symbol): Function[] {
+        return this.events.listeners(event);
+    }
+
+    off(event: string | symbol, listener: (event: NodePyATVDeviceEvent | Error) => void): this {
+        this.events.off(event, listener);
+        return this;
+    }
+
+    on(event: string | symbol, listener: (event: NodePyATVDeviceEvent | Error) => void): this {
+        this.events.on(event, listener);
+        return this;
+    }
+
+    once(event: string | symbol, listener: (event: NodePyATVDeviceEvent | Error) => void): this {
+        this.events.once(event, listener);
+        return this;
+    }
+
+    prependListener(event: string | symbol, listener: (event: NodePyATVDeviceEvent | Error) => void): this {
+        this.events.prependListener(event, listener);
+        return this;
+    }
+
+    prependOnceListener(event: string | symbol, listener: (event: NodePyATVDeviceEvent | Error) => void): this {
+        this.events.prependOnceListener(event, listener);
+        return this;
+    }
+
+    // eslint-disable-next-line @typescript-eslint/ban-types
+    rawListeners(event: string | symbol): Function[] {
+        return this.events.rawListeners(event);
+    }
+
+    removeAllListeners(event?: string | symbol): this {
+        this.events.removeAllListeners(event);
+        return this;
+    }
+
+    removeListener(event: string | symbol, listener: (event: NodePyATVDeviceEvent) => void): this {
+        this.events.removeListener(event, listener);
+        return this;
+    }
+
+    setMaxListeners(n: number): this {
+        this.events.setMaxListeners(n);
+        return this;
     }
 }

@@ -41,6 +41,14 @@
                 "@typescript-eslint/ban-ts-ignore": "off",
                 "@typescript-eslint/ban-ts-comment": "off"
             }
+        },
+        {
+            "files": [
+                "lib/device-events.ts"
+            ],
+            "rules": {
+                "@typescript-eslint/ban-ts-comment": "off"
+            }
         }
     ]
 }

@@ -1,7 +1,7 @@
 'use strict';
 
 import assert from 'assert';
-import {mockSpawn} from 'spawn-mock';
+import {createFakeSpawn} from '../lib/fake-spawn';
 import NodePyATVInstance from '../lib/instance';
 
 describe('NodePyATVInstance', function () {
@@ -21,9 +21,9 @@ describe('NodePyATVInstance', function () {
         });
         it('should return the pyatv version', async function () {
             const result = await NodePyATVInstance.version({
-                spawn: mockSpawn(cp => {
-                    cp.stdout.write('atvremote 0.7.4');
-                    cp.kill('', 1);
+                spawn: createFakeSpawn(cp => {
+                    cp.code(1);
+                    cp.end('atvremote 0.7.4');
                 })
             });
 
@@ -33,7 +33,9 @@ describe('NodePyATVInstance', function () {
         it('should return the module version', async function () {
             const result = await NodePyATVInstance.version({
                 noColors: true,
-                spawn: mockSpawn(cp => cp.kill('', 1))
+                spawn: createFakeSpawn(cp =>
+                    cp.code(1).end()
+                )
             });
 
             // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -42,48 +44,42 @@ describe('NodePyATVInstance', function () {
         it('should handle option.atvremotePath', async function () {
             await NodePyATVInstance.version({
                 atvremotePath: '/foo/bar',
-                spawn: mockSpawn(cp => {
-                    assert.strictEqual(cp.cmd, '/foo/bar');
-                    cp.kill('', 1);
+                spawn: createFakeSpawn(cp => {
+                    assert.strictEqual(cp.cmd(), '/foo/bar');
+                    cp.code(1).end();
                 })
             });
         });
         it('should work with option.debug = true', async function () {
             await NodePyATVInstance.version({
                 debug: true,
-                spawn: mockSpawn(cp => cp.kill('', 1))
+                spawn: createFakeSpawn(cp =>
+                    cp.code(1).end()
+                )
             });
         });
         it('should work with option.noColors', async function () {
             await NodePyATVInstance.version({
                 debug: () => {}, // eslint-disable-line @typescript-eslint/no-empty-function
                 noColors: true,
-                spawn: mockSpawn(cp => cp.kill('', 1))
+                spawn: createFakeSpawn(cp =>
+                    cp.code(1).end()
+                )
             });
         });
         it('should return null on pyatv stderr output', async function () {
             const result = await NodePyATVInstance.version({
-                spawn: mockSpawn(cp => {
-                    cp.stderr.write('Hello World!');
-                    cp.kill('', 123);
-                })
+                spawn: createFakeSpawn(cp =>
+                    cp.stderr('Hello World!').code(123).end()
+                )
             });
 
             assert.strictEqual(result.pyatv, null);
         });
         it('should return null on pyatv error', async function () {
             const result = await NodePyATVInstance.version({
-                spawn: mockSpawn(cp => {
-                    cp.emit('error', new Error('Hello world!'));
-                })
-            });
-
-            assert.strictEqual(result.pyatv, null);
-        });
-        it('should return null on pyatv error (which are not errors)', async function () {
-            const result = await NodePyATVInstance.version({
-                spawn: mockSpawn(cp => {
-                    cp.emit('error', 'Hello world!');
+                spawn: createFakeSpawn(cp => {
+                    cp.error(new Error('Hello world!')).end();
                 })
             });
 
@@ -91,9 +87,8 @@ describe('NodePyATVInstance', function () {
         });
         it('should return null on invalid pyatv version', async function () {
             const result = await NodePyATVInstance.version({
-                spawn: mockSpawn(cp => {
-                    cp.stdout.write('atvremote 42');
-                    cp.kill('', 1);
+                spawn: createFakeSpawn(cp => {
+                    cp.stdout('atvremote 42').code(1).end();
                 })
             });
 
@@ -108,9 +103,8 @@ describe('NodePyATVInstance', function () {
 
             cache.exports = {};
             const result = await NodePyATVInstance.version({
-                spawn: mockSpawn(cp => {
-                    cp.stdout.write('atvremote 0.7.4');
-                    cp.kill('', 1);
+                spawn: createFakeSpawn(cp => {
+                    cp.stdout('atvremote 0.7.4').code(1).end();
                 })
             });
 
@@ -125,9 +119,8 @@ describe('NodePyATVInstance', function () {
 
             cache.exports = {version: 42};
             const result = await NodePyATVInstance.version({
-                spawn: mockSpawn(cp => {
-                    cp.stdout.write('atvremote 0.7.4');
-                    cp.kill('', 1);
+                spawn: createFakeSpawn(cp => {
+                    cp.stdout('atvremote 0.7.4').code(1).end();
                 })
             });
 
@@ -143,9 +136,8 @@ describe('NodePyATVInstance', function () {
         it('should return nice error message if pyatv was not found', async function() {
             await assert.rejects(async () => {
                 await NodePyATVInstance.check({
-                    spawn: mockSpawn(cp => {
-                        cp.emit('error', new Error('spawn atvremote ENOENT'));
-                        cp.kill('', 1);
+                    spawn: createFakeSpawn(cp => {
+                        cp.error(new Error('spawn atvremote ENOENT')).code(1).end();
                     })
                 });
             }, /Unable to find pyatv. Is it installed?/);
@@ -153,9 +145,8 @@ describe('NodePyATVInstance', function () {
         it('should return nice error message if myatv is too old', async function () {
             await assert.rejects(async () => {
                 await NodePyATVInstance.check({
-                    spawn: mockSpawn(cp => {
-                        cp.stdout.write('atvremote 0.5.1');
-                        cp.kill('', 1);
+                    spawn: createFakeSpawn(cp => {
+                        cp.stdout('atvremote 0.5.1').code(1).end();
                     })
                 });
             }, /Found pyatv, but unforunately it's too old. Please update pyatv./);
@@ -164,14 +155,12 @@ describe('NodePyATVInstance', function () {
             let i = 0;
             await assert.rejects(async () => {
                 await NodePyATVInstance.check({
-                    spawn: mockSpawn(cp => {
+                    spawn: createFakeSpawn(cp => {
                         if(i === 0) {
-                            cp.stdout.write('atvremote 0.7.0');
-                            cp.kill('', 1);
+                            cp.stdout('atvremote 0.7.0').code(1).end();
                             i++;
                         } else {
-                            cp.emit('error', new Error('spawn atvremote ENOENT'));
-                            cp.kill('', 1);
+                            cp.error(new Error('spawn atvremote ENOENT')).code(1).end();
                         }
                     })
                 });
@@ -188,32 +177,30 @@ describe('NodePyATVInstance', function () {
         it('should handle option.atvscriptPath', async function () {
             await NodePyATVInstance.find({
                 atvscriptPath: '/foo/bar',
-                spawn: mockSpawn(cp => {
-                    assert.strictEqual(cp.cmd, '/foo/bar');
-                    cp.stdout.write(JSON.stringify({
+                spawn: createFakeSpawn(cp => {
+                    assert.strictEqual(cp.cmd(), '/foo/bar');
+                    cp.stdout({
                         'result': 'success',
                         'datetime': '2020-11-06T20:47:30.840022+01:00',
                         'devices': []
-                    }));
-                    cp.kill('', 0);
+                    }).end();
                 })
             });
         });
-        it('should throw error on stderr output');
+        it('should throw error on stderr output', async function () {
+            await assert.rejects(async () => {
+                await NodePyATVInstance.find({
+                    spawn: createFakeSpawn(cp => {
+                        cp.stderr('Hello World!').code(1).end();
+                    })
+                });
+            }, /Unable to execute request/);
+        });
         it('should throw error on error', async function () {
             await assert.rejects(async () => {
                 await NodePyATVInstance.find({
-                    spawn: mockSpawn(cp => {
-                        cp.emit('error', new Error('Hello world!'));
-                    })
-                });
-            }, /Hello world!/);
-        });
-        it('should throw error on error (which are not errors)', async function () {
-            await assert.rejects(async () => {
-                await NodePyATVInstance.find({
-                    spawn: mockSpawn(cp => {
-                        cp.emit('error', 'Hello world!');
+                    spawn: createFakeSpawn(cp => {
+                        cp.error(new Error('Hello world!')).code(1).end();
                     })
                 });
             }, /Hello world!/);
@@ -221,13 +208,12 @@ describe('NodePyATVInstance', function () {
         it('should throw error if atvscript result is not valid json', async function () {
             await assert.rejects(async () => {
                 await NodePyATVInstance.find({
-                    spawn: mockSpawn(cp => {
-                        cp.stdout.write(JSON.stringify({
+                    spawn: createFakeSpawn(cp => {
+                        cp.stdout(JSON.stringify({
                             'result': 'success',
                             'datetime': '2020-11-06T20:47:30.840022+01:00',
                             'devices': []
-                        }).substr(1));
-                        cp.kill('', 0);
+                        }).substr(1)).end();
                     })
                 });
             }, /Unable to parse result/);
@@ -235,11 +221,10 @@ describe('NodePyATVInstance', function () {
         it('should throw error if atvscript result is not successfull', async function () {
             await assert.rejects(async () => {
                 await NodePyATVInstance.find({
-                    spawn: mockSpawn(cp => {
-                        cp.stdout.write(JSON.stringify({
+                    spawn: createFakeSpawn(cp => {
+                        cp.stdout({
                             result: 'error'
-                        }));
-                        cp.kill('', 1);
+                        }).code(1).end();
                     })
                 });
             }, /Unable to parse pyatv response: /);
@@ -247,11 +232,10 @@ describe('NodePyATVInstance', function () {
         it('should throw error if atvscript result is without device array', async function () {
             await assert.rejects(async () => {
                 await NodePyATVInstance.find({
-                    spawn: mockSpawn(cp => {
-                        cp.stdout.write(JSON.stringify({
+                    spawn: createFakeSpawn(cp => {
+                        cp.stdout({
                             result: 'success'
-                        }));
-                        cp.kill('', 1);
+                        }).code(1).end();
                     })
                 });
             }, /Unable to parse pyatv response: /);
@@ -270,9 +254,9 @@ describe('NodePyATVInstance', function () {
         it('should merge options from constructor', async function() {
             const i = new NodePyATVInstance({atvremotePath: 'test'});
             await i.version({
-                spawn: mockSpawn(cp => {
-                    assert.strictEqual(cp.cmd, 'test');
-                    cp.kill('', 1);
+                spawn: createFakeSpawn(cp => {
+                    assert.strictEqual(cp.cmd(), 'test');
+                    cp.code(1).end();
                 })
             });
         });
@@ -283,10 +267,9 @@ describe('NodePyATVInstance', function () {
             const i = new NodePyATVInstance({atvremotePath: 'test'});
             await assert.rejects(async () => {
                 await i.check({
-                    spawn: mockSpawn(cp => {
-                        assert.strictEqual(cp.cmd, 'test');
-                        cp.emit('error', new Error('spawn atvremote ENOENT'));
-                        cp.kill('', 1);
+                    spawn: createFakeSpawn(cp => {
+                        assert.strictEqual(cp.cmd(), 'test');
+                        cp.error(new Error('spawn atvremote ENOENT')).code(1).end();
                     })
                 });
             }, /Unable to find pyatv. Is it installed?/);
@@ -297,14 +280,13 @@ describe('NodePyATVInstance', function () {
         it('should merge options from constructor', async function() {
             const i = new NodePyATVInstance({atvscriptPath: 'test'});
             await i.find({
-                spawn: mockSpawn(cp => {
-                    assert.strictEqual(cp.cmd, 'test');
-                    cp.stdout.write(JSON.stringify({
+                spawn: createFakeSpawn(cp => {
+                    assert.strictEqual(cp.cmd(), 'test');
+                    cp.stdout({
                         'result': 'success',
                         'datetime': '2020-11-06T20:47:30.840022+01:00',
                         'devices': []
-                    }));
-                    cp.kill('', 0);
+                    }).end();
                 })
             });
         });

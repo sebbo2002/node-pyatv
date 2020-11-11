@@ -1,5 +1,5 @@
 import {ChildProcess, SpawnOptions} from 'child_process';
-import {MockChildProcess} from 'spawn-mock';
+import {FakeChildProcess} from './fake-spawn';
 
 export enum NodePyATVExecutableType {
     atvremote = 'atvremote',
@@ -89,13 +89,24 @@ export enum NodePyATVInternalKeys {
     wakeup = 'wakeup'
 }
 
+export enum NodePyATVListenerState {
+    stopped,
+    starting,
+    started,
+    stopping
+}
+
+
+export type NodePyATVStateIndex = ('dateTime' | 'hash' | 'mediaType' | 'deviceState' | 'title' | 'artist' | 'album' |
+    'genre' | 'totalTime' | 'position' | 'shuffle' | 'repeat' | 'app' | 'appId');
+
 
 export interface NodePyATVInstanceOptions {
     atvremotePath?: string;
     atvscriptPath?: string;
     debug?: true | ((msg: string) => void);
     noColors?: true;
-    spawn?: (command: string, args: Array<string>, options: SpawnOptions) => (ChildProcess | MockChildProcess);
+    spawn?: (command: string, args: Array<string>, options: SpawnOptions) => (ChildProcess | FakeChildProcess);
 }
 
 export interface NodePyATVVersionResponse {
@@ -117,7 +128,7 @@ export interface NodePyATVFindAndInstanceOptions extends NodePyATVInstanceOption
 
 }
 
-export interface NodePyATVDeviceOptions extends NodePyATVInstanceOptions, NodePyATVFindOptions {
+export interface NodePyATVDeviceOptions extends NodePyATVFindAndInstanceOptions {
     host: string;
     name: string;
 }
@@ -141,7 +152,11 @@ export interface NodePyATVInternalState {
     shuffle?: string | unknown,
     repeat?: string | unknown,
     app?: string | unknown,
-    app_id?: string | unknown
+    app_id?: string | unknown,
+    power_state?: string | unknown,
+    push_updates?: string | unknown,
+    exception?: string | unknown,
+    connection?: string | unknown
 }
 
 export interface NodePyATVState {

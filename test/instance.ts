@@ -2,7 +2,15 @@
 
 import assert from 'assert';
 import {createFakeSpawn} from '../lib/fake-spawn';
-import NodePyATVInstance from '../lib/instance';
+import NodePyATVInstance, {
+    NodePyATVProtocol,
+    NodePyATVMediaType,
+    NodePyATVDeviceEvent,
+    NodePyATVDeviceState,
+    NodePyATVRepeatState,
+    NodePyATVShuffleState,
+    NodePyATVKeys
+} from '../lib/instance';
 
 describe('NodePyATVInstance', function () {
     describe('static version()', function () {
@@ -297,6 +305,30 @@ describe('NodePyATVInstance', function () {
             const i = new NodePyATVInstance({debug: true});
             const d = i.device({name: 'My Testdevice', host: '192.168.178.2'});
             assert.deepStrictEqual(d.debug, true);
+        });
+    });
+
+    describe('Type Exports', function () {
+        it('Type NodePyATVProtocol should be exported', function() {
+            assert.ok(NodePyATVProtocol);
+        });
+        it('Type NodePyATVMediaType should be exported', function() {
+            assert.ok(NodePyATVMediaType);
+        });
+        it('Type NodePyATVDeviceEvent should be exported', function() {
+            assert.ok(NodePyATVDeviceEvent);
+        });
+        it('Type NodePyATVDeviceState should be exported', function() {
+            assert.ok(NodePyATVDeviceState);
+        });
+        it('Type NodePyATVRepeatState should be exported', function() {
+            assert.ok(NodePyATVRepeatState);
+        });
+        it('Type NodePyATVShuffleState should be exported', function() {
+            assert.ok(NodePyATVShuffleState);
+        });
+        it('Type NodePyATVKeys should be exported', function() {
+            assert.ok(NodePyATVKeys);
         });
     });
 });

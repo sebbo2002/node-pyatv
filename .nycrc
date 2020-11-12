@@ -1,24 +1,30 @@
 {
-  "cache": false,
-  "check-coverage": true,
-  "extension": [
-    ".ts"
-  ],
-  "include": [
-    "lib/**/*.ts"
-  ],
-  "exclude": [
-    "coverage/**",
-    "node_modules/**"
-  ],
-  "temp-directory": "./coverage/.nyc_output",
-  "sourceMap": true,
-  "reporter": [
-    "text",
-    "text-summary",
-    "cobertura",
-    "html"
-  ],
-  "all": true,
-  "instrument": true
+    "cache": false,
+    "check-coverage": true,
+    "extension": [
+        ".ts"
+    ],
+    "include": [
+        "lib/**/*.ts"
+    ],
+    "exclude": [
+        "coverage/**",
+        "node_modules/**"
+    ],
+    "report-dir": "./dist/coverage/",
+    "temp-directory": "./.nyc_output",
+    "sourceMap": true,
+    "reporter": [
+        "text",
+        "text-summary",
+        "cobertura",
+        "html"
+    ],
+    "all": true,
+    "instrument": true,
+    "branches": 75,
+    "lines": 80,
+    "functions": 90,
+    "statements": 90,
+    "per-file": true
 }

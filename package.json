@@ -35,7 +35,8 @@
     "lint": "eslint . --ext .ts",
     "test": "mocha",
     "coverage": "nyc mocha",
-    "postinstall": "node ./dist/bin/check.js"
+    "check": "./check.sh",
+    "postinstall": "./check.sh"
   },
   "preferGlobal": false,
   "main": "./dist/lib/instance.js",

@@ -1,0 +1,14 @@
+# [1.1.0-develop.1](https://github.com/sebbo2002/node-pyatv/compare/v1.0.0...v1.1.0-develop.1) (2020-11-13)
+
+
+### Bug Fixes
+
+* postinstall file check ([39777b3](https://github.com/sebbo2002/node-pyatv/commit/39777b3d2ad0b19936ba5cd6b3d93111b667c9dd))
+
+
+### Features
+
+* Add semantic release ([2ff70d6](https://github.com/sebbo2002/node-pyatv/commit/2ff70d6375ee40f6f939b9a9997fcf9922d21480))
+* DeviceEvents ([e28fbf9](https://github.com/sebbo2002/node-pyatv/commit/e28fbf960f1ff58e245cfd0a0680cf9e5056c5e6))
+* Get Device State ([c2cfa60](https://github.com/sebbo2002/node-pyatv/commit/c2cfa60ad09f9b2165f9d2193ce257f01551bde1))
+* Instance, Device & Tools ([95c2b77](https://github.com/sebbo2002/node-pyatv/commit/95c2b77070136402a3166a849a8ef8b580ad2935))

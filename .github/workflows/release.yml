@@ -96,7 +96,7 @@ jobs:
         if: steps.module-cache.outputs.cache-hit != 'true'
         run: npm ci
       - name: semantic-release
-        run: npx semantic-release
+        run: NPM_TOKEN=$NODE_AUTH_TOKEN npx semantic-release
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           GH_TOKEN: ${{ secrets.GH_TOKEN }}

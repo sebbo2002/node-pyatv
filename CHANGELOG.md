@@ -1,3 +1,15 @@
+# [2.0.0-develop.1](https://github.com/sebbo2002/node-pyatv/compare/v1.1.0-develop.1...v2.0.0-develop.1) (2020-11-13)
+
+
+### Continuous Integration
+
+* **release:** fix NPM_Token for deprecation ([5c988b9](https://github.com/sebbo2002/node-pyatv/commit/5c988b99ef3d254c8aa729b41a6d0321054e4f90))
+
+
+### BREAKING CHANGES
+
+* **release:** as the merge wasn't marked as one successfully…
+
 # [1.1.0-develop.1](https://github.com/sebbo2002/node-pyatv/compare/v1.0.0...v1.1.0-develop.1) (2020-11-13)
 
 

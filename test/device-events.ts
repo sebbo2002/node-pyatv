@@ -256,4 +256,173 @@ describe('NodePyATVDeviceEvents', function () {
             device.removeAllListeners('update');
         });
     });
+
+    describe('emit()', function () {
+        it('should work', function (done) {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: createFakeSpawn(cp => {
+                    cp.onStdIn(() => cp.end());
+                })
+            });
+            const event = new NodePyATVDeviceEvent({
+                key: 'dateTime',
+                old: 'foo',
+                new: 'bar',
+                device
+            });
+
+            let executions = 0;
+            device.once('test', (e) => {
+                executions++;
+                assert.strictEqual(e, event);
+                assert.strictEqual(executions, 1);
+                done();
+            });
+
+            device.emit('test', event);
+        });
+    });
+
+    describe('eventNames()', function () {
+        it('should work', function () {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: createFakeSpawn(cp => {
+                    cp.onStdIn(() => cp.end());
+                })
+            });
+
+            const listener = () => {
+                // ignore
+            };
+
+            device.on('test', listener);
+            assert.deepStrictEqual(device.eventNames(), ['test']);
+            device.off('test', listener);
+        });
+    });
+
+    describe('getMaxListeners()', function () {
+        it('should work', function () {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: createFakeSpawn(cp => {
+                    cp.onStdIn(() => cp.end());
+                })
+            });
+
+            const result = device.getMaxListeners();
+            assert.ok(typeof result, 'number');
+            assert.ok(result >= 10);
+        });
+    });
+
+    describe('listenerCount()', function () {
+        it('should work', function () {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: createFakeSpawn(cp => {
+                    cp.onStdIn(() => cp.end());
+                })
+            });
+
+            const listener = () => {
+                // ignore
+            };
+
+            assert.deepStrictEqual(device.listenerCount('test'), 0);
+            device.on('test', listener);
+            assert.deepStrictEqual(device.listenerCount('test'), 1);
+            device.off('test', listener);
+        });
+    });
+
+    describe('listeners()', function () {
+        it('should work', function () {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: createFakeSpawn(cp => {
+                    cp.onStdIn(() => cp.end());
+                })
+            });
+
+            const listener = () => {
+                // ignore
+            };
+
+            assert.deepStrictEqual(device.listeners('test').length, 0);
+            device.on('test', listener);
+            assert.deepStrictEqual(device.listeners('test').length, 1);
+            assert.deepStrictEqual(device.listeners('test')[0], listener);
+            device.off('test', listener);
+        });
+    });
+
+    describe('prependListener()', function () {
+        it('should work', function (done) {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: createFakeSpawn(cp => {
+                    cp.onStdIn(() => cp.end());
+                    cp.stdout({
+                        result: 'success',
+                        title: 'My Movie'
+                    });
+                })
+            });
+
+            const listener = () => {
+                device.removeAllListeners('update');
+                done();
+            };
+            device.prependListener('update', listener);
+        });
+    });
+
+    describe('prependOnceListener()', function () {
+        it('should work', function (done) {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: createFakeSpawn(cp => {
+                    cp.onStdIn(() => cp.end());
+                    cp.stdout({
+                        result: 'success',
+                        title: 'My Movie'
+                    });
+                })
+            });
+
+            device.prependOnceListener('update', () => done());
+        });
+    });
+
+    describe('rawListeners()', function () {
+        it('should work', function () {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: createFakeSpawn(cp => {
+                    cp.onStdIn(() => cp.end());
+                })
+            });
+
+            const listener = () => {
+                // ignore
+            };
+
+            assert.deepStrictEqual(device.rawListeners('test').length, 0);
+            device.on('test', listener);
+            assert.deepStrictEqual(device.rawListeners('test').length, 1);
+            assert.deepStrictEqual(device.rawListeners('test')[0], listener);
+            device.off('test', listener);
+        });
+    });
 });

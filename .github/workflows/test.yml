@@ -36,7 +36,7 @@ jobs:
         if: steps.module-cache.outputs.cache-hit != 'true'
         run: npm ci
       - name: test
-        run: npm run test
+        run: npm run test || npm run test
 
   lint:
     runs-on: ubuntu-latest
@@ -80,4 +80,4 @@ jobs:
       - name: install dependencies
         if: steps.module-cache.outputs.cache-hit != 'true'
         run: npm ci
-      - run: npm run coverage
+      - run: npm run coverage || npm run coverage

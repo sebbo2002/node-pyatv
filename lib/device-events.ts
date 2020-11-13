@@ -97,14 +97,17 @@ export default class NodePyATVDeviceEvents extends EventEmitter {
             clearTimeout(this.timeout);
             this.timeout = undefined;
         }
-        if(this.listenerState === NodePyATVListenerState.stopped && this.listenerCount() > 0) {
+        else if(this.listenerState === NodePyATVListenerState.stopped && this.listenerCount() > 0) {
             const id = addRequestId();
             debug(id, `Start listeing to events from device ${this.options.name}`, this.options);
 
             this.startListening(id);
             removeRequestId(id);
         }
-        else if(this.listenerState === NodePyATVListenerState.started && this.listenerCount() === 0) {
+        else if(
+            [NodePyATVListenerState.starting, NodePyATVListenerState.started].includes(this.listenerState) &&
+            this.listenerCount() === 0
+        ) {
             const id = addRequestId();
             debug(id, `Stop listening to events from device ${this.options.name}`, this.options);
 
@@ -195,7 +198,10 @@ export default class NodePyATVDeviceEvents extends EventEmitter {
     }
 
     protected async stopListening(reqId: string): Promise<void> {
-        if(this.listenerState !== NodePyATVListenerState.started) {
+        if(
+            this.listenerState !== NodePyATVListenerState.starting &&
+            this.listenerState !== NodePyATVListenerState.started
+        ) {
             return;
         }
 
@@ -208,11 +214,15 @@ export default class NodePyATVDeviceEvents extends EventEmitter {
         }
 
         if(this.pyatv.stdin) {
-            debug(reqId, 'Press enter to close atvscript…', this.options);
+            debug(reqId, 'Pressing enter to close atvscript…', this.options);
             this.pyatv.stdin.write('\n');
+
+            await new Promise(cb => this.timeout = setTimeout(cb, 250));
         }
 
-        await new Promise(cb => this.timeout = setTimeout(cb, 50)); // @todo kill process
+        if(this.listenerState === NodePyATVListenerState.stopping && this.pyatv) {
+            this.pyatv.kill();
+        }
 
         this.listenerState = NodePyATVListenerState.stopped;
         return;
@@ -231,10 +241,17 @@ export default class NodePyATVDeviceEvents extends EventEmitter {
     }
 
     once(event: string | symbol, listener: (event: NodePyATVDeviceEvent) => void): this {
-        super.once(event, listener);
+        super.once(event, (event: NodePyATVDeviceEvent) => {
+            listener(event);
+            setTimeout(() => this.checkListener(), 0);
+        });
         this.checkListener();
+        return this;
+    }
 
-        super.once(event, () => this.checkListener());
+    prependListener(event: string | symbol, listener: (event: NodePyATVDeviceEvent) => void): this {
+        super.prependListener(event, listener);
+        this.checkListener();
         return this;
     }
 

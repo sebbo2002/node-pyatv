@@ -44,6 +44,14 @@ export class FakeChildProcess extends EventEmitter {
         const controller = new FakeChildProcessController(this);
         setTimeout(() => callback(controller), 0);
     }
+
+    kill() {
+        this.emit('close', 0);
+        if(this.timeout !== undefined) {
+            clearTimeout(this.timeout);
+            this.timeout = undefined;
+        }
+    }
 }
 
 export class FakeChildProcessController {

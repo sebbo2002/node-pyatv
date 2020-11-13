@@ -22,9 +22,9 @@
     ],
     "all": true,
     "instrument": true,
-    "branches": 75,
-    "lines": 80,
+    "branches": 80,
+    "lines": 92,
     "functions": 90,
-    "statements": 90,
+    "statements": 92,
     "per-file": true
 }

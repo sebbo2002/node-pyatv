@@ -1,7 +1,7 @@
 .DS_Store
-/ical-generator.sublime-workspace
-/ical-generator.sublime-project
 /node_modules/
-/test-result/
+/dist
+/coverage
 /.idea/
 /.nyc_output
+/test-result

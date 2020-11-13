@@ -1,7 +1,7 @@
 .DS_Store
-/node_modules/
-/coverage/
-
+/node_modules
+/dist
+/coverage
 /.idea/
-/test-result
 /.nyc_output
+/test-result

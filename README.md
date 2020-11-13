@@ -1,14 +1,15 @@
 # node-pyatv
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
-![Status](https://git-badges.sebbo.net/98/master/build)
+[![Status](https://img.shields.io/github/workflow/status/sebbo2002/node-pyatv/test/main?style=flat-square)](https://github.com/sebbo2002/node-pyatv/actions)
 
 A lightweight wrapper around pyatv's which also supports realtime notifications.
 
 
 ## ☁ Installation
 
-Before you use `node-pyatv` you need to install pyatv and unbuffer. This module woun't do this for you. See FAQ section for installation tips.
+Before you use `node-pyatv` you need to install pyatv. This module woun't do this for you. Run `atvremote --version` to
+double check your installation. See FAQ section for installation tips.
 
 To install the javascript module via npm just run:
 
@@ -17,232 +18,61 @@ To install the javascript module via npm just run:
 
 ## ⚒ Quick Start
 
-```javascript
-const pyatv = require('@sebbo2002/node-pyatv');
-pyatv
-    .scan()
-    .then(results => {
-        results.forEach(atv => {
-            const listener = atv.push();
+```typescript
+import pyatv, {NodePyATVDeviceEvent} from '@sebbo2002/node-pyatv';
 
-            listener.on('error', error => {
-                console.log(`Listener Error for ${atv.name}: ${error}`);
-            });
-            listener.on('close', () => {
-                console.log(`Listener for ${atv.name} closed`);
-            });
+const devices = await pyatv.find(/*{debug: true}*/);
+if (!devices.length) {
+    throw new Error('Oh no.');
+}
 
-            setTimeout(() => {
-                listener.close();
-            }, 60000);
-        });
-    })
-    .catch(error => {
-        console.log('Error during scan:', error);
-    });
+const device = devices[0];
+
+// request current title
+console.log(await device.getTitle());
+
+// request full state
+console.log(await device.getState());
+
+// subscribe to events
+device.on('update:deviceState', (event: NodePyATVDeviceEvent | Error) => {
+    if(event instanceof Error) return;
+    console.log(`Current device state is ${event.value}`);
+});
 ```
 
 
 ## 📑 API
 
-### static scan([_Object_ options])
-
-Scanns for devices on your network.
-
-```javascript
-const pyatv = require('@sebbo2002/node-pyatv');
-
-pyatv
-    .scan({debug: true})
-    .then(results => {
-        results.forEach(atv =>
-            console.log(atv.toString())
-        );
-    })
-    .catch(error => {
-        console.log(error);
-    });
-```
-
-#### Options
-<table>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Default</th>
-            <th>Required</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>timeout</td>
-            <td>Timeout in seconds for scanning</td>
-            <td>Nothing, atvremove's default is 3</td>
-            <td>No</td>
-        </tr>
-    </tbody>
-</table>
-
-
-
-### static version([_Object_ options])
-
-Returns relevant version information.
-
-```javascript
-const pyatv = require('@sebbo2002/node-pyatv');
-
-pyatv
-    .version({debug: false})
-    .then(version => {
-        console.log(`pyatv version: ${version.pyatv}`);
-        console.log(`node-pyatv version: ${version.module}`);
-    })
-    .catch(error => {
-        console.log(error);
-    });
-```
-
-
-### static connect(address, loginId, [_Object_ options])
-
-Returns a apple tv instance with the given credentials.
-
-```javascript
-const pyatv = require('@sebbo2002/node-pyatv');
-const atv = pyatv.connect('192.168.2.1', '*****************************');
-
-atv.deviceId().then(id => console.log);
-```
-
-
-
-### Key Presses
-
-```javascript
-const pyatv = require('@sebbo2002/node-pyatv');
-const atv = pyatv.connect();
-
-/*
- * - up()
- * - right()
- * - down()
- * - left()
- * - menu()
- * - next()
- * - pause()
- * - play()
- * - previous()
- * - stop()
- * - topMenu()
- * - select()
- */
-
-atv.menu()
-    .catch(err => {});
-```
-
-
-### artworkUrl()
-
-```javascript
-const pyatv = require('@sebbo2002/node-pyatv');
-const atv = pyatv.connect();
-
-atv.artworkUrl()
-    .then(url => console.log(`Artwork URL: ${url}`))
-    .catch(err => {});
-```
-
-
-### deviceId()
-
-```javascript
-const pyatv = require('@sebbo2002/node-pyatv');
-const atv = pyatv.connect();
-
-atv.deviceId()
-    .then(url => console.log(`Device ID: ${url}`))
-    .catch(err => {});
-```
-
-
-### playing()
-
-```javascript
-const pyatv = require('@sebbo2002/node-pyatv');
-const atv = pyatv.connect();
-
-atv.playing()
-    .then(playing => console.log(playing))
-    .catch(err => {});
-
-/*
- * Example Response:
- * {
- *     mediaType: 'video',
- *     playState: 'playing',
- *     title: '',
- *     position: 658,
- *     totalTime: 2591,
- *     repeat: false,
- *     shuffle: false
- * }
- */
-```
-
-
-### push()
-
-Listen for push updates
-
-```javascript
-const pyatv = require('@sebbo2002/node-pyatv');
-pyatv
-    .scan({debug: true})
-    .then(results => {
-        results.forEach(atv => {
-            const listener = atv.push();
-
-            listener.on('state', playing => {
-                console.log(playing);
-            });
-            listener.on('error', error => {
-                console.log(`Listener Error for ${atv.name}: ${error}`);
-            });
-            listener.on('close', () => {
-                console.log(`Listener for ${atv.name} closed`);
-            });
-
-            setTimeout(() => {
-                listener.close();
-            }, 30000);
-        });
-    })
-    .catch(error => {
-        console.log('Error during scan:', error);
-    });
-```
+_@todo_
 
 
 
 ## 🤨 FAQ
 
-#### How to install pyatv and unbuffer on macOS
+#### How to install pyatv
 
 ```bash
 pip3 install pyatv
-
-# homebrew required
-brew install expect
 ```
 
 
 #### How to debug things
 
-You can pass `"debug": true` for any command called. Some debug information is then printed via console.log. Additionaly 
-you can pass an alternative function to process debugs logs within the `log` option.
+You can pass `"debug": true` for any command called. Some debug information is then printed via console.log. Additionaly
+you can pass a function to process debugs logs.
+
+
+#### Why are some tests skipped?
+
+Some unit tests require a responding apple tv to pass. These tests are disabled by default. You can set the environment
+variable `ENABLE_INTEGRATION=1` to enable them.
+
+
+#### Is this secure?
+
+Defenitely not. For example, there's no escaping for parameters passed to pyatv. So be sure to double check the data you
+pass to this library, otherwise it may be possible to run code on your machine.
 
 
 ## Copyright and license

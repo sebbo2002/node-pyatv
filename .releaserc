@@ -32,10 +32,9 @@
             "changelogFile": "CHANGELOG.md"
         }],
         "@semantic-release/npm",
-        "semantic-release-npm-deprecate-old-versions",
         "@semantic-release/github",
         ["@semantic-release/git", {
-            "assets": ["CHANGELOG.md", "package.json"],
+            "assets": ["CHANGELOG.md", "package.json", "package-lock.json"],
             "message": "chore(release): :bookmark: ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
         }]
     ]

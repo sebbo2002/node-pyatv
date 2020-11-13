@@ -255,10 +255,6 @@ export default class NodePyATVDeviceEvents extends EventEmitter {
         return this;
     }
 
-    // @todo prependListener
-    // @todo prependOnceListener
-    // @todo rawListeners
-
     off(event: string | symbol, listener: (event: NodePyATVDeviceEvent) => void): this {
         super.off(event, listener);
         this.checkListener();

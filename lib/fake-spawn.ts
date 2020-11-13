@@ -45,7 +45,7 @@ export class FakeChildProcess extends EventEmitter {
         setTimeout(() => callback(controller), 0);
     }
 
-    kill() {
+    kill(): void {
         this.emit('close', 0);
         if(this.timeout !== undefined) {
             clearTimeout(this.timeout);

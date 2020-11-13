@@ -425,4 +425,28 @@ describe('NodePyATVDeviceEvents', function () {
             device.off('test', listener);
         });
     });
+
+    describe('removeListener()', function () {
+        it('should work without any exceptions', async function () {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: createFakeSpawn(cp => {
+                    cp.onStdIn(() => cp.end());
+                    cp.stdout({
+                        result: 'success',
+                        title: 'My Movie'
+                    });
+                })
+            });
+
+            const listener = () => {
+                // empty listener
+            };
+            device.addListener('update', listener);
+            assert.deepStrictEqual(device.listenerCount('update'), 1);
+            device.removeListener('update', listener);
+            assert.deepStrictEqual(device.listenerCount('update'), 0);
+        });
+    });
 });

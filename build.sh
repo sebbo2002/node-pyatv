@@ -2,10 +2,10 @@
 
 npx tsc
 
-branch=$(git rev-parse --abbrev-ref HEAD)
+branch=${GITHUB_REF#refs/heads/}
 folder="./gh-pages/${branch}"
 if [ $branch != "develop" ] && [ $branch != "main" ]; then
-    echo "Skip documentation as branch is not develop and not main.";
+    echo "Skip documentation as branch is not develop and not main (is: ${branch}).";
     exit 0;
 fi;
 

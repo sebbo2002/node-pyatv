@@ -1,3 +1,10 @@
+# [2.0.0-develop.4](https://github.com/sebbo2002/node-pyatv/compare/v2.0.0-develop.3...v2.0.0-develop.4) (2020-11-15)
+
+
+### Bug Fixes
+
+* **CI:** Fix gh-pages branch name ([f2423ca](https://github.com/sebbo2002/node-pyatv/commit/f2423cad8b384f1d1b51d7ec13b2f01253238d10))
+
 # [2.0.0-develop.3](https://github.com/sebbo2002/node-pyatv/compare/v2.0.0-develop.2...v2.0.0-develop.3) (2020-11-15)
 
 

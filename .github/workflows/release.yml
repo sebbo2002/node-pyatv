@@ -107,7 +107,7 @@ jobs:
         run: |
           mkdir -p ./gh-pages
           git config pull.rebase false
-          NPM_TOKEN=$NODE_AUTH_TOKEN npx semantic-release
+          NPM_TOKEN=$NODE_AUTH_TOKEN BRANCH=${GITHUB_REF#refs/heads/} npx semantic-release
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           GH_TOKEN: ${{ secrets.GH_TOKEN }}

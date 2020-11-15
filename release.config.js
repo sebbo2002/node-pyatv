@@ -36,7 +36,7 @@ if(process.env.BRANCH === 'main') {
 if(process.env.BRANCH === 'main' || process.env.BRANCH === 'develop') {
     plugins.push(['@qiwi/semantic-release-gh-pages-plugin', {
         'msg': 'docs: Updated for <%= nextRelease.gitTag %>',
-        'src': './gh-pages',
+        'src': './doc',
         'dst': `./${process.env.BRANCH}`,
         'pullTagsBranch': 'main'
     }]);

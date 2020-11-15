@@ -29,7 +29,7 @@
     "@typescript-eslint/eslint-plugin": "^4.6.0",
     "@typescript-eslint/parser": "^4.6.0",
     "eslint": "^7.12.1",
-    "mocha": "^8.2.0",
+    "mocha": "^8.2.1",
     "mochawesome": "^6.2.1",
     "nyc": "^15.1.0",
     "semantic-release": "^17.2.2",

@@ -1,7 +1,8 @@
 # node-pyatv
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
-[![Status](https://img.shields.io/github/workflow/status/sebbo2002/node-pyatv/test/main?style=flat-square)](https://github.com/sebbo2002/node-pyatv/actions)
+[![Unit Tests](https://img.shields.io/github/workflow/status/sebbo2002/node-pyatv/Release/main?style=flat-square)](https://github.com/sebbo2002/node-pyatv/actions)
+![Dependencies](https://img.shields.io/depfu/sebbo2002/node-pyatv?style=flat-square)
 
 A lightweight wrapper around pyatv's which also supports realtime notifications.
 

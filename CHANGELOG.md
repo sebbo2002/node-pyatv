@@ -1,3 +1,10 @@
+# [2.0.0-develop.5](https://github.com/sebbo2002/node-pyatv/compare/v2.0.0-develop.4...v2.0.0-develop.5) (2020-11-15)
+
+
+### Bug Fixes
+
+* **CI:** Fix docs branch filter for release ([71b6879](https://github.com/sebbo2002/node-pyatv/commit/71b68797b89e411470bb5f3afdbb30d8a46e423c))
+
 # [2.0.0-develop.4](https://github.com/sebbo2002/node-pyatv/compare/v2.0.0-develop.3...v2.0.0-develop.4) (2020-11-15)
 
 

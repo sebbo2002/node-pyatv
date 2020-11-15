@@ -1,6 +1,9 @@
 import {SpawnOptions} from 'child_process';
 import {EventEmitter} from 'events';
 
+/**
+ * @internal
+ */
 export function createFakeSpawn(callback: ((cp: FakeChildProcessController) => void)): (
     command: string,
     args: ReadonlyArray<string>,
@@ -14,12 +17,18 @@ export function createFakeSpawn(callback: ((cp: FakeChildProcessController) => v
     );
 }
 
+/**
+ * @internal
+ */
 export class FakeChildProcessStdIn extends EventEmitter {
     write (data: string): void {
         this.emit('data', Buffer.from(data));
     }
 }
 
+/**
+ * @internal
+ */
 export class FakeChildProcess extends EventEmitter {
     cmd: string;
     args: ReadonlyArray<string>;
@@ -54,6 +63,9 @@ export class FakeChildProcess extends EventEmitter {
     }
 }
 
+/**
+ * @internal
+ */
 export class FakeChildProcessController {
     _cp: FakeChildProcess;
     _code: number | null;

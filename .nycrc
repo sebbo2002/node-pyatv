@@ -11,7 +11,7 @@
         "coverage/**",
         "node_modules/**"
     ],
-    "report-dir": "./dist/coverage/",
+    "report-dir": "./doc/coverage/",
     "temp-directory": "./.nyc_output",
     "sourceMap": true,
     "reporter": [

@@ -1,7 +1,7 @@
 .DS_Store
 /node_modules
 /dist
-/coverage
+/doc
+/gh-pages
 /.idea/
 /.nyc_output
-/test-result

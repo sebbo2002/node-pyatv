@@ -15,6 +15,7 @@
     "node": ">=10.0.0"
   },
   "devDependencies": {
+    "@qiwi/semantic-release-gh-pages-plugin": "^5.0.2",
     "@semantic-release/changelog": "^5.0.1",
     "@semantic-release/commit-analyzer": "^8.0.1",
     "@semantic-release/git": "^9.0.0",
@@ -28,26 +29,29 @@
     "@typescript-eslint/parser": "^4.6.0",
     "eslint": "^7.12.1",
     "mocha": "^8.2.0",
+    "mochawesome": "^6.2.1",
     "nyc": "^15.1.0",
     "semantic-release": "^17.2.2",
     "ts-node": "^9.0.0",
+    "typedoc": "^0.19.2",
     "typescript": "^4.0.5"
   },
   "peerDependencies": {
     "@types/node": ">= 10.0.0"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "./build.sh",
     "example": "node ./dist/examples/push.js",
     "lint": "eslint . --ext .ts",
     "test": "mocha",
     "coverage": "nyc mocha",
     "check": "./check.sh",
+    "docs": "./build.sh",
     "postinstall": "./check.sh",
-    "prepublish": "tsc"
+    "prepublish": "./build.sh"
   },
   "preferGlobal": false,
-  "main": "./dist/lib/instance.js",
+  "main": "./dist/lib/index.js",
   "dependencies": {
     "semver": "^7.3.2"
   },

@@ -16,6 +16,9 @@ import NodePyATVDeviceEvent from './device-event';
 import {addRequestId, debug, execute, getParamters, parseState, removeRequestId} from './tools';
 import {FakeChildProcess} from './fake-spawn';
 
+/**
+ * @internal
+ */
 export default class NodePyATVDeviceEvents extends EventEmitter {
     private readonly options: NodePyATVDeviceOptions;
     private readonly state: NodePyATVState;

@@ -13,9 +13,23 @@ import {
 import {addRequestId, debug, getParamters, removeRequestId, request} from './tools';
 import NodePyATVDevice from './device';
 
+/**
+ * Default class exported by `@sebbo2002/node-pyatv`. Use [[find]] to scan for devices in your local network. Use
+ * [[device]] to connect to a known device by passing (at least) it's name and IP.
+ *
+ * ```typescript
+ * import pyatv from '@sebbo2002/node-pyatv';
+ * ```
+ */
 export default class NodePyATVInstance {
     private readonly options: NodePyATVInstanceOptions = {};
 
+    /**
+     * Checks if pyatv is installed and ready to be used.
+     * Will throw an error if not.
+     *
+     * @param options
+     */
     public static async check(options: NodePyATVInstanceOptions = {}): Promise<void> {
         const versions = await this.version(options);
         if (!versions.pyatv) {
@@ -33,6 +47,12 @@ export default class NodePyATVInstance {
         }
     }
 
+    /**
+     * Resolves with the version of pyatv and of the module itself.
+     * If a value can't be found, null is returned instead.
+     *
+     * @param options
+     */
     public static async version(options: NodePyATVInstanceOptions = {}): Promise<NodePyATVVersionResponse> {
         const id = addRequestId();
         let pyatv = null;
@@ -72,6 +92,19 @@ export default class NodePyATVInstance {
         };
     }
 
+    /**
+     * Scan the network for Apple TVs by using pyatv's atvscript. See [[NodePyATVFindAndInstanceOptions]]
+     * for the options allowed. Use the `host` / `hosts` attribute to filter by IP addresses. Resolves with
+     * an array of [[NodePyATVDevice]].
+     *
+     * ```typescript
+     * import pyatv from '@sebbo2002/node-pyatv';
+     * const devices = await pyatv.find();
+     * console.log(devices);
+     * ```
+     *
+     * @param options
+     */
     public static async find(options: NodePyATVFindAndInstanceOptions = {}): Promise<NodePyATVDevice[]> {
         const id = addRequestId();
         const parameters = getParamters(options);
@@ -93,45 +126,77 @@ export default class NodePyATVInstance {
         return objects;
     }
 
+    /**
+     * Create a [[NodePyATVDevice]] to query the state and control it.
+     * At least `host` and `name` are required.
+     *
+     * @param options
+     */
     public static device(options: NodePyATVDeviceOptions): NodePyATVDevice {
         return new NodePyATVDevice(options);
     }
 
+    /**
+     * Use this to apply [[NodePyATVInstanceOptions]]
+     * (e.g. debug log method) to all further requests
+     *
+     * ```typescript
+     * import pyatv from '@sebbo2002/node-pyatv';
+     * const myPyatv = new pyatv({debug: true});
+     * const devices = myPyatv.find();
+     * console.log(devices);
+     * ```
+     * @param options
+     */
     public constructor(options: NodePyATVInstanceOptions = {}) {
         this.options = Object.assign({}, options);
     }
 
+    /**
+     * Checks if pyatv is installed and ready to be used.
+     * Will throw an error if not.
+     *
+     * @param options
+     */
     public async check(options: NodePyATVInstanceOptions = {}): Promise<void> {
         return NodePyATVInstance.check(Object.assign({}, this.options, options));
     }
 
+    /**
+     * Resolves with the version of pyatv and of the module itself.
+     * If a value can't be found, null is returned instead.
+     *
+     * @param options
+     */
     public async version(options: NodePyATVInstanceOptions = {}): Promise<NodePyATVVersionResponse> {
         return NodePyATVInstance.version(Object.assign({}, this.options, options));
     }
 
+    /**
+     * Scan the network for Apple TVs by using pyatv's atvscript. See [[NodePyATVFindAndInstanceOptions]]
+     * for the options allowed. Use the `host` / `hosts` attribute to filter by IP addresses. Resolves with
+     * an array of [[NodePyATVDevice]].
+     *
+     * ```typescript
+     * import pyatv from '@sebbo2002/node-pyatv';
+     * const myPyATV = new pyatv({debug: true});
+     * const devices = await myPyATV.find();
+     * console.log(devices);
+     * ```
+     *
+     * @param options
+     */
     public async find(options: NodePyATVFindAndInstanceOptions = {}): Promise<NodePyATVDevice[]> {
         return NodePyATVInstance.find(Object.assign({}, this.options, options));
     }
 
+    /**
+     * Create a [[NodePyATVDevice]] to query the state and control it.
+     * At least `host` and `name` are required.
+     *
+     * @param options
+     */
     public device(options: NodePyATVDeviceOptions): NodePyATVDevice {
         return NodePyATVInstance.device(Object.assign({}, this.options, options));
     }
 }
-
-export {
-    NodePyATVProtocol,
-    NodePyATVMediaType,
-    NodePyATVDeviceState,
-    NodePyATVRepeatState,
-    NodePyATVShuffleState,
-    NodePyATVKeys,
-    NodePyATVInstanceOptions,
-    NodePyATVVersionResponse,
-    NodePyATVFindOptions,
-    NodePyATVFindAndInstanceOptions,
-    NodePyATVDeviceOptions,
-    NodePyATVGetStateOptions,
-    NodePyATVState
-} from './types';
-
-export {default as NodePyATVDeviceEvent} from './device-event';

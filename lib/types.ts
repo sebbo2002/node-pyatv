@@ -65,6 +65,9 @@ export enum NodePyATVKeys {
     wakeup = 'wakeup'
 }
 
+/**
+ * @internal
+ */
 export enum NodePyATVInternalKeys {
     down = 'down',
     home = 'home',
@@ -99,6 +102,9 @@ export enum NodePyATVListenerState {
 
 export type NodePyATVStateIndex = ('dateTime' | 'hash' | 'mediaType' | 'deviceState' | 'title' | 'artist' | 'album' |
     'genre' | 'totalTime' | 'position' | 'shuffle' | 'repeat' | 'app' | 'appId');
+
+export type NodePyATVEventValueType = (string | number | NodePyATVMediaType | NodePyATVDeviceState |
+    NodePyATVShuffleState | NodePyATVRepeatState);
 
 
 export interface NodePyATVInstanceOptions {
@@ -137,6 +143,9 @@ export interface NodePyATVGetStateOptions {
     maxAge?: number;
 }
 
+/**
+ * @internal
+ */
 export interface NodePyATVInternalState {
     result?: string | unknown,
     datetime?: string | unknown,

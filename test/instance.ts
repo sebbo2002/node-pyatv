@@ -10,7 +10,7 @@ import NodePyATVInstance, {
     NodePyATVRepeatState,
     NodePyATVShuffleState,
     NodePyATVKeys
-} from '../lib/instance';
+} from '../lib/index';
 
 describe('NodePyATVInstance', function () {
     describe('static version()', function () {

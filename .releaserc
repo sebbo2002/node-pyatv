@@ -13,7 +13,8 @@
             "releaseRules": [
                 {"type": "refactor", "release": "patch"},
                 {"type": "style", "release": "patch"},
-                {"type": "build", "scope": "deps", "release": "patch"}
+                {"type": "build", "scope": "deps", "release": "patch"},
+                {"type": "docs", "release": "patch"}
             ],
             "parserOpts": {
                 "noteKeywords": ["BREAKING CHANGE", "BREAKING CHANGES", "BREAKING"]
@@ -36,6 +37,11 @@
         ["@semantic-release/git", {
             "assets": ["CHANGELOG.md", "package.json", "package-lock.json"],
             "message": "chore(release): :bookmark: ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+        }],
+        ["@qiwi/semantic-release-gh-pages-plugin", {
+            "msg": "docs: Updated for <%= nextRelease.gitTag %>",
+            "src": "./gh-pages",
+            "branch": "docs"
         }]
     ]
 }

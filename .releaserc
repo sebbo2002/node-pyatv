@@ -40,7 +40,8 @@
         }],
         ["@qiwi/semantic-release-gh-pages-plugin", {
             "msg": "docs: Updated for <%= nextRelease.gitTag %>",
-            "src": "./gh-pages"
+            "src": "./gh-pages",
+            "pullTagsBranch": "main"
         }]
     ]
 }

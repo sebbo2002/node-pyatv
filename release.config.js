@@ -21,7 +21,7 @@ const plugins = [
         }
     }],
     ['@semantic-release/exec', {
-        'prepareCmd': 'BRANCH=${options.branch} ./build.sh'
+        'prepareCmd': './build.sh'
     }],
     ['@semantic-release/changelog', {
         'changelogFile': 'CHANGELOG.md'

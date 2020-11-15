@@ -1,6 +1,11 @@
-.DS_Store
+/.dockerignore
+/Dockerfile
 /node_modules/
+/dist/test/
+/release.config.js
+/.eslintrc.json
 /doc
 /.idea/
+/.github
 /.nyc_output
 /test-result

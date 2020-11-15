@@ -9,33 +9,50 @@
   },
   "repository": {
     "type": "git",
-    "url": "http://github.com/sebbo2002/node-pyatv.git"
+    "url": "https://github.com/sebbo2002/node-pyatv.git"
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=10.0.0"
   },
   "devDependencies": {
-    "eslint": "^5.12.0",
-    "mocha": "^5.2.0",
-    "mochawesome": "^3.1.1",
-    "npm-check": "^5.9.0",
-    "nyc": "^13.1.0"
+    "@qiwi/semantic-release-gh-pages-plugin": "^5.0.2",
+    "@semantic-release/changelog": "^5.0.1",
+    "@semantic-release/commit-analyzer": "^8.0.1",
+    "@semantic-release/exec": "^5.0.0",
+    "@semantic-release/git": "^9.0.0",
+    "@semantic-release/github": "^7.1.2",
+    "@semantic-release/npm": "^7.0.6",
+    "@semantic-release/release-notes-generator": "^9.0.1",
+    "@types/mocha": "^8.0.3",
+    "@types/node": "^14.14.7",
+    "@types/semver": "^7.3.4",
+    "@typescript-eslint/eslint-plugin": "^4.6.0",
+    "@typescript-eslint/parser": "^4.6.0",
+    "eslint": "^7.13.0",
+    "mocha": "^8.2.1",
+    "mochawesome": "^6.2.1",
+    "nyc": "^15.1.0",
+    "semantic-release": "^17.2.2",
+    "ts-node": "^9.0.0",
+    "typedoc": "^0.19.2",
+    "typescript": "^4.0.5"
   },
   "peerDependencies": {
-    "@types/node": ">= 8.0.0"
+    "@types/node": ">= 10.0.0"
   },
   "scripts": {
-    "all": "npm run check && npm run tests",
-    "check": "npm run check:eslint && npm run check:npm && npm run check:nsp",
-    "check:eslint": "eslint ./examples ./src ./test",
-    "check:quick": "npm run check:eslint",
-    "check:nsp": "npm_config_audit_level=moderate npm audit",
-    "check:npm": "npm-check -s",
-    "tests": "npm run test && npm run coverage",
-    "test": "mocha -c --reporter mochawesome --reporter-options reportDir=test-result/test,reportFilename=report,json=false ./test/*.js",
-    "coverage": "nyc --reporter=html --reporter=text --report-dir ./test-result/coverage --check-coverage mocha -c ./test/*.js",
-    "bump": "jq -M \".version=\\\"$CI_COMMIT_TAG\\\"\" package.json|sponge package.json"
+    "build": "./build.sh",
+    "example": "node ./dist/examples/push.js",
+    "lint": "eslint . --ext .ts",
+    "test": "mocha",
+    "coverage": "nyc mocha",
+    "check": "./check.sh",
+    "postinstall": "./check.sh"
   },
   "preferGlobal": false,
-  "main": "./src/index.js"
+  "main": "./dist/lib/index.js",
+  "dependencies": {
+    "semver": "^7.3.2"
+  },
+  "version": "2.0.0-develop.5"
 }

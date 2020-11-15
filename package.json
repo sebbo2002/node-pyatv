@@ -48,7 +48,7 @@
     "check": "./check.sh",
     "docs": "./build.sh",
     "postinstall": "./check.sh",
-    "prepublish": "./build.sh"
+    "prepare": "./build.sh"
   },
   "preferGlobal": false,
   "main": "./dist/lib/index.js",

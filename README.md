@@ -7,6 +7,14 @@
 A lightweight wrapper around pyatv's which also supports realtime notifications.
 
 
+## 📝 Content
+- [Installation](#-installation)
+- [Quick Start](#-quick-start)
+- [API Reference](#-api-reference)
+- [Changelog](https://github.com/sebbo2002/node-pyatv/blob/main/CHANGELOG.md)
+- [FAQ](#-faq)
+
+
 ## ☁ Installation
 
 Before you use `node-pyatv` you need to install pyatv. This module woun't do this for you. Run `atvremote --version` to
@@ -43,10 +51,15 @@ device.on('update:deviceState', (event: NodePyATVDeviceEvent | Error) => {
 ```
 
 
-## 📑 API
+## 📑 API Reference
 
-_@todo_
+The API documentation is automatically generated from the code comments and can be found
+[here](https://sebbo2002.github.io/node-pyatv/main/reference/classes/nodepyatvinstance.html).
 
+
+## 📑 Changelog
+
+Please have a look at [CHANGELOG.md](https://github.com/sebbo2002/node-pyatv/blob/main/CHANGELOG.md) to see the changelog.
 
 
 ## 🤨 FAQ

@@ -20,6 +20,9 @@ const plugins = [
             'commitsSort': ['subject', 'scope']
         }
     }],
+    ['@semantic-release/exec', {
+        'prepareCmd': 'BRANCH=${options.branch} ./build.sh'
+    }],
     ['@semantic-release/changelog', {
         'changelogFile': 'CHANGELOG.md'
     }],
@@ -27,13 +30,13 @@ const plugins = [
     '@semantic-release/github'
 ];
 
-if(process.env.BRANCH === 'main') {
+if (process.env.BRANCH === 'main') {
     plugins.push(['@semantic-release/git', {
         'assets': ['CHANGELOG.md', 'package.json', 'package-lock.json'],
         'message': 'chore(release): :bookmark: ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}'
     }]);
 }
-if(process.env.BRANCH === 'main' || process.env.BRANCH === 'develop') {
+if (process.env.BRANCH === 'main' || process.env.BRANCH === 'develop') {
     plugins.push(['@qiwi/semantic-release-gh-pages-plugin', {
         'msg': 'docs: Updated for <%= nextRelease.gitTag %>',
         'src': './doc',

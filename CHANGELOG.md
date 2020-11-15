@@ -1,3 +1,5 @@
+# [2.0.0-develop.2](https://github.com/sebbo2002/node-pyatv/compare/v2.0.0-develop.1...v2.0.0-develop.2) (2020-11-15)
+
 # [2.0.0-develop.1](https://github.com/sebbo2002/node-pyatv/compare/v1.1.0-develop.1...v2.0.0-develop.1) (2020-11-13)
 
 

@@ -30,7 +30,7 @@ import pyatv, {NodePyATVDeviceEvent} from '../lib/index';
             device.off('update', updateListener);
             device.off('error', errorListener);
             process.stdin.off('data', keyPressListener);
-            resolve();
+            resolve(undefined);
         };
 
         device.on('update', updateListener);

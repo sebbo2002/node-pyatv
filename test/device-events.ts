@@ -28,7 +28,7 @@ describe('NodePyATVDeviceEvents', function () {
                     assert.strictEqual(event.newValue, 'My Movie');
                     assert.strictEqual(event.value, 'My Movie');
                     assert.deepStrictEqual(event.device, device);
-                    cb();
+                    cb(undefined);
                 });
             });
         });
@@ -53,7 +53,7 @@ describe('NodePyATVDeviceEvents', function () {
                     assert.strictEqual(event.newValue, 'My Movie');
                     assert.strictEqual(event.value, 'My Movie');
                     assert.deepStrictEqual(event.device, device);
-                    cb();
+                    cb(undefined);
                 });
             });
         });
@@ -75,13 +75,13 @@ describe('NodePyATVDeviceEvents', function () {
                 new Promise(cb => {
                     device.once('update', () => {
                         sort.push('update');
-                        cb();
+                        cb(undefined);
                     });
                 }),
                 new Promise(cb => {
                     device.once('update:title', () => {
                         sort.push('update:title');
-                        cb();
+                        cb(undefined);
                     });
                 })
             ]);
@@ -175,7 +175,7 @@ describe('NodePyATVDeviceEvents', function () {
             await new Promise(cb => {
                 device.once('error', err => {
                     assert.strictEqual(err, error);
-                    cb();
+                    cb(undefined);
                 });
             });
 
@@ -199,7 +199,7 @@ describe('NodePyATVDeviceEvents', function () {
                 device.once('error', err => {
                     assert.ok(err instanceof Error);
                     assert.ok(err.toString().includes('Got stderr output from pyatv: Hello World!'));
-                    cb();
+                    cb(undefined);
                 });
             });
 
@@ -226,7 +226,7 @@ describe('NodePyATVDeviceEvents', function () {
                         'Unable to parse stdout json: SyntaxError: '+
                         'Unexpected token # in JSON at position 0'
                     ));
-                    cb();
+                    cb(undefined);
                 });
             });
 

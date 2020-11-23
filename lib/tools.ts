@@ -136,7 +136,7 @@ export async function request(
         const onError = (data: any) => reject(data instanceof Error ? data : new Error(String(data)));
         /* eslint-enable @typescript-eslint/no-explicit-any*/
 
-        const onClose = (code: number) => {
+        const onClose: (code: number) => void = (code: number) => {
             result.code = code;
 
             if (pyatv.stdout) {
@@ -148,7 +148,7 @@ export async function request(
 
             pyatv.off('error', onError);
             pyatv.off('close', onClose);
-            resolve();
+            resolve(undefined);
         };
 
         if (pyatv.stdout) {

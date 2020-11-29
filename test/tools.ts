@@ -134,7 +134,8 @@ describe('Tools', function () {
                 shuffle: null,
                 repeat: null,
                 app: null,
-                appId: null
+                appId: null,
+                powerState: null
             });
         });
         it('should work without data', function () {
@@ -154,7 +155,8 @@ describe('Tools', function () {
                 shuffle: null,
                 repeat: null,
                 app: null,
-                appId: null
+                appId: null,
+                powerState: null
             });
         });
         it('should work with example data', function () {
@@ -173,7 +175,8 @@ describe('Tools', function () {
                 shuffle: 'off',
                 repeat: 'off',
                 app: 'Disney+',
-                app_id: 'com.disney.disneyplus'
+                app_id: 'com.disney.disneyplus',
+                powerState: null
             };
             const result = parseState(input, '', {});
             assert.deepStrictEqual(result, {
@@ -190,7 +193,8 @@ describe('Tools', function () {
                 shuffle: NodePyATVShuffleState.off,
                 repeat: NodePyATVRepeatState.off,
                 app: 'Disney+',
-                appId: 'com.disney.disneyplus'
+                appId: 'com.disney.disneyplus',
+                powerState: null
             });
         });
         it('should ignore date if it\'s an invalid date', function () {
@@ -210,7 +214,8 @@ describe('Tools', function () {
                 shuffle: null,
                 repeat: null,
                 app: null,
-                appId: null
+                appId: null,
+                powerState: null
             });
         });
         it('should ignore data if unsupported type', function () {
@@ -229,7 +234,8 @@ describe('Tools', function () {
                 shuffle: false,
                 repeat: true,
                 app: 0,
-                app_id: 891645381647289
+                app_id: 891645381647289,
+                powerState: null
             };
             const result = parseState(input, '', {});
             assert.deepStrictEqual(result, {
@@ -246,7 +252,8 @@ describe('Tools', function () {
                 shuffle: null,
                 repeat: null,
                 app: null,
-                appId: null
+                appId: null,
+                powerState: null
             });
         });
         it('should ignore enums with unsupported valid', function () {
@@ -271,7 +278,8 @@ describe('Tools', function () {
                 shuffle: null,
                 repeat: null,
                 app: null,
-                appId: null
+                appId: null,
+                powerState: null
             });
         });
     });

@@ -6,7 +6,7 @@ import {
     NodePyATVFindAndInstanceOptions,
     NodePyATVInstanceOptions,
     NodePyATVInternalState,
-    NodePyATVMediaType, NodePyATVRepeatState, NodePyATVShuffleState,
+    NodePyATVMediaType, NodePyATVPowerState, NodePyATVRepeatState, NodePyATVShuffleState,
     NodePyATVState
 } from './types';
 
@@ -240,7 +240,8 @@ export function parseState(input: NodePyATVInternalState, id: string, options: N
         shuffle: null,
         repeat: null,
         app: null,
-        appId: null
+        appId: null,
+        powerState: null
     };
     if (!input || typeof input !== 'object') {
         return result;
@@ -346,6 +347,19 @@ export function parseState(input: NodePyATVInternalState, id: string, options: N
     // app
     parseStateStringAttr(input, result, 'app', 'app', d);
     parseStateStringAttr(input, result, 'app_id', 'appId', d);
+
+    // powerState
+    if(typeof input.power_state === 'string') {
+        const validValues = Object.keys(NodePyATVPowerState).map(o => String(o));
+        if (validValues.includes(input.power_state)) {
+            result.powerState = NodePyATVPowerState[input.power_state as NodePyATVPowerState];
+        }
+        else {
+            d(`Unsupported powerState value ${input.power_state}, ignore attribute`);
+        }
+    } else {
+        d(`No powerState value found in input (${JSON.stringify(input)})`);
+    }
 
     return result;
 }

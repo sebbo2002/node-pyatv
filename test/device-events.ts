@@ -4,6 +4,7 @@ import assert from 'assert';
 import NodePyATVDevice from '../lib/device';
 import {createFakeSpawn} from '../lib/fake-spawn';
 import NodePyATVDeviceEvent from '../lib/device-event';
+import {NodePyATVPowerState} from '../lib/types';
 
 describe('NodePyATVDeviceEvents', function () {
     describe('applyStateAndEmitEvents()', function () {
@@ -154,6 +155,34 @@ describe('NodePyATVDeviceEvents', function () {
 
             assert.strictEqual(callCounter, 1);
         });
+        it('should also work with powerState', async function () {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: createFakeSpawn(cp => {
+                    cp.onStdIn(() => cp.end());
+                    cp.stdout({
+                        result: 'success',
+                        datetime: new Date().toJSON(),
+                        power_state: 'off'
+                    });
+                })
+            });
+
+            await new Promise(cb => {
+                device.once('update:powerState', event => {
+                    assert.ok(event instanceof NodePyATVDeviceEvent);
+                    assert.strictEqual(event.key, 'powerState');
+                    assert.strictEqual(event.oldValue, null);
+                    assert.strictEqual(event.newValue, 'off');
+                    assert.strictEqual(event.newValue, NodePyATVPowerState.off);
+                    assert.strictEqual(event.value, 'off');
+                    assert.strictEqual(event.value, NodePyATVPowerState.off);
+                    assert.deepStrictEqual(event.device, device);
+                    cb(undefined);
+                });
+            });
+        });
     });
 
     describe('start|stopListening()', function () {
@@ -223,7 +252,7 @@ describe('NodePyATVDeviceEvents', function () {
                 device.once('error', err => {
                     assert.ok(err instanceof Error);
                     assert.ok(err.toString().includes(
-                        'Unable to parse stdout json: SyntaxError: '+
+                        'Unable to parse stdout json: SyntaxError: ' +
                         'Unexpected token # in JSON at position 0'
                     ));
                     cb(undefined);

@@ -54,5 +54,5 @@
   "dependencies": {
     "semver": "^7.3.2"
   },
-  "version": "2.0.0-develop.5"
+  "version": "3.0.0"
 }

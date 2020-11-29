@@ -233,7 +233,8 @@ describe('NodePyATVDevice', function () {
                 shuffle: NodePyATVShuffleState.off,
                 repeat: NodePyATVRepeatState.off,
                 app: 'Disney+',
-                appId: 'com.disney.disneyplus'
+                appId: 'com.disney.disneyplus',
+                powerState: null
             });
         });
         it('should cache requests for a bit', async function () {

@@ -41,6 +41,11 @@ export enum NodePyATVShuffleState {
     off = 'off'
 }
 
+export enum NodePyATVPowerState {
+    on = 'on',
+    off = 'off'
+}
+
 export enum NodePyATVKeys {
     down = 'down',
     home = 'home',
@@ -101,7 +106,7 @@ export enum NodePyATVListenerState {
 
 
 export type NodePyATVStateIndex = ('dateTime' | 'hash' | 'mediaType' | 'deviceState' | 'title' | 'artist' | 'album' |
-    'genre' | 'totalTime' | 'position' | 'shuffle' | 'repeat' | 'app' | 'appId');
+    'genre' | 'totalTime' | 'position' | 'shuffle' | 'repeat' | 'app' | 'appId' | 'powerState');
 
 export type NodePyATVEventValueType = (string | number | NodePyATVMediaType | NodePyATVDeviceState |
     NodePyATVShuffleState | NodePyATVRepeatState);
@@ -182,5 +187,6 @@ export interface NodePyATVState {
     shuffle: NodePyATVShuffleState | null,
     repeat: NodePyATVRepeatState | null,
     app: string | null,
-    appId: string | null
+    appId: string | null,
+    powerState: NodePyATVPowerState | null
 }

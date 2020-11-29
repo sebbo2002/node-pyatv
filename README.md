@@ -1,10 +1,18 @@
 # node-pyatv
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
-[![Unit Tests](https://img.shields.io/github/workflow/status/sebbo2002/node-pyatv/Release/main?style=flat-square)](https://github.com/sebbo2002/node-pyatv/actions)
+[![Unit Tests](https://img.shields.io/github/workflow/status/sebbo2002/node-pyatv/Release/main?style=flat-square)](https://github.com/sebbo2002/node-pyatv/actions?query=workflow%3ARelease+branch%3Amain)
 ![Dependencies](https://img.shields.io/depfu/sebbo2002/node-pyatv?style=flat-square)
 
 A lightweight wrapper around pyatv's which also supports realtime notifications.
+
+
+## 📝 Content
+- [Installation](#-installation)
+- [Quick Start](#-quick-start)
+- [API Reference](#-api-reference)
+- [Changelog](https://github.com/sebbo2002/node-pyatv/blob/main/CHANGELOG.md)
+- [FAQ](#-faq)
 
 
 ## ☁ Installation
@@ -43,10 +51,15 @@ device.on('update:deviceState', (event: NodePyATVDeviceEvent | Error) => {
 ```
 
 
-## 📑 API
+## 📑 API Reference
 
-_@todo_
+The API documentation is automatically generated from the code comments and can be found
+[here](https://sebbo2002.github.io/node-pyatv/main/reference/classes/nodepyatvinstance.html).
 
+
+## 📑 Changelog
+
+Please have a look at [CHANGELOG.md](https://github.com/sebbo2002/node-pyatv/blob/main/CHANGELOG.md) to see the changelog.
 
 
 ## 🤨 FAQ

@@ -52,7 +52,7 @@
   "preferGlobal": false,
   "main": "./dist/lib/index.js",
   "dependencies": {
-    "semver": "^7.3.2"
+    "semver": "^7.3.4"
   },
   "version": "2.0.0-develop.5"
 }

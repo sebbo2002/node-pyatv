@@ -105,8 +105,7 @@ export enum NodePyATVListenerState {
 }
 
 
-export type NodePyATVStateIndex = ('dateTime' | 'hash' | 'mediaType' | 'deviceState' | 'title' | 'artist' | 'album' |
-    'genre' | 'totalTime' | 'position' | 'shuffle' | 'repeat' | 'app' | 'appId' | 'powerState');
+export type NodePyATVStateIndex = keyof NodePyATVState;
 
 export type NodePyATVEventValueType = (string | number | NodePyATVMediaType | NodePyATVDeviceState |
     NodePyATVShuffleState | NodePyATVRepeatState);

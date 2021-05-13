@@ -1,3 +1,5 @@
+## [3.1.1-develop.1](https://github.com/sebbo2002/node-pyatv/compare/v3.1.0...v3.1.1-develop.1) (2021-05-13)
+
 # [3.1.0](https://github.com/sebbo2002/node-pyatv/compare/v3.0.1...v3.1.0) (2021-05-13)
 
 

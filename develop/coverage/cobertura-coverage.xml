@@ -1,11 +1,11 @@
 <?xml version="1.0" ?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
-<coverage lines-valid="592" lines-covered="578" line-rate="0.9764" branches-valid="254" branches-covered="226" branch-rate="0.8898" timestamp="1620666901045" complexity="0" version="0.1">
+<coverage lines-valid="592" lines-covered="578" line-rate="0.9764" branches-valid="254" branches-covered="226" branch-rate="0.8898" timestamp="1620927708218" complexity="0" version="0.1">
   <sources>
     <source>/home/runner/work/node-pyatv/node-pyatv</source>
   </sources>
   <packages>
-    <class name="device-event.ts" filename="lib/device-event.ts" line-rate="1" branch-rate="1">
+    <class name="device-event.ts" filename="src/lib/device-event.ts" line-rate="1" branch-rate="1">
       <methods>
         <method name="(anonymous_0)" hits="70" signature="()V">
           <lines>
@@ -48,7 +48,7 @@
         <line number="55" hits="4" branch="false"/>
       </lines>
     </class>
-    <class name="device-events.ts" filename="lib/device-events.ts" line-rate="0.9398000000000001" branch-rate="0.8148000000000001">
+    <class name="device-events.ts" filename="src/lib/device-events.ts" line-rate="0.9398000000000001" branch-rate="0.8148000000000001">
       <methods>
         <method name="(anonymous_8)" hits="83" signature="()V">
           <lines>
@@ -337,7 +337,7 @@
         <line number="286" hits="70" branch="false"/>
       </lines>
     </class>
-    <class name="device.ts" filename="lib/device.ts" line-rate="0.9828" branch-rate="0.9487000000000001">
+    <class name="device.ts" filename="src/lib/device.ts" line-rate="0.9828" branch-rate="0.9487000000000001">
       <methods>
         <method name="(anonymous_8)" hits="83" signature="()V">
           <lines>
@@ -784,7 +784,7 @@
         <line number="678" hits="0" branch="false"/>
       </lines>
     </class>
-    <class name="fake-spawn.ts" filename="lib/fake-spawn.ts" line-rate="0.9756" branch-rate="0.8">
+    <class name="fake-spawn.ts" filename="src/lib/fake-spawn.ts" line-rate="0.9756" branch-rate="0.8">
       <methods>
         <method name="createFakeSpawn" hits="82" signature="()V">
           <lines>
@@ -906,7 +906,7 @@
         <line number="119" hits="77" branch="false"/>
       </lines>
     </class>
-    <class name="index.ts" filename="lib/index.ts" line-rate="1" branch-rate="1">
+    <class name="index.ts" filename="src/lib/index.ts" line-rate="1" branch-rate="1">
       <methods>
         <method name="(anonymous_1)" hits="1" signature="()V">
           <lines>
@@ -961,7 +961,7 @@
         <line number="21" hits="28" branch="false"/>
       </lines>
     </class>
-    <class name="instance.ts" filename="lib/instance.ts" line-rate="0.9582999999999999" branch-rate="0.8571">
+    <class name="instance.ts" filename="src/lib/instance.ts" line-rate="0.9582999999999999" branch-rate="0.8571">
       <methods>
         <method name="(anonymous_8)" hits="4" signature="()V">
           <lines>
@@ -1065,7 +1065,7 @@
         <line number="200" hits="1" branch="false"/>
       </lines>
     </class>
-    <class name="tools.ts" filename="lib/tools.ts" line-rate="0.9937" branch-rate="0.9029">
+    <class name="tools.ts" filename="src/lib/tools.ts" line-rate="0.9937" branch-rate="0.9029">
       <methods>
         <method name="addRequestId" hits="104" signature="()V">
           <lines>
@@ -1349,7 +1349,7 @@
         <line number="364" hits="119" branch="false"/>
       </lines>
     </class>
-    <class name="types.ts" filename="lib/types.ts" line-rate="1" branch-rate="1">
+    <class name="types.ts" filename="src/lib/types.ts" line-rate="1" branch-rate="1">
       <methods>
         <method name="(anonymous_0)" hits="1" signature="()V">
           <lines>

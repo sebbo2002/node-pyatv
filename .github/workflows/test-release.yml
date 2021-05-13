@@ -17,7 +17,7 @@ jobs:
       - name: ☁️ Checkout Project
         uses: actions/checkout@v2
       - name: 🔧 Set up Python
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v2.2.2
       - name: 🔧 Setup pip cache
         uses: actions/cache@v1
         id: pip-cache
@@ -50,7 +50,7 @@ jobs:
       - name: ☁️ Checkout Project
         uses: actions/checkout@v2
       - name: 🔧 Set up Python
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v2.2.2
       - name: 🔧 Setup pip cache
         uses: actions/cache@v1
         id: pip-cache
@@ -112,7 +112,7 @@ jobs:
       - name: ☁️ Checkout Project
         uses: actions/checkout@v2
       - name: 🔧 Set up Python
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v2.2.2
       - name: 🔧 Setup pip cache
         uses: actions/cache@v1
         id: pip-cache

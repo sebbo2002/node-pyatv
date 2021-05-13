@@ -1,7 +1,7 @@
 'use strict';
 
 import assert from 'assert';
-import {addRequestId, debug, getExecutable, getParamters, parseState, removeRequestId} from '../lib/tools';
+import {addRequestId, debug, getExecutable, getParamters, parseState, removeRequestId} from '../src/lib/tools';
 import {
     NodePyATVDeviceState,
     NodePyATVExecutableType,
@@ -9,7 +9,7 @@ import {
     NodePyATVProtocol,
     NodePyATVRepeatState,
     NodePyATVShuffleState
-} from '../lib/types';
+} from '../src/lib/types';
 
 describe('Tools', function () {
     describe('addRequestId() / removeRequestId()', function () {

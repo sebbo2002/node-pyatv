@@ -1,7 +1,7 @@
 'use strict';
 
 import assert from 'assert';
-import {createFakeSpawn} from '../lib/fake-spawn';
+import {createFakeSpawn} from '../src/lib/fake-spawn';
 import NodePyATVInstance, {
     NodePyATVProtocol,
     NodePyATVMediaType,
@@ -10,7 +10,7 @@ import NodePyATVInstance, {
     NodePyATVRepeatState,
     NodePyATVShuffleState,
     NodePyATVKeys
-} from '../lib/index';
+} from '../src/lib/index';
 
 describe('NodePyATVInstance', function () {
     describe('static version()', function () {

@@ -5,13 +5,14 @@
         ".ts"
     ],
     "include": [
-        "lib/**/*.ts"
+        "src/**/*.ts"
     ],
     "exclude": [
         "coverage/**",
-        "node_modules/**"
+        "node_modules/**",
+        "src/bin/check.ts"
     ],
-    "report-dir": "./doc/coverage/",
+    "report-dir": "./docs/coverage/",
     "temp-directory": "./.nyc_output",
     "sourceMap": true,
     "reporter": [

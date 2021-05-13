@@ -1,7 +1,7 @@
 'use strict';
 
 import assert from 'assert';
-import NodePyATVDevice from '../lib/device';
+import NodePyATVDevice from '../src/lib/device';
 import {
     NodePyATVDeviceState,
     NodePyATVKeys,
@@ -9,9 +9,9 @@ import {
     NodePyATVProtocol,
     NodePyATVRepeatState,
     NodePyATVShuffleState
-} from '../lib/types';
-import NodePyATVInstance from '../lib/instance';
-import {createFakeSpawn} from '../lib/fake-spawn';
+} from '../src/lib/types';
+import NodePyATVInstance from '../src/lib/instance';
+import {createFakeSpawn} from '../src/lib/fake-spawn';
 
 describe('NodePyATVDevice', function () {
     describe('get name()', function () {

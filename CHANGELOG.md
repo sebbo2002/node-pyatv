@@ -1,3 +1,10 @@
+# [3.1.0-develop.1](https://github.com/sebbo2002/node-pyatv/compare/v3.0.1...v3.1.0-develop.1) (2021-05-13)
+
+
+### Features
+
+* Use repo template (@sebbo2002/js-template) ([696a474](https://github.com/sebbo2002/node-pyatv/commit/696a4741fc36ed3976ec2ac41e422e3763aeeda8))
+
 ## [3.0.1](https://github.com/sebbo2002/node-pyatv/compare/v3.0.0...v3.0.1) (2020-12-15)
 
 # [3.0.0](https://github.com/sebbo2002/node-pyatv/compare/v2.0.0...v3.0.0) (2020-11-29)

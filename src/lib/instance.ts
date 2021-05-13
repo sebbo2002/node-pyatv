@@ -75,7 +75,7 @@ export default class NodePyATVInstance {
 
         try {
             // eslint-disable-next-line @typescript-eslint/no-var-requires
-            module = require(__dirname + '/../package.json').version || null;
+            module = require(__dirname + '/../../package.json').version || null;
         }
         catch (error) {
             debug(id, `Unable to get module version due to ${error}`, options);

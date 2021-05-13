@@ -1,18 +1,15 @@
 {
-    "inputFiles": [
-        "./lib/index.ts"
-    ],
+    "entryPoints": ["./src/lib/index.ts"],
     "exclude": [
         "./lib/tools.ts"
     ],
-    "out": "./doc/reference",
-    "mode": "file",
+    "out": "./docs/reference",
     "theme": "minimal",
+    "plugin": [],
     "name": "node-pyatv",
     "readme": "none",
     "includeVersion": true,
-    "excludeNotExported": true,
     "excludePrivate": true,
     "excludeProtected": true,
-    "stripInternal": true
+    "excludeInternal": true
 }

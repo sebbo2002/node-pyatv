@@ -12,7 +12,7 @@
     "url": "https://github.com/sebbo2002/node-pyatv.git"
   },
   "engines": {
-    "node": ">=10.0.0"
+    "node": ">=12.0.0"
   },
   "devDependencies": {
     "@amanda-mitchell/semantic-release-npm-multiple": "^2.8.0",
@@ -30,17 +30,14 @@
     "@typescript-eslint/parser": "^4.22.0",
     "eslint": "^7.25.0",
     "license-checker": "^25.0.1",
-    "mocha": "^8.3.2",
+    "mocha": "^9.0.0",
     "mochawesome": "^6.2.2",
     "nyc": "^15.1.0",
     "semantic-release": "^17.4.2",
     "semantic-release-license": "^1.0.3",
     "ts-node": "^10.0.0",
-    "typedoc": "^0.20.36",
+    "typedoc": "^0.21.0-beta.2",
     "typescript": "^4.2.4"
-  },
-  "peerDependencies": {
-    "@types/node": ">= 10.0.0"
   },
   "scripts": {
     "build-all": "./.github/workflows/build.sh",

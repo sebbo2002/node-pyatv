@@ -1,19 +1,13 @@
 {
-  "name": "@sebbo2002/node-pyatv",
-  "description": "A lightweight wrapper around pyatv…",
   "author": "Sebastian Pekarek <sheeboothohmoolaiquu@e.sebbo.net>",
-  "license": "MIT",
   "bugs": {
-    "url": "http://github.com/sebbo2002/node-pyatv/issues",
-    "email": "sheeboothohmoolaiquu@e.sebbo.net"
+    "email": "sheeboothohmoolaiquu@e.sebbo.net",
+    "url": "http://github.com/sebbo2002/node-pyatv/issues"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/sebbo2002/node-pyatv.git"
+  "dependencies": {
+    "semver": "^7.3.5"
   },
-  "engines": {
-    "node": ">=12.0.0"
-  },
+  "description": "A lightweight wrapper around pyatv…",
   "devDependencies": {
     "@amanda-mitchell/semantic-release-npm-multiple": "^2.8.0",
     "@qiwi/semantic-release-gh-pages-plugin": "^5.0.7",
@@ -29,6 +23,7 @@
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
     "eslint": "^7.25.0",
+    "eslint-plugin-jsonc": "^1.2.1",
     "license-checker": "^25.0.1",
     "mocha": "^9.0.0",
     "mochawesome": "^6.2.2",
@@ -39,22 +34,28 @@
     "typedoc": "^0.21.0-beta.2",
     "typescript": "^4.2.4"
   },
-  "scripts": {
-    "build-all": "./.github/workflows/build.sh",
-    "build": "tsc",
-    "example": "node ./dist/examples/push.js",
-    "develop": "ts-node ./src/bin/start.ts",
-    "lint": "eslint . --ext .ts",
-    "test": "mocha",
-    "coverage": "nyc mocha",
-    "license-check": "license-checker --production --summary",
-    "check": "./check.sh",
-    "postinstall": "./check.sh"
+  "engines": {
+    "node": ">=12.0.0"
   },
-  "preferGlobal": false,
+  "license": "MIT",
   "main": "./dist/lib/index.js",
-  "dependencies": {
-    "semver": "^7.3.5"
+  "name": "@sebbo2002/node-pyatv",
+  "preferGlobal": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sebbo2002/node-pyatv.git"
+  },
+  "scripts": {
+    "build": "tsc",
+    "build-all": "./.github/workflows/build.sh",
+    "check": "./check.sh",
+    "coverage": "nyc mocha",
+    "develop": "ts-node ./src/bin/start.ts",
+    "example": "node ./dist/examples/push.js",
+    "license-check": "license-checker --production --summary",
+    "lint": "eslint . --ext .ts",
+    "postinstall": "./check.sh",
+    "test": "mocha"
   },
   "version": "3.0.1"
 }

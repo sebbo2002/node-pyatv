@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>node-pyatv - v3.0.1 | node-pyatv - v3.0.1</title>
-	<meta name="description" content="Documentation for node-pyatv - v3.0.1">
+	<title>@sebbo2002/node-pyatv - v3.0.1 | @sebbo2002/node-pyatv - v3.0.1</title>
+	<meta name="description" content="Documentation for @sebbo2002/node-pyatv - v3.0.1">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<style type="text/css">:root {
   --color-background: #fdfdfd;
@@ -2674,7 +2674,7 @@ img {
 		<div class="container">
 			<div class="table-wrap">
 				<div class="table-cell">
-					<strong><a href="index.html">node-pyatv - v3.0.1</a></strong>
+					<strong><a href="index.html">@sebbo2002/node-pyatv - v3.0.1</a></strong>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -2753,6 +2753,94 @@ img {
 </nav>
 <div class="container container-main">
 	<div class="content-wrap">
+		<div class="tsd-panel tsd-typography">
+			<a href="#node-pyatv" id="node-pyatv" style="color: inherit; text-decoration: none;">
+				<h1>node-pyatv</h1>
+			</a>
+			<p><a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square" alt="License"></a>
+				<a href="https://github.com/sebbo2002/node-pyatv/actions?query=workflow%3ARelease+branch%3Amain"><img src="https://img.shields.io/github/workflow/status/sebbo2002/node-pyatv/Release/main?style=flat-square" alt="Unit Tests"></a>
+			<img src="https://img.shields.io/david/sebbo2002/node-pyatv?style=flat-square" alt="Dependencies"></p>
+			<p>A lightweight wrapper around pyatv&#39;s which also supports realtime notifications.</p>
+			<a href="#📝-content" id="📝-content" style="color: inherit; text-decoration: none;">
+				<h2>📝 Content</h2>
+			</a>
+			<ul>
+				<li><a href="#-installation">Installation</a></li>
+				<li><a href="#-quick-start">Quick Start</a></li>
+				<li><a href="#-api-reference">API Reference</a></li>
+				<li><a href="https://github.com/sebbo2002/node-pyatv/blob/main/CHANGELOG.md">Changelog</a></li>
+				<li><a href="#-faq">FAQ</a></li>
+			</ul>
+			<a href="#☁-installation" id="☁-installation" style="color: inherit; text-decoration: none;">
+				<h2>☁ Installation</h2>
+			</a>
+			<p>Before you use <code>node-pyatv</code> you need to install pyatv. This module woun&#39;t do this for you. Run <code>atvremote --version</code> to
+			double check your installation. See FAQ section for installation tips.</p>
+			<p>To install the javascript module via npm just run:</p>
+			<pre><code><span style="color: #001080">npm</span><span style="color: #000000"> </span><span style="color: #001080">install</span><span style="color: #000000"> @</span><span style="color: #001080">sebbo2002</span><span style="color: #000000">/</span><span style="color: #001080">node</span><span style="color: #000000">-</span><span style="color: #001080">pyatv</span>
+</code></pre>
+			<a href="#⚒-quick-start" id="⚒-quick-start" style="color: inherit; text-decoration: none;">
+				<h2>⚒ Quick Start</h2>
+			</a>
+			<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">pyatv</span><span style="color: #000000">, {</span><span style="color: #001080">NodePyATVDeviceEvent</span><span style="color: #000000">} </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@sebbo2002/node-pyatv&#039;</span><span style="color: #000000">;</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">devices</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">pyatv</span><span style="color: #000000">.</span><span style="color: #795E26">find</span><span style="color: #000000">(</span><span style="color: #008000">/*{debug: true}*/</span><span style="color: #000000">);</span>
+<span style="color: #AF00DB">if</span><span style="color: #000000"> (!</span><span style="color: #001080">devices</span><span style="color: #000000">.</span><span style="color: #001080">length</span><span style="color: #000000">) {</span>
+<span style="color: #000000">    </span><span style="color: #AF00DB">throw</span><span style="color: #000000"> </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Error</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Oh no.&#039;</span><span style="color: #000000">);</span>
+<span style="color: #000000">}</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">device</span><span style="color: #000000"> = </span><span style="color: #001080">devices</span><span style="color: #000000">[</span><span style="color: #098658">0</span><span style="color: #000000">];</span>
+
+<span style="color: #008000">// request current title</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">device</span><span style="color: #000000">.</span><span style="color: #795E26">getTitle</span><span style="color: #000000">());</span>
+
+<span style="color: #008000">// request full state</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">device</span><span style="color: #000000">.</span><span style="color: #795E26">getState</span><span style="color: #000000">());</span>
+
+<span style="color: #008000">// subscribe to events</span>
+<span style="color: #001080">device</span><span style="color: #000000">.</span><span style="color: #795E26">on</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;update:deviceState&#039;</span><span style="color: #000000">, (</span><span style="color: #001080">event</span><span style="color: #000000">: </span><span style="color: #267F99">NodePyATVDeviceEvent</span><span style="color: #000000"> | </span><span style="color: #267F99">Error</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #AF00DB">if</span><span style="color: #000000">(</span><span style="color: #001080">event</span><span style="color: #000000"> </span><span style="color: #0000FF">instanceof</span><span style="color: #000000"> </span><span style="color: #267F99">Error</span><span style="color: #000000">) </span><span style="color: #AF00DB">return</span><span style="color: #000000">;</span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">`Current device state is </span><span style="color: #0000FF">${</span><span style="color: #001080">event</span><span style="color: #000000FF">.</span><span style="color: #001080">value</span><span style="color: #0000FF">}</span><span style="color: #A31515">`</span><span style="color: #000000">);</span>
+<span style="color: #000000">});</span>
+</code></pre>
+			<a href="#📑-api-reference" id="📑-api-reference" style="color: inherit; text-decoration: none;">
+				<h2>📑 API Reference</h2>
+			</a>
+			<p>The API documentation is automatically generated from the code comments and can be found
+			<a href="https://sebbo2002.github.io/node-pyatv/main/reference/classes/default.html">here</a>.</p>
+			<a href="#📑-changelog" id="📑-changelog" style="color: inherit; text-decoration: none;">
+				<h2>📑 Changelog</h2>
+			</a>
+			<p>Please have a look at <a href="https://github.com/sebbo2002/node-pyatv/blob/main/CHANGELOG.md">CHANGELOG.md</a> to see the changelog.</p>
+			<a href="#🤨-faq" id="🤨-faq" style="color: inherit; text-decoration: none;">
+				<h2>🤨 FAQ</h2>
+			</a>
+			<a href="#how-to-install-pyatv" id="how-to-install-pyatv" style="color: inherit; text-decoration: none;">
+				<h4>How to install pyatv</h4>
+			</a>
+			<pre><code class="language-bash"><span style="color: #000000">pip3 install pyatv</span>
+</code></pre>
+			<a href="#how-to-debug-things" id="how-to-debug-things" style="color: inherit; text-decoration: none;">
+				<h4>How to debug things</h4>
+			</a>
+			<p>You can pass <code>&quot;debug&quot;: true</code> for any command called. Some debug information is then printed via console.log. Additionaly
+			you can pass a function to process debugs logs.</p>
+			<a href="#why-are-some-tests-skipped" id="why-are-some-tests-skipped" style="color: inherit; text-decoration: none;">
+				<h4>Why are some tests skipped?</h4>
+			</a>
+			<p>Some unit tests require a responding apple tv to pass. These tests are disabled by default. You can set the environment
+			variable <code>ENABLE_INTEGRATION=1</code> to enable them.</p>
+			<a href="#is-this-secure" id="is-this-secure" style="color: inherit; text-decoration: none;">
+				<h4>Is this secure?</h4>
+			</a>
+			<p>Defenitely not. For example, there&#39;s no escaping for parameters passed to pyatv. So be sure to double check the data you
+			pass to this library, otherwise it may be possible to run code on your machine.</p>
+			<a href="#copyright-and-license" id="copyright-and-license" style="color: inherit; text-decoration: none;">
+				<h2>Copyright and license</h2>
+			</a>
+			<p>Copyright (c) Sebastian Pekarek under the <a href="LICENSE">MIT license</a>.</p>
+		</div>
+		<div style="position:relative;"><a name="typedoc-main-index" class="tsd-anchor"></a></div>
 		<section class="tsd-panel-group tsd-index-group">
 			<h2>Index</h2>
 			<section class="tsd-panel tsd-index-panel">

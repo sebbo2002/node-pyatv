@@ -1,3 +1,21 @@
+# [4.0.0-develop.3](https://github.com/sebbo2002/node-pyatv/compare/v4.0.0-develop.2...v4.0.0-develop.3) (2021-06-18)
+
+# [4.0.0-develop.2](https://github.com/sebbo2002/node-pyatv/compare/v4.0.0-develop.1...v4.0.0-develop.2) (2021-06-08)
+
+# [4.0.0-develop.1](https://github.com/sebbo2002/node-pyatv/compare/v3.1.1-develop.1...v4.0.0-develop.1) (2021-06-08)
+
+
+### chore
+
+* Remove node.js 10 Support ([2b910c0](https://github.com/sebbo2002/node-pyatv/commit/2b910c09bc8a41085fc4472159494d8738d5521e))
+
+
+### BREAKING CHANGES
+
+* Removed support for node.js v10
+
+## [3.1.1-develop.1](https://github.com/sebbo2002/node-pyatv/compare/v3.1.0...v3.1.1-develop.1) (2021-05-13)
+
 # [3.1.0](https://github.com/sebbo2002/node-pyatv/compare/v3.0.1...v3.1.0) (2021-05-13)
 
 

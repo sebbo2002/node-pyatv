@@ -2,7 +2,7 @@
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Unit Tests](https://img.shields.io/github/workflow/status/sebbo2002/node-pyatv/Release/main?style=flat-square)](https://github.com/sebbo2002/node-pyatv/actions?query=workflow%3ARelease+branch%3Amain)
-![Dependencies](https://img.shields.io/depfu/sebbo2002/node-pyatv?style=flat-square)
+![Dependencies](https://img.shields.io/david/sebbo2002/node-pyatv?style=flat-square)
 
 A lightweight wrapper around pyatv's which also supports realtime notifications.
 
@@ -54,7 +54,7 @@ device.on('update:deviceState', (event: NodePyATVDeviceEvent | Error) => {
 ## 📑 API Reference
 
 The API documentation is automatically generated from the code comments and can be found
-[here](https://sebbo2002.github.io/node-pyatv/main/reference/classes/nodepyatvinstance.html).
+[here](https://sebbo2002.github.io/node-pyatv/main/reference/classes/default.html).
 
 
 ## 📑 Changelog

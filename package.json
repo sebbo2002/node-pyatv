@@ -1,63 +1,58 @@
 {
-  "name": "@sebbo2002/node-pyatv",
-  "description": "A lightweight wrapper around pyatv…",
   "author": "Sebastian Pekarek <sheeboothohmoolaiquu@e.sebbo.net>",
-  "license": "MIT",
   "bugs": {
-    "url": "http://github.com/sebbo2002/node-pyatv/issues",
-    "email": "sheeboothohmoolaiquu@e.sebbo.net"
+    "email": "sheeboothohmoolaiquu@e.sebbo.net",
+    "url": "http://github.com/sebbo2002/node-pyatv/issues"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/sebbo2002/node-pyatv.git"
+  "dependencies": {
+    "semver": "^7.3.5"
   },
-  "engines": {
-    "node": ">=10.0.0"
-  },
+  "description": "A lightweight wrapper around pyatv…",
   "devDependencies": {
-    "@amanda-mitchell/semantic-release-npm-multiple": "^2.8.0",
-    "@qiwi/semantic-release-gh-pages-plugin": "^5.0.7",
+    "@amanda-mitchell/semantic-release-npm-multiple": "^2.11.0",
+    "@qiwi/semantic-release-gh-pages-plugin": "^5.1.1",
     "@semantic-release/changelog": "^5.0.1",
-    "@semantic-release/commit-analyzer": "^8.0.1",
     "@semantic-release/exec": "^5.0.0",
     "@semantic-release/git": "^9.0.0",
-    "@semantic-release/github": "^7.2.1",
-    "@semantic-release/release-notes-generator": "^9.0.2",
-    "@types/mocha": "^8.2.2",
-    "@types/node": "^15.0.1",
-    "@types/semver": "^7.3.5",
-    "@typescript-eslint/eslint-plugin": "^4.22.0",
-    "@typescript-eslint/parser": "^4.22.0",
-    "eslint": "^7.25.0",
+    "@types/mocha": "^9.0.0",
+    "@types/node": "^16.4.3",
+    "@types/semver": "^7.3.8",
+    "@typescript-eslint/eslint-plugin": "^4.28.4",
+    "@typescript-eslint/parser": "^4.28.4",
+    "eslint": "^7.31.0",
+    "eslint-plugin-jsonc": "^1.4.0",
     "license-checker": "^25.0.1",
-    "mocha": "^8.3.2",
+    "mocha": "^9.0.3",
     "mochawesome": "^6.2.2",
     "nyc": "^15.1.0",
     "semantic-release": "^17.4.2",
     "semantic-release-license": "^1.0.3",
-    "ts-node": "^9.1.1",
-    "typedoc": "^0.20.36",
-    "typescript": "^4.2.4"
+    "ts-node": "^10.1.0",
+    "typedoc": "^0.21.4",
+    "typescript": "^4.3.5"
   },
-  "peerDependencies": {
-    "@types/node": ">= 10.0.0"
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "license": "MIT",
+  "main": "./dist/lib/index.js",
+  "name": "@sebbo2002/node-pyatv",
+  "preferGlobal": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sebbo2002/node-pyatv.git"
   },
   "scripts": {
-    "build-all": "./.github/workflows/build.sh",
     "build": "tsc",
-    "example": "node ./dist/examples/push.js",
-    "develop": "ts-node ./src/bin/start.ts",
-    "lint": "eslint . --ext .ts",
-    "test": "mocha",
-    "coverage": "nyc mocha",
-    "license-check": "license-checker --production --summary",
+    "build-all": "./.github/workflows/build.sh",
     "check": "./check.sh",
-    "postinstall": "./check.sh"
-  },
-  "preferGlobal": false,
-  "main": "./dist/lib/index.js",
-  "dependencies": {
-    "semver": "^7.3.5"
+    "coverage": "nyc mocha",
+    "develop": "ts-node ./src/bin/start.ts",
+    "example": "node ./dist/examples/push.js",
+    "license-check": "license-checker --production --summary",
+    "lint": "eslint . --ext .ts",
+    "postinstall": "./check.sh",
+    "test": "mocha"
   },
   "version": "3.0.1"
 }

@@ -3,13 +3,13 @@
     "exclude": [
         "./lib/tools.ts"
     ],
-    "out": "./docs/reference",
-    "theme": "minimal",
-    "plugin": [],
-    "name": "node-pyatv",
-    "readme": "none",
-    "includeVersion": true,
+    "excludeInternal": true,
     "excludePrivate": true,
     "excludeProtected": true,
-    "excludeInternal": true
+    "includeVersion": true,
+    "name": "",
+    "out": "./docs/reference",
+    "plugin": [],
+    "readme": "README.md",
+    "theme": "minimal"
 }

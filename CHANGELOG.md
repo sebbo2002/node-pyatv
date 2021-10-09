@@ -1,14 +1,9 @@
-# [4.0.0](https://github.com/sebbo2002/node-pyatv/compare/v3.1.0...v4.0.0) (2021-07-31)
+# [4.0.0-develop.4](https://github.com/sebbo2002/node-pyatv/compare/v4.0.0-develop.3...v4.0.0-develop.4) (2021-10-09)
 
 
-### chore
+### Features
 
-* Remove node.js 10 Support ([2b910c0](https://github.com/sebbo2002/node-pyatv/commit/2b910c09bc8a41085fc4472159494d8738d5521e))
-
-
-### BREAKING CHANGES
-
-* Removed support for node.js v10
+* Add support for companion and raop credentials ([6c68d6b](https://github.com/sebbo2002/node-pyatv/commit/6c68d6b0741785eab8619a4c84b8c779a001b987))
 
 # [4.0.0-develop.3](https://github.com/sebbo2002/node-pyatv/compare/v4.0.0-develop.2...v4.0.0-develop.3) (2021-06-18)
 

@@ -132,6 +132,8 @@ export interface NodePyATVFindOptions {
     dmapCredentials?: string;
     mrpCredentials?: string;
     airplayCredentials?: string;
+    companionCredentials?: string;
+    raopCredentials?: string;
 }
 
 export interface NodePyATVFindAndInstanceOptions extends NodePyATVInstanceOptions, NodePyATVFindOptions {

@@ -103,7 +103,9 @@ describe('Tools', function () {
                 protocol: NodePyATVProtocol.mrp,
                 dmapCredentials: '****',
                 mrpCredentials: '****',
-                airplayCredentials: '****'
+                airplayCredentials: '****',
+                companionCredentials: '1234',
+                raopCredentials: '::foo:'
             });
             assert.deepEqual(result, [
                 '-s', '192.168.178.2,192.168.178.3',
@@ -111,7 +113,9 @@ describe('Tools', function () {
                 '--protocol', 'mrp',
                 '--dmap-credentials', '****',
                 '--mrp-credentials', '****',
-                '--airplay-credentials', '****'
+                '--airplay-credentials', '****',
+                '--companion-credentials', '1234',
+                '--raop-credentials', '::foo:'
             ]);
         });
     });

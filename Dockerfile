@@ -1,6 +1,6 @@
 FROM ubuntu:latest
 
-ARG PYATV_VERSION=0.7.0
+ARG PYATV_VERSION=0.9.2
 ARG NODE_VERSION=14
 
 # ensure local python is preferred over distribution python

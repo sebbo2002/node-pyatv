@@ -11,5 +11,5 @@
     "out": "./docs/reference",
     "plugin": [],
     "readme": "README.md",
-    "theme": "minimal"
+    "theme": "default"
 }

@@ -205,6 +205,12 @@ export function getParamters(options: NodePyATVFindAndInstanceOptions = {}): str
     if (options.airplayCredentials) {
         parameters.push('--airplay-credentials', options.airplayCredentials);
     }
+    if (options.companionCredentials) {
+        parameters.push('--companion-credentials', options.companionCredentials);
+    }
+    if (options.raopCredentials) {
+        parameters.push('--raop-credentials', options.raopCredentials);
+    }
 
     return parameters;
 }

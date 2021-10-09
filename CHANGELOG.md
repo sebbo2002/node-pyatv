@@ -1,3 +1,10 @@
+# [4.1.0](https://github.com/sebbo2002/node-pyatv/compare/v4.0.0...v4.1.0) (2021-10-09)
+
+
+### Features
+
+* Add support for companion and raop credentials ([6c68d6b](https://github.com/sebbo2002/node-pyatv/commit/6c68d6b0741785eab8619a4c84b8c779a001b987))
+
 # [4.0.0-develop.4](https://github.com/sebbo2002/node-pyatv/compare/v4.0.0-develop.3...v4.0.0-develop.4) (2021-10-09)
 
 

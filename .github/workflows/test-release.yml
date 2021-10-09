@@ -74,8 +74,8 @@ jobs:
         uses: actions/checkout@v2
       - name: 🔧 Setup node.js
         uses: actions/setup-node@v2
-          cache: 'npm'
         with:
+          cache: 'npm'
       - name: 📦 Install dependencies
         run: npm ci
       - name: 🕵️‍♀️ Run license checker

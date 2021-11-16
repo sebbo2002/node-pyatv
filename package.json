@@ -15,10 +15,10 @@
     "@semantic-release/exec": "^6.0.2",
     "@semantic-release/git": "^10.0.1",
     "@types/mocha": "^9.0.0",
-    "@types/node": "^16.11.6",
+    "@types/node": "^16.11.7",
     "@types/semver": "^7.3.9",
-    "@typescript-eslint/eslint-plugin": "^5.3.0",
-    "@typescript-eslint/parser": "^5.3.0",
+    "@typescript-eslint/eslint-plugin": "^5.3.1",
+    "@typescript-eslint/parser": "^5.3.1",
     "eslint": "^8.2.0",
     "eslint-plugin-jsonc": "^2.0.0",
     "license-checker": "^25.0.1",
@@ -29,7 +29,7 @@
     "semantic-release-license": "^1.0.3",
     "source-map-support": "^0.5.20",
     "ts-node": "^10.4.0",
-    "typedoc": "^0.22.8",
+    "typedoc": "^0.22.9",
     "typescript": "^4.4.4"
   },
   "engines": {

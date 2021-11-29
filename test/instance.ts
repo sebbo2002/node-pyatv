@@ -9,7 +9,9 @@ import NodePyATVInstance, {
     NodePyATVDeviceState,
     NodePyATVRepeatState,
     NodePyATVShuffleState,
-    NodePyATVKeys
+    NodePyATVKeys,
+    NodePyATVListenerState,
+    NodePyATVPowerState
 } from '../src/lib/index';
 
 describe('NodePyATVInstance', function () {
@@ -329,6 +331,12 @@ describe('NodePyATVInstance', function () {
         });
         it('Type NodePyATVKeys should be exported', function() {
             assert.ok(NodePyATVKeys);
+        });
+        it('Type NodePyATVInstanceOptions should be exported', function() {
+            assert.ok(NodePyATVListenerState);
+        });
+        it('Type NodePyATVPowerState should be exported', function() {
+            assert.ok(NodePyATVPowerState);
         });
     });
 });

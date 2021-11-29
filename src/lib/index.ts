@@ -13,9 +13,14 @@ export {
     NodePyATVFindAndInstanceOptions,
     NodePyATVDeviceOptions,
     NodePyATVGetStateOptions,
-    NodePyATVState
+    NodePyATVState,
+    NodePyATVPowerState,
+    NodePyATVListenerState,
+    NodePyATVEventValueType,
 } from './types';
 
 export {default as NodePyATVDeviceEvent} from './device-event';
+export {default as NodePyATVDeviceEvents} from './device-events';
+export {default as NodePyATVDevice} from './device';
 
 export {default} from './instance';

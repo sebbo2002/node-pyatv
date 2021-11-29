@@ -1,3 +1,19 @@
+# [4.2.0-develop.2](https://github.com/sebbo2002/node-pyatv/compare/v4.2.0-develop.1...v4.2.0-develop.2) (2021-11-29)
+
+
+### Features
+
+* Add previously inaccessible types and classes to exports ([9443c02](https://github.com/sebbo2002/node-pyatv/commit/9443c02aad02406d465b9ead91a6e88d8f171c44))
+
+# [4.2.0-develop.1](https://github.com/sebbo2002/node-pyatv/compare/v4.1.1-develop.1...v4.2.0-develop.1) (2021-11-29)
+
+
+### Features
+
+* Handle pyatv exceptions for `getState()` and event listeners ([a695e11](https://github.com/sebbo2002/node-pyatv/commit/a695e113258d53dcc6aef5f06e6815b9045aa502)), closes [#105](https://github.com/sebbo2002/node-pyatv/issues/105)
+
+## [4.1.1-develop.1](https://github.com/sebbo2002/node-pyatv/compare/v4.1.0...v4.1.1-develop.1) (2021-10-22)
+
 # [4.1.0](https://github.com/sebbo2002/node-pyatv/compare/v4.0.0...v4.1.0) (2021-10-09)
 
 

@@ -11,8 +11,7 @@ import {
 import {ChildProcess} from 'child_process';
 
 import {EventEmitter} from 'events';
-import NodePyATVDevice from './device';
-import NodePyATVDeviceEvent from './device-event';
+import {NodePyATVDevice, NodePyATVDeviceEvent} from '../lib';
 import {addRequestId, debug, execute, getParamters, parseState, removeRequestId} from './tools';
 import {FakeChildProcess} from './fake-spawn';
 
@@ -91,8 +90,13 @@ export default class NodePyATVDeviceEvents extends EventEmitter {
     }
 
     private applyPushUpdate(update: NodePyATVInternalState, reqId: string): void {
-        const newState = parseState(update, reqId, this.options);
-        this.applyStateAndEmitEvents(newState);
+        try {
+            const newState = parseState(update, reqId, this.options);
+            this.applyStateAndEmitEvents(newState);
+        }
+        catch(error) {
+            this.emit('error', error);
+        }
     }
 
     private checkListener(): void {

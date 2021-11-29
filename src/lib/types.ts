@@ -171,6 +171,7 @@ export interface NodePyATVInternalState {
     power_state?: string | unknown,
     push_updates?: string | unknown,
     exception?: string | unknown,
+    stacktrace?: string | unknown,
     connection?: string | unknown
 }
 

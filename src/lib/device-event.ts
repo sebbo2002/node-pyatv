@@ -1,6 +1,6 @@
 'use strict';
 
-import NodePyATVDevice from './device';
+import {NodePyATVDevice} from '../lib';
 import {NodePyATVEventValueType, NodePyATVStateIndex} from './types';
 
 export default class NodePyATVDeviceEvent {

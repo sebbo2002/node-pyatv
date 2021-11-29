@@ -252,6 +252,14 @@ export function parseState(input: NodePyATVInternalState, id: string, options: N
     if (!input || typeof input !== 'object') {
         return result;
     }
+    if(input.exception) {
+        let errorStr = 'Got pyatv Error: ' + input.exception;
+        if(input.stacktrace) {
+            errorStr += '\n\npyatv Stacktrace:\n' + input.stacktrace;
+        }
+
+        throw new Error(errorStr);
+    }
 
     // datetime
     if (typeof input.datetime === 'string') {

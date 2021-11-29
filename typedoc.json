@@ -7,7 +7,7 @@
     "excludePrivate": true,
     "excludeProtected": true,
     "includeVersion": true,
-    "name": "",
+    "name": "node-pyatv",
     "out": "./docs/reference",
     "plugin": [],
     "readme": "README.md",

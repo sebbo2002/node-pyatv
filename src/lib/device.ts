@@ -14,8 +14,7 @@ import {
 } from './types';
 
 import {addRequestId, getParamters, parseState, removeRequestId, request} from './tools';
-import NodePyATVDeviceEvents from './device-events';
-import NodePyATVDeviceEvent from './device-event';
+import {NodePyATVDeviceEvents, NodePyATVDeviceEvent} from '../lib';
 import { EventEmitter } from 'events';
 
 /**
@@ -148,14 +147,19 @@ export default class NodePyATVDevice implements EventEmitter{
         }
 
         const id = addRequestId();
-        const parameters = getParamters(this.options);
 
-        const result = await request(id, NodePyATVExecutableType.atvscript, [...parameters, 'playing'], this.options);
-        const newState = parseState(result, id, this.options);
-        this.applyState(newState);
+        try {
+            const parameters = getParamters(this.options);
 
-        removeRequestId(id);
-        return newState;
+            const result = await request(id, NodePyATVExecutableType.atvscript, [...parameters, 'playing'], this.options);
+            const newState = parseState(result, id, this.options);
+
+            this.applyState(newState);
+            return newState;
+        }
+        finally {
+            removeRequestId(id);
+        }
     }
 
     /**

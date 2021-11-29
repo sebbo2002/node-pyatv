@@ -21,6 +21,6 @@ export {
 
 export {default as NodePyATVDeviceEvent} from './device-event';
 export {default as NodePyATVDeviceEvents} from './device-events';
-export {default as NodeMyATVDevice} from './device';
+export {default as NodePyATVDevice} from './device';
 
 export {default} from './instance';

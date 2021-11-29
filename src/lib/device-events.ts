@@ -11,8 +11,7 @@ import {
 import {ChildProcess} from 'child_process';
 
 import {EventEmitter} from 'events';
-import NodePyATVDevice from './device';
-import NodePyATVDeviceEvent from './device-event';
+import {NodePyATVDevice, NodePyATVDeviceEvent} from '../lib';
 import {addRequestId, debug, execute, getParamters, parseState, removeRequestId} from './tools';
 import {FakeChildProcess} from './fake-spawn';
 

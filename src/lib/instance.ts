@@ -11,7 +11,7 @@ import {
 } from './types';
 
 import {addRequestId, debug, getParamters, removeRequestId, request} from './tools';
-import NodePyATVDevice from './device';
+import {NodePyATVDevice} from '../lib';
 
 /**
  * Default class exported by `@sebbo2002/node-pyatv`. Use [[find]] to scan for devices in your local network. Use

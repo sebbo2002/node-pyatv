@@ -14,8 +14,7 @@ import {
 } from './types';
 
 import {addRequestId, getParamters, parseState, removeRequestId, request} from './tools';
-import NodePyATVDeviceEvents from './device-events';
-import NodePyATVDeviceEvent from './device-event';
+import {NodePyATVDeviceEvents, NodePyATVDeviceEvent} from '../lib';
 import { EventEmitter } from 'events';
 
 /**

@@ -1,10 +1,8 @@
 'use strict';
 
 import assert from 'assert';
-import NodePyATVDevice from '../src/lib/device';
 import {createFakeSpawn} from '../src/lib/fake-spawn';
-import NodePyATVDeviceEvent from '../src/lib/device-event';
-import {NodePyATVPowerState} from '../src/lib/types';
+import {NodePyATVDeviceEvent, NodePyATVPowerState, NodePyATVDevice} from '../src/lib';
 
 describe('NodePyATVDeviceEvents', function () {
     describe('applyStateAndEmitEvents()', function () {

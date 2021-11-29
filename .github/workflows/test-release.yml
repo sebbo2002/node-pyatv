@@ -20,7 +20,7 @@ jobs:
       - name: 🔧 Set up Python
         uses: actions/setup-python@v2.3.0
       - name: 🔧 Setup pip cache
-        uses: actions/cache@v2.1.6
+        uses: actions/cache@v2.1.7
         id: pip-cache
         with:
           path: ~/.cache/pip
@@ -47,7 +47,7 @@ jobs:
       - name: 🔧 Set up Python
         uses: actions/setup-python@v2.3.0
       - name: 🔧 Setup pip cache
-        uses: actions/cache@v2.1.6
+        uses: actions/cache@v2.1.7
         id: pip-cache
         with:
           path: ~/.cache/pip
@@ -95,7 +95,7 @@ jobs:
       - name: 🔧 Set up Python
         uses: actions/setup-python@v2.3.0
       - name: 🔧 Setup pip cache
-        uses: actions/cache@v2.1.6
+        uses: actions/cache@v2.1.7
         id: pip-cache
         with:
           path: ~/.cache/pip

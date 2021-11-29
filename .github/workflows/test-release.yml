@@ -20,7 +20,7 @@ jobs:
       - name: 🔧 Set up Python
         uses: actions/setup-python@v2.3.0
         with:
-          - cache: 'pip'
+          cache: 'pip'
       - name: 📦 Install pyatv
         run: pip install pyatv
       - name: 🔧 Setup node.js
@@ -43,7 +43,7 @@ jobs:
       - name: 🔧 Set up Python
         uses: actions/setup-python@v2.3.0
         with:
-          - cache: 'pip'
+          cache: 'pip'
       - name: 📦 Install pyatv
         run: pip install pyatv
       - name: 🔧 Setup node.js
@@ -87,7 +87,7 @@ jobs:
       - name: 🔧 Set up Python
         uses: actions/setup-python@v2.3.0
         with:
-          - cache: 'pip'
+          cache: 'pip'
       - name: 📦 Install pyatv
         run: pip install pyatv
       - name: 🔧 Setup node.js

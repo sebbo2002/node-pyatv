@@ -19,8 +19,12 @@ jobs:
         uses: actions/checkout@v2
       - name: 🔧 Set up Python
         uses: actions/setup-python@v2.3.0
+      - name: 🔧 Setup pip cache
+        uses: actions/cache@v2.1.7
+        id: pip-cache
         with:
-          cache: 'pip'
+          path: ~/.cache/pip
+          key: pip
       - name: 📦 Install pyatv
         run: pip install pyatv
       - name: 🔧 Setup node.js
@@ -42,8 +46,12 @@ jobs:
         uses: actions/checkout@v2
       - name: 🔧 Set up Python
         uses: actions/setup-python@v2.3.0
+      - name: 🔧 Setup pip cache
+        uses: actions/cache@v2.1.7
+        id: pip-cache
         with:
-          cache: 'pip'
+          path: ~/.cache/pip
+          key: pip
       - name: 📦 Install pyatv
         run: pip install pyatv
       - name: 🔧 Setup node.js
@@ -86,8 +94,12 @@ jobs:
         uses: actions/checkout@v2
       - name: 🔧 Set up Python
         uses: actions/setup-python@v2.3.0
+      - name: 🔧 Setup pip cache
+        uses: actions/cache@v2.1.7
+        id: pip-cache
         with:
-          cache: 'pip'
+          path: ~/.cache/pip
+          key: pip
       - name: 📦 Install pyatv
         run: pip install pyatv
       - name: 🔧 Setup node.js

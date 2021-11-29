@@ -91,8 +91,13 @@ export default class NodePyATVDeviceEvents extends EventEmitter {
     }
 
     private applyPushUpdate(update: NodePyATVInternalState, reqId: string): void {
-        const newState = parseState(update, reqId, this.options);
-        this.applyStateAndEmitEvents(newState);
+        try {
+            const newState = parseState(update, reqId, this.options);
+            this.applyStateAndEmitEvents(newState);
+        }
+        catch(error) {
+            this.emit('error', error);
+        }
     }
 
     private checkListener(): void {

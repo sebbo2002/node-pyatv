@@ -89,6 +89,29 @@ describe('NodePyATVDeviceEvents', function () {
 
             assert.deepStrictEqual(sort, ['update:title', 'update']);
         });
+        it('should emit error events on failures', async function () {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: createFakeSpawn(cp => {
+                    cp.onStdIn(() => cp.end());
+                    cp.stdout({
+                        result: 'failure',
+                        datetime: '2021-11-24T21:13:36.424576+03:00',
+                        exception: 'invalid credentials: 321',
+                        stacktrace: 'Traceback (most recent call last):\n  File \"/Users/free/Library/Python/3.8/lib/python/site-packages/pyatv/scripts/atvscript.py\", line 302, in appstart\n    print(args.output(await _handle_command(args, abort_sem, loop)), flush=True)\n  File \"/Users/free/Library/Python/3.8/lib/python/site-packages/pyatv/scripts/atvscript.py\", line 196, in _handle_command\n    atv = await connect(config, loop, protocol=Protocol.MRP)\n  File \"/Users/free/Library/Python/3.8/lib/python/site-packages/pyatv/__init__.py\", line 96, in connect\n    for setup_data in proto_methods.setup(\n  File \"/Users/free/Library/Python/3.8/lib/python/site-packages/pyatv/protocols/airplay/__init__.py\", line 192, in setup\n    stream = AirPlayStream(config, service)\n  File \"/Users/free/Library/Python/3.8/lib/python/site-packages/pyatv/protocols/airplay/__init__.py\", line 79, in __init__\n    self._credentials: HapCredentials = parse_credentials(self.service.credentials)\n  File \"/Users/free/Library/Python/3.8/lib/python/site-packages/pyatv/auth/hap_pairing.py\", line 139, in parse_credentials\n    raise exceptions.InvalidCredentialsError(\"invalid credentials: \" + detail_string)\npyatv.exceptions.InvalidCredentialsError: invalid credentials: 321\n'
+                    });
+                })
+            });
+
+            await new Promise(cb => {
+                device.once('error', error => {
+                    assert.ok(error instanceof Error);
+                    assert.ok(error.toString().includes('invalid credentials: 321'));
+                    cb(undefined);
+                });
+            });
+        });
         it('should not emit an update if new value is same as old one', async function () {
             let spawnCounter = 0;
             let eventCounter = 0;

@@ -1,7 +1,7 @@
 'use strict';
 
 import assert from 'assert';
-import {addRequestId, debug, getExecutable, getParamters, parseState, removeRequestId} from '../src/lib/tools';
+import { addRequestId, debug, getExecutable, getParamters, parseState, removeRequestId } from '../src/lib/tools';
 import {
     NodePyATVDeviceState,
     NodePyATVExecutableType,
@@ -28,7 +28,7 @@ describe('Tools', function () {
             debug('TEST', 'Hello World.', {});
         });
         it('should work with default logger', function () {
-            debug('TEST', 'Hello World.', {debug: true});
+            debug('TEST', 'Hello World.', { debug: true });
         });
         it('should work with custom logger', function () {
             debug('TEST', 'Hello World.', {
@@ -39,7 +39,7 @@ describe('Tools', function () {
             });
         });
         it('should work with colors disabled', function () {
-            debug('TEST', 'Hello World.', {noColors: true});
+            debug('TEST', 'Hello World.', { noColors: true });
         });
         it('should work with custom logger and colors disabled', function () {
             debug('TEST', 'Hello World.', {
@@ -201,8 +201,19 @@ describe('Tools', function () {
                 powerState: null
             });
         });
+        it('should throw an error for pyatv exceptions', function () {
+            const input = {
+                result: 'failure',
+                datetime: '2021-11-24T21:13:36.424576+03:00',
+                exception: 'invalid credentials: 321',
+                stacktrace: 'Traceback (most recent call last):\n  File \"/Users/free/Library/Python/3.8/lib/python/site-packages/pyatv/scripts/atvscript.py\", line 302, in appstart\n    print(args.output(await _handle_command(args, abort_sem, loop)), flush=True)\n  File \"/Users/free/Library/Python/3.8/lib/python/site-packages/pyatv/scripts/atvscript.py\", line 196, in _handle_command\n    atv = await connect(config, loop, protocol=Protocol.MRP)\n  File \"/Users/free/Library/Python/3.8/lib/python/site-packages/pyatv/__init__.py\", line 96, in connect\n    for setup_data in proto_methods.setup(\n  File \"/Users/free/Library/Python/3.8/lib/python/site-packages/pyatv/protocols/airplay/__init__.py\", line 192, in setup\n    stream = AirPlayStream(config, service)\n  File \"/Users/free/Library/Python/3.8/lib/python/site-packages/pyatv/protocols/airplay/__init__.py\", line 79, in __init__\n    self._credentials: HapCredentials = parse_credentials(self.service.credentials)\n  File \"/Users/free/Library/Python/3.8/lib/python/site-packages/pyatv/auth/hap_pairing.py\", line 139, in parse_credentials\n    raise exceptions.InvalidCredentialsError(\"invalid credentials: \" + detail_string)\npyatv.exceptions.InvalidCredentialsError: invalid credentials: 321\n'
+            };
+            assert.throws(() => {
+                parseState(input, '', {});
+            }, /Got pyatv Error: invalid credentials: 321/);
+        });
         it('should ignore date if it\'s an invalid date', function () {
-            const input = {datetime: 'today'};
+            const input = { datetime: 'today' };
             const result = parseState(input, '', {});
             assert.deepStrictEqual(result, {
                 dateTime: null,

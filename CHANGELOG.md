@@ -1,3 +1,10 @@
+# [4.2.0-develop.2](https://github.com/sebbo2002/node-pyatv/compare/v4.2.0-develop.1...v4.2.0-develop.2) (2021-11-29)
+
+
+### Features
+
+* Add previously inaccessible types and classes to exports ([9443c02](https://github.com/sebbo2002/node-pyatv/commit/9443c02aad02406d465b9ead91a6e88d8f171c44))
+
 # [4.2.0-develop.1](https://github.com/sebbo2002/node-pyatv/compare/v4.1.1-develop.1...v4.2.0-develop.1) (2021-11-29)
 
 

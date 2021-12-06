@@ -1,3 +1,10 @@
+## [4.2.1-develop.1](https://github.com/sebbo2002/node-pyatv/compare/v4.2.0...v4.2.1-develop.1) (2021-12-06)
+
+
+### Bug Fixes
+
+* **CI:** Fix DockerHub container release ([01b7534](https://github.com/sebbo2002/node-pyatv/commit/01b753406d1f1ef24a949c7d7b946d99b779d013))
+
 # [4.2.0](https://github.com/sebbo2002/node-pyatv/compare/v4.1.0...v4.2.0) (2021-11-29)
 
 

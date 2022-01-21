@@ -1,3 +1,10 @@
+# [4.3.0-develop.1](https://github.com/sebbo2002/node-pyatv/compare/v4.2.1...v4.3.0-develop.1) (2022-01-21)
+
+
+### Features
+
+* Add `turnOn()` and `turnOff()` commands ([82e52d4](https://github.com/sebbo2002/node-pyatv/commit/82e52d417b191dc5001d0f332140b6746578062f))
+
 ## [4.2.1](https://github.com/sebbo2002/node-pyatv/compare/v4.2.0...v4.2.1) (2021-12-14)
 
 

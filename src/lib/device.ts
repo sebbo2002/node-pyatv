@@ -5,7 +5,8 @@ import {
     NodePyATVDeviceState,
     NodePyATVExecutableType,
     NodePyATVGetStateOptions,
-    NodePyATVInternalKeys, NodePyATVKeys,
+    NodePyATVInternalKeys,
+    NodePyATVKeys,
     NodePyATVMediaType,
     NodePyATVProtocol,
     NodePyATVRepeatState,
@@ -13,8 +14,8 @@ import {
     NodePyATVState
 } from './types';
 
-import {addRequestId, getParamters, parseState, removeRequestId, request} from './tools';
-import {NodePyATVDeviceEvents, NodePyATVDeviceEvent} from '../lib';
+import { addRequestId, getParamters, parseState, removeRequestId, request } from './tools';
+import { NodePyATVDeviceEvent, NodePyATVDeviceEvents } from '../lib';
 import { EventEmitter } from 'events';
 
 /**
@@ -315,12 +316,15 @@ export default class NodePyATVDevice implements EventEmitter{
         return state.appId;
     }
 
-    private async _pressKey(key: NodePyATVInternalKeys) {
+    private async _pressKey(key: NodePyATVInternalKeys, executableType = NodePyATVExecutableType.atvscript) {
         const id = addRequestId();
         const parameters = getParamters(this.options);
 
-        const result = await request(id, NodePyATVExecutableType.atvscript, [...parameters, key], this.options);
-        if (typeof result !== 'object' || result.result !== 'success') {
+        const result = await request(id, executableType, [...parameters, key], this.options);
+        if (
+            executableType === NodePyATVExecutableType.atvscript &&
+            (typeof result !== 'object' || result.result !== 'success')
+        ) {
             throw new Error(`Unable to parse pyatv response: ${JSON.stringify(result, null, '  ')}`);
         }
 
@@ -478,6 +482,7 @@ export default class NodePyATVDevice implements EventEmitter{
     /**
      * Send the "suspend" command
      * @category Control
+     * @deprecated
      */
     async suspend(): Promise<void> {
         await this._pressKey(NodePyATVInternalKeys.suspend);
@@ -518,9 +523,26 @@ export default class NodePyATVDevice implements EventEmitter{
     /**
      * Send the "wakeup" command
      * @category Control
+     * @deprecated
      */
     async wakeup(): Promise<void> {
         await this._pressKey(NodePyATVInternalKeys.wakeup);
+    }
+
+    /**
+     * Send the "turn_off" command
+     * @category Control
+     */
+    async turnOff(): Promise<void> {
+        await this._pressKey(NodePyATVInternalKeys.turnOff, NodePyATVExecutableType.atvremote);
+    }
+
+    /**
+     * Send the "turn_on" command
+     * @category Control
+     */
+    async turnOn(): Promise<void> {
+        await this._pressKey(NodePyATVInternalKeys.turnOn, NodePyATVExecutableType.atvremote);
     }
 
     /**

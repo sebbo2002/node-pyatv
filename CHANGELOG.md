@@ -1,3 +1,10 @@
+# [4.3.0-develop.3](https://github.com/sebbo2002/node-pyatv/compare/v4.3.0-develop.2...v4.3.0-develop.3) (2022-01-21)
+
+
+### Bug Fixes
+
+* Handle turnOn/turnOff in pressKey() correctly ([7e6eefa](https://github.com/sebbo2002/node-pyatv/commit/7e6eefa8df87d73c4129bdc6d24148fe8ea9976d))
+
 # [4.3.0-develop.2](https://github.com/sebbo2002/node-pyatv/compare/v4.3.0-develop.1...v4.3.0-develop.2) (2022-01-21)
 
 

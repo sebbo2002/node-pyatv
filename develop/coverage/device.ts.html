@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">96.64% </span>
+                <span class="strong">98.32% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>115/119</span>
+                <span class='fraction'>117/119</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">95.52% </span>
+                <span class="strong">98.51% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>64/67</span>
+                <span class='fraction'>66/67</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">96.64% </span>
+                <span class="strong">98.32% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>115/119</span>
+                <span class='fraction'>117/119</span>
             </div>
         
             
@@ -796,9 +796,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">85x</span>
-<span class="cline-any cline-yes">85x</span>
-<span class="cline-any cline-yes">85x</span>
+<span class="cline-any cline-yes">87x</span>
+<span class="cline-any cline-yes">87x</span>
+<span class="cline-any cline-yes">87x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1082,18 +1082,18 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">23x</span>
-<span class="cline-any cline-yes">23x</span>
+<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-yes">25x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">23x</span>
-<span class="cline-any cline-yes">23x</span>
+<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-yes">25x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">22x</span>
+<span class="cline-any cline-yes">24x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1299,7 +1299,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1307,7 +1307,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -2004,16 +2004,16 @@ export default class NodePyATVDevice implements EventEmitter{
      * Send the "turn_off" command
      * @category Control
      */
-    async <span class="fstat-no" title="function not covered" >turnOff(</span>): Promise&lt;void&gt; {
-<span class="cstat-no" title="statement not covered" >        await this._pressKey(NodePyATVInternalKeys.turnOff, NodePyATVExecutableType.atvremote);</span>
+    async turnOff(): Promise&lt;void&gt; {
+        await this._pressKey(NodePyATVInternalKeys.turnOff, NodePyATVExecutableType.atvremote);
     }
 &nbsp;
     /**
      * Send the "turn_on" command
      * @category Control
      */
-    async <span class="fstat-no" title="function not covered" >turnOn(</span>): Promise&lt;void&gt; {
-<span class="cstat-no" title="statement not covered" >        await this._pressKey(NodePyATVInternalKeys.turnOn, NodePyATVExecutableType.atvremote);</span>
+    async turnOn(): Promise&lt;void&gt; {
+        await this._pressKey(NodePyATVInternalKeys.turnOn, NodePyATVExecutableType.atvremote);
     }
 &nbsp;
     /**
@@ -2182,7 +2182,7 @@ export default class NodePyATVDevice implements EventEmitter{
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Fri Jan 21 2022 22:10:24 GMT+0000 (Coordinated Universal Time)
+                at Fri Jan 21 2022 22:14:59 GMT+0000 (Coordinated Universal Time)
             </div>
         </div>
         <script src="prettify.js"></script>

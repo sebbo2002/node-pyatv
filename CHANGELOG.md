@@ -1,3 +1,10 @@
+# [4.3.0-develop.2](https://github.com/sebbo2002/node-pyatv/compare/v4.3.0-develop.1...v4.3.0-develop.2) (2022-01-21)
+
+
+### Bug Fixes
+
+* Add `turnOn` and `turnOff` to NodePyATVKeys ([7497591](https://github.com/sebbo2002/node-pyatv/commit/7497591f0254687384004f04399b7a29eeba46d9))
+
 # [4.3.0-develop.1](https://github.com/sebbo2002/node-pyatv/compare/v4.2.1...v4.3.0-develop.1) (2022-01-21)
 
 

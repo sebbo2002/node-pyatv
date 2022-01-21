@@ -94,7 +94,9 @@ export enum NodePyATVInternalKeys {
     up = 'up',
     volumeDown = 'volume_down',
     volumeUp = 'volume_up',
-    wakeup = 'wakeup'
+    wakeup = 'wakeup',
+    turnOff = 'turn_off',
+    turnOn = 'turn_on'
 }
 
 export enum NodePyATVListenerState {

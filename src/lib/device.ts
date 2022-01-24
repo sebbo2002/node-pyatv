@@ -5,7 +5,8 @@ import {
     NodePyATVDeviceState,
     NodePyATVExecutableType,
     NodePyATVGetStateOptions,
-    NodePyATVInternalKeys, NodePyATVKeys,
+    NodePyATVInternalKeys,
+    NodePyATVKeys,
     NodePyATVMediaType,
     NodePyATVProtocol,
     NodePyATVRepeatState,
@@ -13,8 +14,8 @@ import {
     NodePyATVState
 } from './types';
 
-import {addRequestId, getParamters, parseState, removeRequestId, request} from './tools';
-import {NodePyATVDeviceEvents, NodePyATVDeviceEvent} from '../lib';
+import { addRequestId, getParamters, parseState, removeRequestId, request } from './tools';
+import { NodePyATVDeviceEvent, NodePyATVDeviceEvents } from '../lib';
 import { EventEmitter } from 'events';
 
 /**
@@ -315,12 +316,15 @@ export default class NodePyATVDevice implements EventEmitter{
         return state.appId;
     }
 
-    private async _pressKey(key: NodePyATVInternalKeys) {
+    private async _pressKey(key: NodePyATVInternalKeys, executableType: NodePyATVExecutableType) {
         const id = addRequestId();
         const parameters = getParamters(this.options);
 
-        const result = await request(id, NodePyATVExecutableType.atvscript, [...parameters, key], this.options);
-        if (typeof result !== 'object' || result.result !== 'success') {
+        const result = await request(id, executableType, [...parameters, key], this.options);
+        if (
+            executableType === NodePyATVExecutableType.atvscript &&
+            (typeof result !== 'object' || result.result !== 'success')
+        ) {
             throw new Error(`Unable to parse pyatv response: ${JSON.stringify(result, null, '  ')}`);
         }
 
@@ -352,7 +356,11 @@ export default class NodePyATVDevice implements EventEmitter{
         }
 
         const internalKey = internalKeyEntry[1];
-        await this._pressKey(internalKey);
+        const executableType = [NodePyATVKeys.turnOn, NodePyATVKeys.turnOff].includes(key) ?
+            NodePyATVExecutableType.atvremote :
+            NodePyATVExecutableType.atvscript;
+
+        await this._pressKey(internalKey, executableType);
     }
 
     /**
@@ -360,7 +368,7 @@ export default class NodePyATVDevice implements EventEmitter{
      * @category Control
      */
     async down(): Promise<void> {
-        await this._pressKey(NodePyATVInternalKeys.down);
+        await this._pressKey(NodePyATVInternalKeys.down, NodePyATVExecutableType.atvscript);
     }
 
     /**
@@ -368,7 +376,7 @@ export default class NodePyATVDevice implements EventEmitter{
      * @category Control
      */
     async home(): Promise<void> {
-        await this._pressKey(NodePyATVInternalKeys.home);
+        await this._pressKey(NodePyATVInternalKeys.home, NodePyATVExecutableType.atvscript);
     }
 
     /**
@@ -376,7 +384,7 @@ export default class NodePyATVDevice implements EventEmitter{
      * @category Control
      */
     async homeHold(): Promise<void> {
-        await this._pressKey(NodePyATVInternalKeys.homeHold);
+        await this._pressKey(NodePyATVInternalKeys.homeHold, NodePyATVExecutableType.atvscript);
     }
 
     /**
@@ -384,7 +392,7 @@ export default class NodePyATVDevice implements EventEmitter{
      * @category Control
      */
     async left(): Promise<void> {
-        await this._pressKey(NodePyATVInternalKeys.left);
+        await this._pressKey(NodePyATVInternalKeys.left, NodePyATVExecutableType.atvscript);
     }
 
     /**
@@ -392,7 +400,7 @@ export default class NodePyATVDevice implements EventEmitter{
      * @category Control
      */
     async menu(): Promise<void> {
-        await this._pressKey(NodePyATVInternalKeys.menu);
+        await this._pressKey(NodePyATVInternalKeys.menu, NodePyATVExecutableType.atvscript);
     }
 
     /**
@@ -400,7 +408,7 @@ export default class NodePyATVDevice implements EventEmitter{
      * @category Control
      */
     async next(): Promise<void> {
-        await this._pressKey(NodePyATVInternalKeys.next);
+        await this._pressKey(NodePyATVInternalKeys.next, NodePyATVExecutableType.atvscript);
     }
 
     /**
@@ -408,7 +416,7 @@ export default class NodePyATVDevice implements EventEmitter{
      * @category Control
      */
     async pause(): Promise<void> {
-        await this._pressKey(NodePyATVInternalKeys.pause);
+        await this._pressKey(NodePyATVInternalKeys.pause, NodePyATVExecutableType.atvscript);
     }
 
     /**
@@ -416,7 +424,7 @@ export default class NodePyATVDevice implements EventEmitter{
      * @category Control
      */
     async play(): Promise<void> {
-        await this._pressKey(NodePyATVInternalKeys.play);
+        await this._pressKey(NodePyATVInternalKeys.play, NodePyATVExecutableType.atvscript);
     }
 
     /**
@@ -424,7 +432,7 @@ export default class NodePyATVDevice implements EventEmitter{
      * @category Control
      */
     async playPause(): Promise<void> {
-        await this._pressKey(NodePyATVInternalKeys.playPause);
+        await this._pressKey(NodePyATVInternalKeys.playPause, NodePyATVExecutableType.atvscript);
     }
 
     /**
@@ -432,7 +440,7 @@ export default class NodePyATVDevice implements EventEmitter{
      * @category Control
      */
     async previous(): Promise<void> {
-        await this._pressKey(NodePyATVInternalKeys.previous);
+        await this._pressKey(NodePyATVInternalKeys.previous, NodePyATVExecutableType.atvscript);
     }
 
     /**
@@ -440,7 +448,7 @@ export default class NodePyATVDevice implements EventEmitter{
      * @category Control
      */
     async right(): Promise<void> {
-        await this._pressKey(NodePyATVInternalKeys.right);
+        await this._pressKey(NodePyATVInternalKeys.right, NodePyATVExecutableType.atvscript);
     }
 
     /**
@@ -448,7 +456,7 @@ export default class NodePyATVDevice implements EventEmitter{
      * @category Control
      */
     async select(): Promise<void> {
-        await this._pressKey(NodePyATVInternalKeys.select);
+        await this._pressKey(NodePyATVInternalKeys.select, NodePyATVExecutableType.atvscript);
     }
 
     /**
@@ -456,7 +464,7 @@ export default class NodePyATVDevice implements EventEmitter{
      * @category Control
      */
     async skipBackward(): Promise<void> {
-        await this._pressKey(NodePyATVInternalKeys.skipBackward);
+        await this._pressKey(NodePyATVInternalKeys.skipBackward, NodePyATVExecutableType.atvscript);
     }
 
     /**
@@ -464,7 +472,7 @@ export default class NodePyATVDevice implements EventEmitter{
      * @category Control
      */
     async skipForward(): Promise<void> {
-        await this._pressKey(NodePyATVInternalKeys.skipForward);
+        await this._pressKey(NodePyATVInternalKeys.skipForward, NodePyATVExecutableType.atvscript);
     }
 
     /**
@@ -472,15 +480,16 @@ export default class NodePyATVDevice implements EventEmitter{
      * @category Control
      */
     async stop(): Promise<void> {
-        await this._pressKey(NodePyATVInternalKeys.stop);
+        await this._pressKey(NodePyATVInternalKeys.stop, NodePyATVExecutableType.atvscript);
     }
 
     /**
      * Send the "suspend" command
      * @category Control
+     * @deprecated
      */
     async suspend(): Promise<void> {
-        await this._pressKey(NodePyATVInternalKeys.suspend);
+        await this._pressKey(NodePyATVInternalKeys.suspend, NodePyATVExecutableType.atvscript);
     }
 
     /**
@@ -488,7 +497,7 @@ export default class NodePyATVDevice implements EventEmitter{
      * @category Control
      */
     async topMenu(): Promise<void> {
-        await this._pressKey(NodePyATVInternalKeys.topMenu);
+        await this._pressKey(NodePyATVInternalKeys.topMenu, NodePyATVExecutableType.atvscript);
     }
 
     /**
@@ -496,7 +505,7 @@ export default class NodePyATVDevice implements EventEmitter{
      * @category Control
      */
     async up(): Promise<void> {
-        await this._pressKey(NodePyATVInternalKeys.up);
+        await this._pressKey(NodePyATVInternalKeys.up, NodePyATVExecutableType.atvscript);
     }
 
     /**
@@ -504,7 +513,7 @@ export default class NodePyATVDevice implements EventEmitter{
      * @category Control
      */
     async volumeDown(): Promise<void> {
-        await this._pressKey(NodePyATVInternalKeys.volumeDown);
+        await this._pressKey(NodePyATVInternalKeys.volumeDown, NodePyATVExecutableType.atvscript);
     }
 
     /**
@@ -512,15 +521,32 @@ export default class NodePyATVDevice implements EventEmitter{
      * @category Control
      */
     async volumeUp(): Promise<void> {
-        await this._pressKey(NodePyATVInternalKeys.volumeUp);
+        await this._pressKey(NodePyATVInternalKeys.volumeUp, NodePyATVExecutableType.atvscript);
     }
 
     /**
      * Send the "wakeup" command
      * @category Control
+     * @deprecated
      */
     async wakeup(): Promise<void> {
-        await this._pressKey(NodePyATVInternalKeys.wakeup);
+        await this._pressKey(NodePyATVInternalKeys.wakeup, NodePyATVExecutableType.atvscript);
+    }
+
+    /**
+     * Send the "turn_off" command
+     * @category Control
+     */
+    async turnOff(): Promise<void> {
+        await this._pressKey(NodePyATVInternalKeys.turnOff, NodePyATVExecutableType.atvremote);
+    }
+
+    /**
+     * Send the "turn_on" command
+     * @category Control
+     */
+    async turnOn(): Promise<void> {
+        await this._pressKey(NodePyATVInternalKeys.turnOn, NodePyATVExecutableType.atvremote);
     }
 
     /**

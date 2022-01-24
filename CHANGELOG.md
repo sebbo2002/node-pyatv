@@ -1,3 +1,16 @@
+# [4.3.0](https://github.com/sebbo2002/node-pyatv/compare/v4.2.1...v4.3.0) (2022-01-24)
+
+
+### Bug Fixes
+
+* Add `turnOn` and `turnOff` to NodePyATVKeys ([7497591](https://github.com/sebbo2002/node-pyatv/commit/7497591f0254687384004f04399b7a29eeba46d9))
+* Handle turnOn/turnOff in pressKey() correctly ([7e6eefa](https://github.com/sebbo2002/node-pyatv/commit/7e6eefa8df87d73c4129bdc6d24148fe8ea9976d))
+
+
+### Features
+
+* Add `turnOn()` and `turnOff()` commands ([82e52d4](https://github.com/sebbo2002/node-pyatv/commit/82e52d417b191dc5001d0f332140b6746578062f))
+
 # [4.3.0-develop.3](https://github.com/sebbo2002/node-pyatv/compare/v4.3.0-develop.2...v4.3.0-develop.3) (2022-01-21)
 
 

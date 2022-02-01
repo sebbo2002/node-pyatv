@@ -9,7 +9,7 @@
   },
   "description": "A lightweight wrapper around pyatv…",
   "devDependencies": {
-    "@amanda-mitchell/semantic-release-npm-multiple": "^2.16.0",
+    "@amanda-mitchell/semantic-release-npm-multiple": "^2.17.0",
     "@qiwi/semantic-release-gh-pages-plugin": "^5.2.0",
     "@semantic-release/changelog": "^6.0.1",
     "@semantic-release/exec": "^6.0.3",

@@ -1,3 +1,5 @@
+## [4.3.2-develop.1](https://github.com/sebbo2002/node-pyatv/compare/v4.3.1...v4.3.2-develop.1) (2022-04-13)
+
 ## [4.3.1](https://github.com/sebbo2002/node-pyatv/compare/v4.3.0...v4.3.1) (2022-03-31)
 
 ## [4.3.1-develop.1](https://github.com/sebbo2002/node-pyatv/compare/v4.3.0...v4.3.1-develop.1) (2022-03-31)

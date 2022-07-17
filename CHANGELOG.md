@@ -1,3 +1,15 @@
+# [5.0.0-develop.1](https://github.com/sebbo2002/node-pyatv/compare/v4.3.4-develop.4...v5.0.0-develop.1) (2022-07-17)
+
+
+### Build System
+
+* Native ESM support ([7b86a4f](https://github.com/sebbo2002/node-pyatv/commit/7b86a4f1187c387a3a5792e1fb72d822b04e3631))
+
+
+### BREAKING CHANGES
+
+* Only Support for node.js ^12.20.0 || >=14.13.1
+
 ## [4.3.4-develop.4](https://github.com/sebbo2002/node-pyatv/compare/v4.3.4-develop.3...v4.3.4-develop.4) (2022-06-10)
 
 ## [4.3.4-develop.3](https://github.com/sebbo2002/node-pyatv/compare/v4.3.4-develop.2...v4.3.4-develop.3) (2022-06-09)

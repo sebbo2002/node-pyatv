@@ -1,6 +1,6 @@
 'use strict';
 
-import NodePyATVInstance from '../lib/instance';
+import NodePyATVInstance from '../lib/instance.js';
 
 (async () => {
     try {

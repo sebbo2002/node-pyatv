@@ -1,7 +1,7 @@
 'use strict';
 
-import {NodePyATVDevice} from '../lib';
-import {NodePyATVEventValueType, NodePyATVStateIndex} from './types';
+import {NodePyATVDevice} from '../lib/index.js';
+import type {NodePyATVEventValueType, NodePyATVStateIndex} from './types.js';
 
 export default class NodePyATVDeviceEvent {
     protected readonly values: {key: NodePyATVStateIndex, old: NodePyATVEventValueType, new: NodePyATVEventValueType, device: NodePyATVDevice};

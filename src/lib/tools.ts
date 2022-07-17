@@ -8,7 +8,7 @@ import {
     NodePyATVInternalState,
     NodePyATVMediaType, NodePyATVPowerState, NodePyATVRepeatState, NodePyATVShuffleState,
     NodePyATVState
-} from './types';
+} from './types.js';
 
 import {ChildProcess, spawn, SpawnOptions} from 'child_process';
 import {FakeChildProcess} from './fake-spawn';

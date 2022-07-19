@@ -19,7 +19,7 @@
     "@types/semver": "^7.3.10",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.30.5",
-    "eslint": "^8.18.0",
+    "eslint": "^8.19.0",
     "eslint-plugin-jsonc": "^2.3.1",
     "esm": "^3.2.25",
     "license-checker": "^25.0.1",

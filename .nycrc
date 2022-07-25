@@ -10,6 +10,7 @@
     "exclude": [
         "coverage/**",
         "node_modules/**",
+        "src/examples/**",
         "src/bin/check.ts"
     ],
     "report-dir": "./docs/coverage/",

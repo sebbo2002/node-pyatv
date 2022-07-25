@@ -1,7 +1,11 @@
 'use strict';
 
 import assert from 'assert';
-import {createFakeSpawn} from '../src/lib/fake-spawn';
+import { readFileSync } from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+import { createFakeSpawn } from '../src/lib/fake-spawn.js';
 import NodePyATVInstance, {
     NodePyATVProtocol,
     NodePyATVMediaType,
@@ -12,7 +16,11 @@ import NodePyATVInstance, {
     NodePyATVKeys,
     NodePyATVListenerState,
     NodePyATVPowerState
-} from '../src/lib/index';
+} from '../src/lib/index.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const version = JSON.parse(readFileSync(__dirname + '/../package.json', 'utf8'))?.version || null;
 
 describe('NodePyATVInstance', function () {
     describe('static version()', function () {
@@ -25,9 +33,7 @@ describe('NodePyATVInstance', function () {
 
             assert.equal(typeof result.pyatv, 'string', 'result.pyatv is a string');
             assert.ok(result.pyatv.length >= 5, 'result.pyatv has content');
-
-            // eslint-disable-next-line @typescript-eslint/no-var-requires
-            assert.strictEqual(result.module, require(__dirname + '/../package.json').version || null);
+            assert.strictEqual(result.module, version);
         });
         it('should return the pyatv version', async function () {
             const result = await NodePyATVInstance.version({
@@ -48,8 +54,7 @@ describe('NodePyATVInstance', function () {
                 )
             });
 
-            // eslint-disable-next-line @typescript-eslint/no-var-requires
-            assert.strictEqual(result.module, require(__dirname + '/../package.json').version || null);
+            assert.strictEqual(result.module, version);
         });
         it('should handle option.atvremotePath', async function () {
             await NodePyATVInstance.version({
@@ -70,7 +75,9 @@ describe('NodePyATVInstance', function () {
         });
         it('should work with option.noColors', async function () {
             await NodePyATVInstance.version({
-                debug: () => {}, // eslint-disable-line @typescript-eslint/no-empty-function
+                debug: () => {
+                    // no debug log
+                },
                 noColors: true,
                 spawn: createFakeSpawn(cp =>
                     cp.code(1).end()
@@ -104,7 +111,7 @@ describe('NodePyATVInstance', function () {
 
             assert.strictEqual(result.pyatv, null);
         });
-        it('should return null on empty module version', async function () {
+        /* it('should return null on empty module version', async function () {
             const path = require.resolve(__dirname + '/../package.json');
             require(path);
 
@@ -119,8 +126,8 @@ describe('NodePyATVInstance', function () {
             });
 
             assert.strictEqual(result.module, null);
-        });
-        it('should return null on invalid module version', async function () {
+        }); */
+        /* it('should return null on invalid module version', async function () {
             const path = require.resolve(__dirname + '/../package.json');
             require(path);
 
@@ -135,7 +142,7 @@ describe('NodePyATVInstance', function () {
             });
 
             assert.strictEqual(result.module, null);
-        });
+        }); */
     });
 
     describe('static check()', function () {
@@ -143,7 +150,7 @@ describe('NodePyATVInstance', function () {
             this.timeout(12000);
             await NodePyATVInstance.check();
         });
-        it('should return nice error message if pyatv was not found', async function() {
+        it('should return nice error message if pyatv was not found', async function () {
             await assert.rejects(async () => {
                 await NodePyATVInstance.check({
                     spawn: createFakeSpawn(cp => {
@@ -161,12 +168,12 @@ describe('NodePyATVInstance', function () {
                 });
             }, /Found pyatv, but unforunately it's too old. Please update pyatv./);
         });
-        it('should return nice error message if scan failed', async function() {
+        it('should return nice error message if scan failed', async function () {
             let i = 0;
             await assert.rejects(async () => {
                 await NodePyATVInstance.check({
                     spawn: createFakeSpawn(cp => {
-                        if(i === 0) {
+                        if (i === 0) {
                             cp.stdout('atvremote 0.7.0').code(1).end();
                             i++;
                         } else {
@@ -254,15 +261,15 @@ describe('NodePyATVInstance', function () {
 
     describe('static device()', function () {
         it('should pass options to constructor', function () {
-            const device = NodePyATVInstance.device({host: '192.168.178.6', name: 'My Testdevice'});
+            const device = NodePyATVInstance.device({ host: '192.168.178.6', name: 'My Testdevice' });
             assert.strictEqual(device.host, '192.168.178.6');
             assert.strictEqual(device.name, 'My Testdevice');
         });
     });
 
-    describe('version()', function() {
-        it('should merge options from constructor', async function() {
-            const i = new NodePyATVInstance({atvremotePath: 'test'});
+    describe('version()', function () {
+        it('should merge options from constructor', async function () {
+            const i = new NodePyATVInstance({ atvremotePath: 'test' });
             await i.version({
                 spawn: createFakeSpawn(cp => {
                     assert.strictEqual(cp.cmd(), 'test');
@@ -272,9 +279,9 @@ describe('NodePyATVInstance', function () {
         });
     });
 
-    describe('check()', function() {
-        it('should merge options from constructor', async function() {
-            const i = new NodePyATVInstance({atvremotePath: 'test'});
+    describe('check()', function () {
+        it('should merge options from constructor', async function () {
+            const i = new NodePyATVInstance({ atvremotePath: 'test' });
             await assert.rejects(async () => {
                 await i.check({
                     spawn: createFakeSpawn(cp => {
@@ -286,9 +293,9 @@ describe('NodePyATVInstance', function () {
         });
     });
 
-    describe('find()', function() {
-        it('should merge options from constructor', async function() {
-            const i = new NodePyATVInstance({atvscriptPath: 'test'});
+    describe('find()', function () {
+        it('should merge options from constructor', async function () {
+            const i = new NodePyATVInstance({ atvscriptPath: 'test' });
             await i.find({
                 spawn: createFakeSpawn(cp => {
                     assert.strictEqual(cp.cmd(), 'test');
@@ -303,39 +310,39 @@ describe('NodePyATVInstance', function () {
     });
 
     describe('device()', function () {
-        it('should merge options from constructor', async function() {
-            const i = new NodePyATVInstance({debug: true});
-            const d = i.device({name: 'My Testdevice', host: '192.168.178.2'});
+        it('should merge options from constructor', async function () {
+            const i = new NodePyATVInstance({ debug: true });
+            const d = i.device({ name: 'My Testdevice', host: '192.168.178.2' });
             assert.deepStrictEqual(d.debug, true);
         });
     });
 
     describe('Type Exports', function () {
-        it('Type NodePyATVProtocol should be exported', function() {
+        it('Type NodePyATVProtocol should be exported', function () {
             assert.ok(NodePyATVProtocol);
         });
-        it('Type NodePyATVMediaType should be exported', function() {
+        it('Type NodePyATVMediaType should be exported', function () {
             assert.ok(NodePyATVMediaType);
         });
-        it('Type NodePyATVDeviceEvent should be exported', function() {
+        it('Type NodePyATVDeviceEvent should be exported', function () {
             assert.ok(NodePyATVDeviceEvent);
         });
-        it('Type NodePyATVDeviceState should be exported', function() {
+        it('Type NodePyATVDeviceState should be exported', function () {
             assert.ok(NodePyATVDeviceState);
         });
-        it('Type NodePyATVRepeatState should be exported', function() {
+        it('Type NodePyATVRepeatState should be exported', function () {
             assert.ok(NodePyATVRepeatState);
         });
-        it('Type NodePyATVShuffleState should be exported', function() {
+        it('Type NodePyATVShuffleState should be exported', function () {
             assert.ok(NodePyATVShuffleState);
         });
-        it('Type NodePyATVKeys should be exported', function() {
+        it('Type NodePyATVKeys should be exported', function () {
             assert.ok(NodePyATVKeys);
         });
-        it('Type NodePyATVInstanceOptions should be exported', function() {
+        it('Type NodePyATVInstanceOptions should be exported', function () {
             assert.ok(NodePyATVListenerState);
         });
-        it('Type NodePyATVPowerState should be exported', function() {
+        it('Type NodePyATVPowerState should be exported', function () {
             assert.ok(NodePyATVPowerState);
         });
     });

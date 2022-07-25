@@ -1,24 +1,23 @@
 name: Test & Release
 on:
-  push:
-    branches:
-      - develop
-      - main
+  push: null
   pull_request: null
 
 jobs:
   tests:
     name: Unit Tests
     runs-on: ubuntu-latest
-    if: contains(toJson(github.event.commits.*.message), '[skip ci]') == false || github.ref == 'refs/heads/main'
+    if: github.repository != 'sebbo2002/js-template' && (contains(toJson(github.event.commits.*.message), '[skip ci]') == false || github.ref == 'refs/heads/main')
     strategy:
       matrix:
-        node: [12.x, 14.x, 16.x]
+        node: [14.x, 16.x, 18.x]
     steps:
       - name: ☁️ Checkout Project
         uses: actions/checkout@v3
       - name: 🔧 Set up Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
       - name: 🔧 Setup pip cache
         uses: actions/cache@v3
         id: pip-cache
@@ -40,12 +39,14 @@ jobs:
   coverage:
     name: Code Coverage / Lint
     runs-on: ubuntu-latest
-    if: contains(toJson(github.event.commits.*.message), '[skip ci]') == false || github.ref == 'refs/heads/main'
+    if: github.repository != 'sebbo2002/js-template' && (contains(toJson(github.event.commits.*.message), '[skip ci]') == false || github.ref == 'refs/heads/main')
     steps:
       - name: ☁️ Checkout Project
         uses: actions/checkout@v3
       - name: 🔧 Set up Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
       - name: 🔧 Setup pip cache
         uses: actions/cache@v3
         id: pip-cache
@@ -94,7 +95,9 @@ jobs:
       - name: ☁️ Checkout Project
         uses: actions/checkout@v3
       - name: 🔧 Set up Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
       - name: 🔧 Setup pip cache
         uses: actions/cache@v3
         id: pip-cache
@@ -125,7 +128,7 @@ jobs:
         if: ${{ github.ref == 'refs/heads/main' }}
         uses: everlytic/branch-merge@1.1.2
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GH_TOKEN }}
           source_ref: 'main'
           target_branch: 'develop'
           commit_message_template: 'Merge branch {source_ref} into {target_branch} [skip ci]'

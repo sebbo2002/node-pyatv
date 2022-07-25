@@ -12,10 +12,10 @@ import {
     NodePyATVRepeatState,
     NodePyATVShuffleState,
     NodePyATVState
-} from './types';
+} from './types.js';
 
-import { addRequestId, getParamters, parseState, removeRequestId, request } from './tools';
-import { NodePyATVDeviceEvent, NodePyATVDeviceEvents } from '../lib';
+import { addRequestId, getParamters, parseState, removeRequestId, request } from './tools.js';
+import { NodePyATVDeviceEvent, NodePyATVDeviceEvents } from '../lib/index.js';
 import { EventEmitter } from 'events';
 
 /**

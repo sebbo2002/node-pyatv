@@ -17,10 +17,10 @@ export {
     NodePyATVPowerState,
     NodePyATVListenerState,
     NodePyATVEventValueType,
-} from './types';
+} from './types.js';
 
-export {default as NodePyATVDeviceEvent} from './device-event';
-export {default as NodePyATVDeviceEvents} from './device-events';
-export {default as NodePyATVDevice} from './device';
+export {default as NodePyATVDeviceEvent} from './device-event.js';
+export {default as NodePyATVDeviceEvents} from './device-events.js';
+export {default as NodePyATVDevice} from './device.js';
 
-export {default} from './instance';
+export {default} from './instance.js';

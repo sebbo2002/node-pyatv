@@ -7,13 +7,13 @@ import {
     NodePyATVListenerState,
     NodePyATVState,
     NodePyATVStateIndex
-} from './types';
+} from './types.js';
 import {ChildProcess} from 'child_process';
 
 import {EventEmitter} from 'events';
-import {NodePyATVDevice, NodePyATVDeviceEvent} from '../lib';
-import {addRequestId, debug, execute, getParamters, parseState, removeRequestId} from './tools';
-import {FakeChildProcess} from './fake-spawn';
+import {NodePyATVDevice, NodePyATVDeviceEvent} from '../lib/index.js';
+import {addRequestId, debug, execute, getParamters, parseState, removeRequestId} from './tools.js';
+import {FakeChildProcess} from './fake-spawn.js';
 
 /**
  * @internal

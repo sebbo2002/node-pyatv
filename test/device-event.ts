@@ -1,8 +1,8 @@
 'use strict';
 
 import assert from 'assert';
-import NodePyATVDevice from '../src/lib/device';
-import NodePyATVDeviceEvent from '../src/lib/device-event';
+import NodePyATVDevice from '../src/lib/device.js';
+import NodePyATVDeviceEvent from '../src/lib/device-event.js';
 
 describe('NodePyATVDeviceEvent', function () {
     describe('get key()', function () {

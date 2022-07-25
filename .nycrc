@@ -9,7 +9,9 @@
     ],
     "exclude": [
         "coverage/**",
-        "node_modules/**"
+        "node_modules/**",
+        "src/examples/**",
+        "src/bin/check.ts"
     ],
     "report-dir": "./docs/coverage/",
     "temp-directory": "./.nyc_output",
@@ -22,9 +24,9 @@
     ],
     "all": true,
     "instrument": true,
-    "branches": 95,
-    "lines": 95,
-    "functions": 95,
-    "statements": 95,
+    "branches": 80,
+    "lines": 92,
+    "functions": 90,
+    "statements": 92,
     "per-file": true
 }

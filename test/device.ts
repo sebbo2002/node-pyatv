@@ -11,7 +11,7 @@ import {
     NodePyATVShuffleState
 } from '../src/lib/types.js';
 import NodePyATVInstance from '../src/lib/instance.js';
-import {createFakeSpawn} from '../src/lib/fake-spawn.js';
+import { createFakeSpawn } from '../src/lib/fake-spawn.js';
 
 describe('NodePyATVDevice', function () {
     describe('get name()', function () {
@@ -57,6 +57,129 @@ describe('NodePyATVDevice', function () {
             });
 
             assert.strictEqual(device.protocol, NodePyATVProtocol.airplay);
+        });
+    });
+
+    describe('get model()', function () {
+        it('should return the model if set by scan', function () {
+            const device = new NodePyATVDevice({
+                name: 'Vardagsrum',
+                host: '10.0.10.81',
+                id: 'xxx',
+                model: 'Gen4K'
+            });
+
+            assert.strictEqual(device.model, 'Gen4K');
+        });
+        it('should return undefined otherwise', function () {
+            const device = new NodePyATVDevice({
+                name: 'Vardagsrum',
+                host: '10.0.10.81'
+            });
+
+            assert.strictEqual(device.model, undefined);
+        });
+    });
+
+    describe('get modelName()', function () {
+        it('should return the model name if set by scan', function () {
+            const device = new NodePyATVDevice({
+                name: 'Vardagsrum',
+                host: '10.0.10.81',
+                id: 'xxx',
+                modelName: 'Apple TV 4K'
+            });
+
+            assert.strictEqual(device.modelName, 'Apple TV 4K');
+        });
+        it('should return undefined otherwise', function () {
+            const device = new NodePyATVDevice({
+                name: 'Vardagsrum',
+                host: '10.0.10.81'
+            });
+
+            assert.strictEqual(device.modelName, undefined);
+        });
+    });
+
+    describe('get os()', function () {
+        it('should return the operating system if set by scan', function () {
+            const device = new NodePyATVDevice({
+                name: 'Vardagsrum',
+                host: '10.0.10.81',
+                id: 'xxx',
+                os: 'TvOS'
+            });
+
+            assert.strictEqual(device.os, 'TvOS');
+        });
+        it('should return undefined otherwise', function () {
+            const device = new NodePyATVDevice({
+                name: 'Vardagsrum',
+                host: '10.0.10.81'
+            });
+
+            assert.strictEqual(device.os, undefined);
+        });
+    });
+
+    describe('get version()', function () {
+        it('should return the version if set by scan', function () {
+            const device = new NodePyATVDevice({
+                name: 'Vardagsrum',
+                host: '10.0.10.81',
+                id: 'xxx',
+                version: '15.5.1'
+            });
+
+            assert.strictEqual(device.version, '15.5.1');
+        });
+        it('should return undefined otherwise', function () {
+            const device = new NodePyATVDevice({
+                name: 'Vardagsrum',
+                host: '10.0.10.81'
+            });
+
+            assert.strictEqual(device.version, undefined);
+        });
+    });
+
+    describe('get services()', function () {
+        it('should return the services if set by scan', function () {
+            const device = new NodePyATVDevice({
+                name: 'Vardagsrum',
+                host: '10.0.10.81',
+                id: 'xxx',
+                services: [
+                    {
+                        protocol: NodePyATVProtocol.mrp,
+                        port: 49152
+                    },
+                    {
+                        protocol: NodePyATVProtocol.airplay,
+                        port: 7000
+                    }
+                ]
+            });
+
+            assert.deepStrictEqual(device.services, [
+                {
+                    protocol: 'mrp',
+                    port: 49152
+                },
+                {
+                    protocol: 'airplay',
+                    port: 7000
+                }
+            ]);
+        });
+        it('should return undefined otherwise', function () {
+            const device = new NodePyATVDevice({
+                name: 'Vardagsrum',
+                host: '10.0.10.81'
+            });
+
+            assert.strictEqual(device.services, undefined);
         });
     });
 

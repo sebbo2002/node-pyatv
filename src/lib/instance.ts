@@ -10,6 +10,7 @@ import {
     NodePyATVExecutableType,
     NodePyATVFindAndInstanceOptions,
     NodePyATVInstanceOptions,
+    NodePyATVInternalScanDevice,
     NodePyATVVersionResponse
 } from './types.js';
 
@@ -117,11 +118,16 @@ export default class NodePyATVInstance {
             throw new Error(`Unable to parse pyatv response: ${JSON.stringify(result, null, '  ')}`);
         }
 
-        const objects = result.devices.map((device: { address: string, identifier: string, name: string }) =>
+        const objects = result.devices.map((device: NodePyATVInternalScanDevice) =>
             this.device(Object.assign({}, options, {
                 host: device.address,
                 id: device.identifier,
-                name: device.name
+                name: device.name,
+                model: device.device_info?.model,
+                modelName: device.device_info?.model_str,
+                os: device.device_info?.operating_system,
+                version: device.device_info?.version,
+                services: device.services
             }))
         );
 

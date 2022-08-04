@@ -1,3 +1,10 @@
+# [5.1.0-develop.1](https://github.com/sebbo2002/node-pyatv/compare/v5.0.0...v5.1.0-develop.1) (2022-08-04)
+
+
+### Features
+
+* Add Support for `device_info` and `device.services` ([1f60980](https://github.com/sebbo2002/node-pyatv/commit/1f6098006ec76a018e385f44c8567e465eedbbce))
+
 # [5.0.0](https://github.com/sebbo2002/node-pyatv/compare/v4.3.3...v5.0.0) (2022-07-25)
 
 

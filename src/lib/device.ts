@@ -10,6 +10,7 @@ import {
     NodePyATVMediaType,
     NodePyATVProtocol,
     NodePyATVRepeatState,
+    NodePyATVService,
     NodePyATVShuffleState,
     NodePyATVState
 } from './types.js';
@@ -73,6 +74,67 @@ export default class NodePyATVDevice implements EventEmitter{
     get protocol(): NodePyATVProtocol | undefined {
         return this.options.protocol;
     }
+
+    /**
+     * Get the model identifier of the device. Only set, if the
+     * device was found using [[find()]]. Requires pyatv ≧ 0.10.3.
+     *
+     * @example device.model → "Gen4K"
+     */
+    get model(): string | undefined {
+        return this.options.model;
+    }
+
+    /**
+     * Get the model name of the device. Only set, if the device
+     * was found with [[find()]]. Requires pyatv ≧ 0.10.3.
+     *
+     * @example device.modelName → "Apple TV 4K"
+     */
+    get modelName(): string | undefined {
+        return this.options.modelName;
+    }
+
+    /**
+     * Get the operating system of the device. Only set, if the
+     * device was found with [[find()]]. Requires pyatv ≧ 0.10.3.
+     *
+     * @example device.os → "TvOS"
+     */
+    get os(): string | undefined {
+        return this.options.os;
+    }
+
+    /**
+     * Get the device version. Only set, if the device was found
+     * during a scan using [[find()]]. Requires pyatv ≧ 0.10.3.
+     *
+     * @example device.version → "15.5.1"
+     */
+    get version(): string | undefined {
+        return this.options.version;
+    }
+
+    /**
+     * Returns a list of services supported by the device. Ony set, if
+     * the device was found during a scan using [[find()]]. Requires
+     * pyatv ≧ 0.10.3.
+     *
+     * @example device.services → [
+     *   {
+     *     "protocol": "airplay",
+     *     "port": 7000
+     *   },
+     *   {
+     *     "protocol": "dmap",
+     *     "port": 3689
+     *   }
+     * ]
+     */
+    get services(): NodePyATVService[] | undefined {
+        return this.options.services;
+    }
+
 
     /**
      * Returns true, if debugging is enabled. Returns the custom

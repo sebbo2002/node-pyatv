@@ -147,10 +147,36 @@ export interface NodePyATVFindAndInstanceOptions extends NodePyATVInstanceOption
 export interface NodePyATVDeviceOptions extends NodePyATVFindAndInstanceOptions {
     host: string;
     name: string;
+    model?: string;
+    modelName?: string;
+    os?: string;
+    version?: string;
+    services?: NodePyATVService[];
 }
 
 export interface NodePyATVGetStateOptions {
     maxAge?: number;
+}
+
+export interface NodePyATVService {
+    protocol: NodePyATVProtocol;
+    port: number;
+}
+
+/**
+ * @internal
+ */
+export interface NodePyATVInternalScanDevice {
+    name: string;
+    address: string;
+    identifier: string;
+    device_info?: {
+        model: string;
+        model_str: string;
+        operating_system: string;
+        version: string;
+    };
+    services?: NodePyATVService[];
 }
 
 /**

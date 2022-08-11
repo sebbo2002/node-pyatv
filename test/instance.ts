@@ -7,15 +7,15 @@ import { fileURLToPath } from 'url';
 
 import { createFakeSpawn } from '../src/lib/fake-spawn.js';
 import NodePyATVInstance, {
-    NodePyATVProtocol,
-    NodePyATVMediaType,
     NodePyATVDeviceEvent,
     NodePyATVDeviceState,
-    NodePyATVRepeatState,
-    NodePyATVShuffleState,
     NodePyATVKeys,
     NodePyATVListenerState,
-    NodePyATVPowerState
+    NodePyATVMediaType,
+    NodePyATVPowerState,
+    NodePyATVProtocol,
+    NodePyATVRepeatState,
+    NodePyATVShuffleState
 } from '../src/lib/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -256,6 +256,85 @@ describe('NodePyATVInstance', function () {
                     })
                 });
             }, /Unable to parse pyatv response: /);
+        });
+        it('should work if devices are without device_info / services', async function () {
+            const devices = await NodePyATVInstance.find({
+                spawn: createFakeSpawn(cp => {
+                    cp.stdout({
+                        result: 'success',
+                        datetime: '2020-11-06T20:47:30.840022+01:00',
+                        devices: [
+                            {
+                                name: 'Vardagsrum',
+                                address: '10.0.10.81',
+                                identifier: 'xxx'
+                            }
+                        ]
+                    }).code(1).end();
+                })
+            });
+
+            assert.strictEqual(devices.length, 1);
+            assert.strictEqual(devices[0].name, 'Vardagsrum');
+            assert.strictEqual(devices[0].host, '10.0.10.81');
+            assert.strictEqual(devices[0].id, 'xxx');
+            assert.strictEqual(devices[0].model, undefined);
+            assert.strictEqual(devices[0].modelName, undefined);
+            assert.strictEqual(devices[0].os, undefined);
+            assert.strictEqual(devices[0].version, undefined);
+            assert.deepStrictEqual(devices[0].services, undefined);
+        });
+        it('should work if devices are with device_info / services', async function () {
+            const devices = await NodePyATVInstance.find({
+                spawn: createFakeSpawn(cp => {
+                    cp.stdout({
+                        result: 'success',
+                        datetime: '2020-11-06T20:47:30.840022+01:00',
+                        devices: [
+                            {
+                                name: 'Vardagsrum',
+                                address: '10.0.10.81',
+                                identifier: 'xxx',
+                                device_info: {
+                                    'model': 'Gen4K',
+                                    'model_str': 'Apple TV 4K',
+                                    'operating_system': 'TvOS',
+                                    'version': '15.5.1'
+                                },
+                                services: [
+                                    {
+                                        protocol: 'mrp',
+                                        port: 49152
+                                    },
+                                    {
+                                        protocol: 'airplay',
+                                        port: 7000
+                                    }
+                                ]
+                            }
+                        ]
+                    }).code(1).end();
+                })
+            });
+
+            assert.strictEqual(devices.length, 1);
+            assert.strictEqual(devices[0].name, 'Vardagsrum');
+            assert.strictEqual(devices[0].host, '10.0.10.81');
+            assert.strictEqual(devices[0].id, 'xxx');
+            assert.strictEqual(devices[0].model, 'Gen4K');
+            assert.strictEqual(devices[0].modelName, 'Apple TV 4K');
+            assert.strictEqual(devices[0].os, 'TvOS');
+            assert.strictEqual(devices[0].version, '15.5.1');
+            assert.deepStrictEqual(devices[0].services, [
+                {
+                    protocol: NodePyATVProtocol.mrp,
+                    port: 49152
+                },
+                {
+                    protocol: NodePyATVProtocol.airplay,
+                    port: 7000
+                }
+            ]);
         });
     });
 

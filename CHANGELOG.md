@@ -1,3 +1,5 @@
+## [5.1.1-develop.2](https://github.com/sebbo2002/node-pyatv/compare/v5.1.1-develop.1...v5.1.1-develop.2) (2022-10-11)
+
 ## [5.1.1-develop.1](https://github.com/sebbo2002/node-pyatv/compare/v5.1.0...v5.1.1-develop.1) (2022-09-12)
 
 # [5.1.0](https://github.com/sebbo2002/node-pyatv/compare/v5.0.0...v5.1.0) (2022-08-11)

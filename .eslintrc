@@ -47,6 +47,14 @@
                 "*.json"
             ],
             "parser": "jsonc-eslint-parser"
+        },
+        {
+            "files": [
+                "src/lib/device-events.ts"
+            ],
+            "rules": {
+                "@typescript-eslint/ban-ts-comment": "off"
+            }
         }
     ]
 }

@@ -1,5 +1,5 @@
 import {ChildProcess, SpawnOptions} from 'child_process';
-import {FakeChildProcess} from './fake-spawn';
+import {FakeChildProcess} from './fake-spawn.js';
 
 export enum NodePyATVExecutableType {
     atvremote = 'atvremote',

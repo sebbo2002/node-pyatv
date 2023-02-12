@@ -11,7 +11,7 @@ import {
 } from './types.js';
 
 import {ChildProcess, spawn, SpawnOptions} from 'child_process';
-import {FakeChildProcess} from './fake-spawn';
+import {FakeChildProcess} from './fake-spawn.js';
 
 const requestIds: string[] = [];
 

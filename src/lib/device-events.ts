@@ -134,6 +134,9 @@ export default class NodePyATVDeviceEvents extends EventEmitter {
         const listenStart = new Date().getTime();
         const parameters = getParamters(this.options);
         this.pyatv = execute(reqId, NodePyATVExecutableType.atvscript, [...parameters, 'push_updates'], this.options);
+        if(!this.pyatv) {
+            throw new Error('Unable to start listener: Unable to start atvscript');
+        }
 
         const onError = (error: Error) => {
             debug(reqId, `Got error from child process: ${error}`, this.options);

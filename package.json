@@ -17,10 +17,10 @@
     "@types/mocha": "^10.0.1",
     "@types/node": "^18.13.0",
     "@types/semver": "^7.3.13",
-    "@typescript-eslint/eslint-plugin": "^5.52.0",
-    "@typescript-eslint/parser": "^5.52.0",
+    "@typescript-eslint/eslint-plugin": "^5.54.1",
+    "@typescript-eslint/parser": "^5.54.1",
     "c8": "^7.13.0",
-    "eslint": "^8.34.0",
+    "eslint": "^8.35.0",
     "eslint-plugin-jsonc": "^2.6.0",
     "esm": "^3.2.25",
     "license-checker": "^25.0.1",
@@ -30,7 +30,7 @@
     "semantic-release-license": "^1.0.3",
     "source-map-support": "^0.5.21",
     "ts-node": "^10.9.1",
-    "typedoc": "^0.23.25",
+    "typedoc": "^0.23.26",
     "typescript": "^4.9.5"
   },
   "engines": {

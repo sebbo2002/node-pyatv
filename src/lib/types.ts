@@ -222,3 +222,9 @@ export interface NodePyATVState {
     appId: string | null,
     powerState: NodePyATVPowerState | null
 }
+
+export interface NodePyATVApp {
+    id: string;
+    name: string;
+    launch: () => Promise<void>;
+}

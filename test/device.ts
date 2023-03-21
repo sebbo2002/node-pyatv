@@ -726,6 +726,35 @@ describe('NodePyATVDevice', function () {
         });
     });
 
+    describe('listApps()', function () {
+        it('should work', async function () {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: createFakeSpawn(cp => {
+                    cp.end(
+                        'App: Fitness (com.apple.Fitness), App: Podcasts (com.apple.podcasts), ' +
+                        'App: Filme (com.apple.TVMovies), App: Prime Video (com.amazon.aiv.AIVApp), ' +
+                        'App: TV (com.apple.TVWatchList), App: Fotos (com.apple.TVPhotos), App: App Store ' +
+                        '(com.apple.TVAppStore), App: Arcade (com.apple.Arcade), App: TV-Sendungen (com.apple.TVShows), ' +
+                        'App: Suchen (com.apple.TVSearch), App: Live TV (de.couchfunk.WM2014), App: RTL+ ' +
+                        '(com.rtlinteractive.tvnow), App: Computer (com.apple.TVHomeSharing), App: ARTE ' +
+                        '(tv.arte.plus7), App: YouTube (com.google.ios.youtube), App: ARD Mediathek ' +
+                        '(de.swr.avp.ard.tablet), App: Disney+ (com.disney.disneyplus), App: Plex (com.plexapp.plex), ' +
+                        'App: Joyn (de.prosiebensat1digital.seventv), App: Einstellungen (com.apple.TVSettings), ' +
+                        'App: ZDFmediathek (de.zdf.mediathek.universal), App: Crossy Road (com.hipsterwhale.crossy), ' +
+                        'App: Netflix (com.netflix.Netflix), App: Infuse (com.firecore.infuse), ' +
+                        'App: Musik (com.apple.TVMusic)');
+                })
+            });
+
+            const result = await device.listApps();
+            assert.strictEqual(result.length, 25);
+            assert.strictEqual(result[0].id, 'com.apple.Fitness');
+            assert.strictEqual(result[0].name, 'Fitness');
+        });
+    });
+
     describe('pressKey()', function () {
         it('should work with valid key', async function () {
             const device = new NodePyATVDevice({
@@ -781,4 +810,17 @@ describe('NodePyATVDevice', function () {
         });
     });
 
+    describe('launchApp()', function () {
+        it('should work', async function () {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: createFakeSpawn(cp => {
+                    cp.end('');
+                })
+            });
+
+            await device.launchApp('com.apple.TVShows');
+        });
+    });
 });

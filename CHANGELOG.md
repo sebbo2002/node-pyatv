@@ -1,3 +1,10 @@
+# [6.0.0-develop.2](https://github.com/sebbo2002/node-pyatv/compare/v6.0.0-develop.1...v6.0.0-develop.2) (2023-03-21)
+
+
+### Features
+
+* List and launch AppleTV Apps ([680d1de](https://github.com/sebbo2002/node-pyatv/commit/680d1deb83882a87b246e621cbce6237c9741825))
+
 # [6.0.0-develop.1](https://github.com/sebbo2002/node-pyatv/compare/v5.1.2-develop.3...v6.0.0-develop.1) (2023-02-12)
 
 

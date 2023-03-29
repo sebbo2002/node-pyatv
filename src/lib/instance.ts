@@ -1,8 +1,6 @@
 'use strict';
 
 import semver from 'semver';
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
 import { promises as fsPromises } from 'fs';
 
 import {
@@ -16,9 +14,6 @@ import {
 
 import { addRequestId, debug, getParamters, removeRequestId, request } from './tools.js';
 import { NodePyATVDevice } from '../lib/index.js';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 /**
  * Default class exported by `@sebbo2002/node-pyatv`. Use [[find]] to scan for devices in your local network. Use

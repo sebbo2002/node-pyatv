@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-if [ -f "./dist/bin/check.js" ]; then
-    node "./dist/bin/check.js"
+if [ -f "./dist/bin/check.cjs" ]; then
+    node "./dist/bin/check.cjs"
 fi

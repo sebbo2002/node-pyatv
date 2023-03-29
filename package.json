@@ -30,15 +30,24 @@
     "semantic-release-license": "^1.0.3",
     "source-map-support": "^0.5.21",
     "ts-node": "^10.9.1",
+    "tsup": "^6.7.0",
     "typedoc": "^0.23.26",
     "typescript": "^4.9.5"
   },
   "engines": {
     "node": "^14.8.0 || >=16.0.0"
   },
+  "exports": {
+    "import": "./dist/lib/index.js",
+    "require": "./dist/lib/index.cjs"
+  },
+  "files": [
+    "/dist"
+  ],
   "homepage": "https://github.com/sebbo2002/js-template#readme",
   "license": "MIT",
-  "main": "./dist/lib/index.js",
+  "main": "./dist/lib/index.cjs",
+  "module": "./dist/lib/index.js",
   "name": "@sebbo2002/node-pyatv",
   "preferGlobal": false,
   "repository": {
@@ -46,7 +55,7 @@
     "url": "https://github.com/sebbo2002/node-pyatv.git"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsup && cp ./dist/lib/index.d.ts ./dist/lib/index.d.cts",
     "build-all": "./.github/workflows/build.sh",
     "check": "./check.sh",
     "coverage": "c8 mocha",

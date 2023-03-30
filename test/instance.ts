@@ -26,7 +26,7 @@ describe('NodePyATVInstance', function () {
     describe('static version()', function () {
         it('should work with pyatv [L]', async function () {
             this.timeout(4000);
-            const result = await NodePyATVInstance.version();
+            const result = await NodePyATVInstance.version({debug: true});
             if (result.pyatv === null) {
                 throw new Error('No version found for pyatv. Is it installed in test environment?');
             }
@@ -48,6 +48,7 @@ describe('NodePyATVInstance', function () {
         });
         it('should return the module version', async function () {
             const result = await NodePyATVInstance.version({
+                debug: true,
                 noColors: true,
                 spawn: createFakeSpawn(cp =>
                     cp.code(1).end()

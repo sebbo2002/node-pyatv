@@ -1,6 +1,8 @@
 'use strict';
 
 import semver from 'semver';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
 import { promises as fsPromises } from 'fs';
 
 import {
@@ -74,7 +76,8 @@ export default class NodePyATVInstance {
         }
 
         try {
-            const json = JSON.parse(await fsPromises.readFile(__dirname + '/../../package.json', 'utf8'));
+            const packageJsonPath = join(dirname(fileURLToPath(import.meta.url)), '..', '..', 'package.json');
+            const json = JSON.parse(await fsPromises.readFile(packageJsonPath, 'utf8'));
             module = json?.version || null;
         } catch (error) {
             debug(id, `Unable to get module version due to ${error}`, options);

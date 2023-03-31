@@ -1,7 +1,7 @@
 'use strict';
 
 import semver from 'semver';
-import { dirname } from 'path';
+import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { promises as fsPromises } from 'fs';
 
@@ -16,9 +16,6 @@ import {
 
 import { addRequestId, debug, getParamters, removeRequestId, request } from './tools.js';
 import { NodePyATVDevice } from '../lib/index.js';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 /**
  * Default class exported by `@sebbo2002/node-pyatv`. Use [[find]] to scan for devices in your local network. Use
@@ -79,7 +76,8 @@ export default class NodePyATVInstance {
         }
 
         try {
-            const json = JSON.parse(await fsPromises.readFile(__dirname + '/../../package.json', 'utf8'));
+            const packageJsonPath = join(dirname(fileURLToPath(import.meta.url)), '..', '..', 'package.json');
+            const json = JSON.parse(await fsPromises.readFile(packageJsonPath, 'utf8'));
             module = json?.version || null;
         } catch (error) {
             debug(id, `Unable to get module version due to ${error}`, options);

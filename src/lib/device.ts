@@ -1,6 +1,7 @@
 'use strict';
 
 import {
+    NodePyATVApp,
     NodePyATVDeviceOptions,
     NodePyATVDeviceState,
     NodePyATVExecutableType,
@@ -378,7 +379,36 @@ export default class NodePyATVDevice implements EventEmitter{
         return state.appId;
     }
 
-    private async _pressKey(key: NodePyATVInternalKeys, executableType: NodePyATVExecutableType) {
+    /**
+     * Returns the list of installed apps on the Apple TV. Probably requires `companionCredentials`,
+     * see https://pyatv.dev/documentation/atvremote/#apps for more details.
+     */
+    async listApps(): Promise<NodePyATVApp[]> {
+        const id = addRequestId();
+        const parameters = getParamters(this.options);
+
+        const result = await request(id, NodePyATVExecutableType.atvremote, [...parameters, 'app_list'], this.options);
+        if(typeof result !== 'string' || !result.startsWith('App: ')) {
+            throw new Error('Unexpected atvremote response: ' + result);
+        }
+
+        removeRequestId(id);
+        const regex = /(.+) \(([^\)]+)\)$/i;
+        const items = result.substring(5, ).split(', App: ').map(i => {
+            const m = i.match(regex);
+            if (m !== null) {
+                return {
+                    id: m[2],
+                    name: m[1],
+                    launch: () => this.launchApp(m[2])
+                };
+            }
+        }) as Array<NodePyATVApp | undefined>;
+
+        return items.filter(Boolean) as NodePyATVApp[];
+    }
+
+    private async _pressKey(key: NodePyATVInternalKeys | string, executableType: NodePyATVExecutableType) {
         const id = addRequestId();
         const parameters = getParamters(this.options);
 
@@ -609,6 +639,15 @@ export default class NodePyATVDevice implements EventEmitter{
      */
     async turnOn(): Promise<void> {
         await this._pressKey(NodePyATVInternalKeys.turnOn, NodePyATVExecutableType.atvremote);
+    }
+
+    /**
+     * Launch an application. Probably requires `companionCredentials`, see
+     * https://pyatv.dev/documentation/atvremote/#apps for more details.
+     * @param id App identifier, e.g. `com.netflix.Netflix`
+     */
+    async launchApp(id: string): Promise<void> {
+        await this._pressKey('launch_app=' + id, NodePyATVExecutableType.atvremote);
     }
 
     /**

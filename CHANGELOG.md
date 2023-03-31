@@ -1,3 +1,10 @@
+## [6.0.1](https://github.com/sebbo2002/node-pyatv/compare/v6.0.0...v6.0.1) (2023-03-31)
+
+
+### Bug Fixes
+
+* Add `check.sh` to npm module ([ac7b04e](https://github.com/sebbo2002/node-pyatv/commit/ac7b04e1c850952eae0eac0ad2f60f39b91b68da))
+
 # [6.0.0](https://github.com/sebbo2002/node-pyatv/compare/v5.1.1...v6.0.0) (2023-03-31)
 
 

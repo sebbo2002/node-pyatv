@@ -42,7 +42,8 @@
     "require": "./dist/lib/index.cjs"
   },
   "files": [
-    "/dist"
+    "/dist",
+    "check.sh"
   ],
   "homepage": "https://github.com/sebbo2002/js-template#readme",
   "license": "MIT",

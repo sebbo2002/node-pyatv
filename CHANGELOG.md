@@ -1,3 +1,20 @@
+# [6.0.0](https://github.com/sebbo2002/node-pyatv/compare/v5.1.1...v6.0.0) (2023-03-31)
+
+
+### Build System
+
+* Deprecate node.js 12 ([426588b](https://github.com/sebbo2002/node-pyatv/commit/426588b4bb7bde2924bbc92006ca839e960872e1))
+
+
+### Features
+
+* List and launch AppleTV Apps ([680d1de](https://github.com/sebbo2002/node-pyatv/commit/680d1deb83882a87b246e621cbce6237c9741825))
+
+
+### BREAKING CHANGES
+
+* From now on, only node.js ^14.8.0 || >=16.0.0 are supported
+
 # [6.0.0-develop.3](https://github.com/sebbo2002/node-pyatv/compare/v6.0.0-develop.2...v6.0.0-develop.3) (2023-03-30)
 
 # [6.0.0-develop.2](https://github.com/sebbo2002/node-pyatv/compare/v6.0.0-develop.1...v6.0.0-develop.2) (2023-03-21)

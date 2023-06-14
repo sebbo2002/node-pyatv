@@ -1,3 +1,10 @@
+# [7.0.0-develop.2](https://github.com/sebbo2002/node-pyatv/compare/v7.0.0-develop.1...v7.0.0-develop.2) (2023-06-14)
+
+
+### Features
+
+* Support focus state and volume events ([9fb10c6](https://github.com/sebbo2002/node-pyatv/commit/9fb10c641ee7384f1165b98cbe66997688d34835))
+
 # [7.0.0-develop.1](https://github.com/sebbo2002/node-pyatv/compare/v6.0.3...v7.0.0-develop.1) (2023-06-14)
 
 

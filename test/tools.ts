@@ -139,7 +139,9 @@ describe('Tools', function () {
                 repeat: null,
                 app: null,
                 appId: null,
-                powerState: null
+                powerState: null,
+                focusState: null,
+                volume: null
             });
         });
         it('should work without data', function () {
@@ -160,7 +162,9 @@ describe('Tools', function () {
                 repeat: null,
                 app: null,
                 appId: null,
-                powerState: null
+                powerState: null,
+                focusState: null,
+                volume: null
             });
         });
         it('should work with example data', function () {
@@ -180,7 +184,9 @@ describe('Tools', function () {
                 repeat: 'off',
                 app: 'Disney+',
                 app_id: 'com.disney.disneyplus',
-                powerState: null
+                powerState: null,
+                focusState: null,
+                volume: null
             };
             const result = parseState(input, '', {});
             assert.deepStrictEqual(result, {
@@ -198,7 +204,9 @@ describe('Tools', function () {
                 repeat: NodePyATVRepeatState.off,
                 app: 'Disney+',
                 appId: 'com.disney.disneyplus',
-                powerState: null
+                powerState: null,
+                focusState: null,
+                volume: null
             });
         });
         it('should throw an error for pyatv exceptions', function () {
@@ -230,7 +238,9 @@ describe('Tools', function () {
                 repeat: null,
                 app: null,
                 appId: null,
-                powerState: null
+                powerState: null,
+                focusState: null,
+                volume: null
             });
         });
         it('should ignore data if unsupported type', function () {
@@ -250,7 +260,9 @@ describe('Tools', function () {
                 repeat: true,
                 app: 0,
                 app_id: 891645381647289,
-                powerState: null
+                powerState: null,
+                focusState: null,
+                volume: null
             };
             const result = parseState(input, '', {});
             assert.deepStrictEqual(result, {
@@ -268,7 +280,9 @@ describe('Tools', function () {
                 repeat: null,
                 app: null,
                 appId: null,
-                powerState: null
+                powerState: null,
+                focusState: null,
+                volume: null
             });
         });
         it('should ignore enums with unsupported valid', function () {
@@ -294,7 +308,9 @@ describe('Tools', function () {
                 repeat: null,
                 app: null,
                 appId: null,
-                powerState: null
+                powerState: null,
+                focusState: null,
+                volume: null
             });
         });
     });

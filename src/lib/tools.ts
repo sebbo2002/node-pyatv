@@ -4,9 +4,13 @@ import {
     NodePyATVDeviceState,
     NodePyATVExecutableType,
     NodePyATVFindAndInstanceOptions,
+    NodePyATVFocusState,
     NodePyATVInstanceOptions,
     NodePyATVInternalState,
-    NodePyATVMediaType, NodePyATVPowerState, NodePyATVRepeatState, NodePyATVShuffleState,
+    NodePyATVMediaType,
+    NodePyATVPowerState,
+    NodePyATVRepeatState,
+    NodePyATVShuffleState,
     NodePyATVState
 } from './types.js';
 
@@ -247,7 +251,9 @@ export function parseState(input: NodePyATVInternalState, id: string, options: N
         repeat: null,
         app: null,
         appId: null,
-        powerState: null
+        powerState: null,
+        volume: null,
+        focusState: null
     };
     if (!input || typeof input !== 'object') {
         return result;
@@ -373,6 +379,24 @@ export function parseState(input: NodePyATVInternalState, id: string, options: N
         }
     } else {
         d(`No powerState value found in input (${JSON.stringify(input)})`);
+    }
+
+    // volume
+    if (typeof input.volume === 'number') {
+        result.volume = input.volume;
+    }
+
+    // focusState
+    if(typeof input.focus_state === 'string') {
+        const validValues = Object.keys(NodePyATVFocusState).map(o => String(o));
+        if (validValues.includes(input.focus_state)) {
+            result.focusState = NodePyATVFocusState[input.power_state as NodePyATVFocusState];
+        }
+        else {
+            d(`Unsupported focusState value ${input.focus_state}, ignore attribute`);
+        }
+    } else {
+        d(`No focusState value found in input (${JSON.stringify(input)})`);
     }
 
     return result;

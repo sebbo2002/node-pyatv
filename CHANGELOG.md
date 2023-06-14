@@ -1,3 +1,22 @@
+# [7.0.0-develop.2](https://github.com/sebbo2002/node-pyatv/compare/v7.0.0-develop.1...v7.0.0-develop.2) (2023-06-14)
+
+
+### Features
+
+* Support focus state and volume events ([9fb10c6](https://github.com/sebbo2002/node-pyatv/commit/9fb10c641ee7384f1165b98cbe66997688d34835))
+
+# [7.0.0-develop.1](https://github.com/sebbo2002/node-pyatv/compare/v6.0.3...v7.0.0-develop.1) (2023-06-14)
+
+
+### Build System
+
+* Deprecate node.js v14 / v17 ([7a2de45](https://github.com/sebbo2002/node-pyatv/commit/7a2de45c12f19a1ec441b3a004f4aa935efc197c))
+
+
+### BREAKING CHANGES
+
+* The node.js versions v14 and v17 are no longer maintained and are therefore no longer supported. See https://nodejs.dev/en/about/releases/ for more details on node.js release cycles.
+
 ## [6.0.3](https://github.com/sebbo2002/node-pyatv/compare/v6.0.2...v6.0.3) (2023-05-19)
 
 ## [6.0.3-develop.2](https://github.com/sebbo2002/node-pyatv/compare/v6.0.3-develop.1...v6.0.3-develop.2) (2023-05-19)

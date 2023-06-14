@@ -25,14 +25,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>230/230</span>
+                <span class='fraction'>239/239</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>10/10</span>
+                <span class='fraction'>11/11</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>230/230</span>
+                <span class='fraction'>239/239</span>
             </div>
         
             
@@ -293,7 +293,25 @@
 <a name='L228'></a><a href='#L228'>228</a>
 <a name='L229'></a><a href='#L229'>229</a>
 <a name='L230'></a><a href='#L230'>230</a>
-<a name='L231'></a><a href='#L231'>231</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L231'></a><a href='#L231'>231</a>
+<a name='L232'></a><a href='#L232'>232</a>
+<a name='L233'></a><a href='#L233'>233</a>
+<a name='L234'></a><a href='#L234'>234</a>
+<a name='L235'></a><a href='#L235'>235</a>
+<a name='L236'></a><a href='#L236'>236</a>
+<a name='L237'></a><a href='#L237'>237</a>
+<a name='L238'></a><a href='#L238'>238</a>
+<a name='L239'></a><a href='#L239'>239</a>
+<a name='L240'></a><a href='#L240'>240</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -571,6 +589,11 @@ export enum NodePyATVPowerState {
     off = 'off'
 }
 &nbsp;
+export enum NodePyATVFocusState {
+    focued = 'focused',
+    unfocused = 'unfocused'
+}
+&nbsp;
 export enum NodePyATVKeys {
     down = 'down',
     home = 'home',
@@ -708,44 +731,48 @@ export interface NodePyATVInternalScanDevice {
  * @internal
  */
 export interface NodePyATVInternalState {
-    result?: string | unknown,
-    datetime?: string | unknown,
-    hash?: string | unknown,
-    media_type?: string | unknown,
-    device_state?: string | unknown,
-    title?: string | unknown,
-    artist?: string | unknown,
-    album?: string | unknown,
-    genre?: string | unknown,
-    total_time?: number | unknown,
-    position?: 1 | unknown,
-    shuffle?: string | unknown,
-    repeat?: string | unknown,
-    app?: string | unknown,
-    app_id?: string | unknown,
-    power_state?: string | unknown,
-    push_updates?: string | unknown,
-    exception?: string | unknown,
-    stacktrace?: string | unknown,
-    connection?: string | unknown
+    result?: string | unknown;
+    datetime?: string | unknown;
+    hash?: string | unknown;
+    media_type?: string | unknown;
+    device_state?: string | unknown;
+    title?: string | unknown;
+    artist?: string | unknown;
+    album?: string | unknown;
+    genre?: string | unknown;
+    total_time?: number | unknown;
+    position?: 1 | unknown;
+    shuffle?: string | unknown;
+    repeat?: string | unknown;
+    app?: string | unknown;
+    app_id?: string | unknown;
+    power_state?: string | unknown;
+    push_updates?: string | unknown;
+    exception?: string | unknown;
+    stacktrace?: string | unknown;
+    connection?: string | unknown;
+    volume?: number | unknown;
+    focus_state?: string | unknown;
 }
 &nbsp;
 export interface NodePyATVState {
     dateTime: Date | null;
     hash: string | null;
-    mediaType: NodePyATVMediaType | null,
-    deviceState: NodePyATVDeviceState | null,
-    title: string | null,
-    artist: string | null,
-    album: string | null,
-    genre: string | null,
-    totalTime: number | null,
-    position: number | null,
-    shuffle: NodePyATVShuffleState | null,
-    repeat: NodePyATVRepeatState | null,
-    app: string | null,
-    appId: string | null,
-    powerState: NodePyATVPowerState | null
+    mediaType: NodePyATVMediaType | null;
+    deviceState: NodePyATVDeviceState | null;
+    title: string | null;
+    artist: string | null;
+    album: string | null;
+    genre: string | null;
+    totalTime: number | null;
+    position: number | null;
+    shuffle: NodePyATVShuffleState | null;
+    repeat: NodePyATVRepeatState | null;
+    app: string | null;
+    appId: string | null;
+    powerState: NodePyATVPowerState | null;
+    volume: number | null;
+    focusState: NodePyATVFocusState | null;
 }
 &nbsp;
 export interface NodePyATVApp {
@@ -760,7 +787,7 @@ export interface NodePyATVApp {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-05-19T19:03:27.332Z
+                at 2023-06-14T19:03:31.465Z
             </div>
         <script src="prettify.js"></script>
         <script>

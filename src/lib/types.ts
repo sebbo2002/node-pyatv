@@ -46,6 +46,11 @@ export enum NodePyATVPowerState {
     off = 'off'
 }
 
+export enum NodePyATVFocusState {
+    focued = 'focused',
+    unfocused = 'unfocused'
+}
+
 export enum NodePyATVKeys {
     down = 'down',
     home = 'home',
@@ -183,44 +188,48 @@ export interface NodePyATVInternalScanDevice {
  * @internal
  */
 export interface NodePyATVInternalState {
-    result?: string | unknown,
-    datetime?: string | unknown,
-    hash?: string | unknown,
-    media_type?: string | unknown,
-    device_state?: string | unknown,
-    title?: string | unknown,
-    artist?: string | unknown,
-    album?: string | unknown,
-    genre?: string | unknown,
-    total_time?: number | unknown,
-    position?: 1 | unknown,
-    shuffle?: string | unknown,
-    repeat?: string | unknown,
-    app?: string | unknown,
-    app_id?: string | unknown,
-    power_state?: string | unknown,
-    push_updates?: string | unknown,
-    exception?: string | unknown,
-    stacktrace?: string | unknown,
-    connection?: string | unknown
+    result?: string | unknown;
+    datetime?: string | unknown;
+    hash?: string | unknown;
+    media_type?: string | unknown;
+    device_state?: string | unknown;
+    title?: string | unknown;
+    artist?: string | unknown;
+    album?: string | unknown;
+    genre?: string | unknown;
+    total_time?: number | unknown;
+    position?: 1 | unknown;
+    shuffle?: string | unknown;
+    repeat?: string | unknown;
+    app?: string | unknown;
+    app_id?: string | unknown;
+    power_state?: string | unknown;
+    push_updates?: string | unknown;
+    exception?: string | unknown;
+    stacktrace?: string | unknown;
+    connection?: string | unknown;
+    volume?: number | unknown;
+    focus_state?: string | unknown;
 }
 
 export interface NodePyATVState {
     dateTime: Date | null;
     hash: string | null;
-    mediaType: NodePyATVMediaType | null,
-    deviceState: NodePyATVDeviceState | null,
-    title: string | null,
-    artist: string | null,
-    album: string | null,
-    genre: string | null,
-    totalTime: number | null,
-    position: number | null,
-    shuffle: NodePyATVShuffleState | null,
-    repeat: NodePyATVRepeatState | null,
-    app: string | null,
-    appId: string | null,
-    powerState: NodePyATVPowerState | null
+    mediaType: NodePyATVMediaType | null;
+    deviceState: NodePyATVDeviceState | null;
+    title: string | null;
+    artist: string | null;
+    album: string | null;
+    genre: string | null;
+    totalTime: number | null;
+    position: number | null;
+    shuffle: NodePyATVShuffleState | null;
+    repeat: NodePyATVRepeatState | null;
+    app: string | null;
+    appId: string | null;
+    powerState: NodePyATVPowerState | null;
+    volume: number | null;
+    focusState: NodePyATVFocusState | null;
 }
 
 export interface NodePyATVApp {

@@ -5,7 +5,7 @@
     "url": "http://github.com/sebbo2002/node-pyatv/issues"
   },
   "dependencies": {
-    "semver": "^7.5.1"
+    "semver": "^7.5.2"
   },
   "description": "A lightweight wrapper around pyatv…",
   "devDependencies": {
@@ -35,7 +35,7 @@
     "typescript": "^5.1.3"
   },
   "engines": {
-    "node": "^14.8.0 || >=16.0.0"
+    "node": "^16.0.0 || >=18.0.0"
   },
   "exports": {
     "import": "./dist/lib/index.js",

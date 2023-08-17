@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
-<coverage lines-valid="2164" lines-covered="2123" line-rate="0.981" branches-valid="333" branches-covered="316" branch-rate="0.9489" timestamp="1689101666032" complexity="0" version="0.1">
+<coverage lines-valid="2164" lines-covered="2123" line-rate="0.981" branches-valid="333" branches-covered="316" branch-rate="0.9489" timestamp="1692298646653" complexity="0" version="0.1">
   <sources>
     <source>/home/runner/work/node-pyatv/node-pyatv</source>
   </sources>
@@ -2289,12 +2289,12 @@
             <line number="23" hits="111" branch="false"/>
             <line number="24" hits="111" branch="false"/>
             <line number="25" hits="111" branch="true" condition-coverage="100% (1/1)"/>
-            <line number="26" hits="115" branch="false"/>
-            <line number="27" hits="115" branch="true" condition-coverage="100% (1/1)"/>
+            <line number="26" hits="122" branch="false"/>
+            <line number="27" hits="122" branch="true" condition-coverage="100% (1/1)"/>
             <line number="28" hits="111" branch="false"/>
             <line number="29" hits="111" branch="false"/>
             <line number="30" hits="111" branch="false"/>
-            <line number="31" hits="115" branch="false"/>
+            <line number="31" hits="122" branch="false"/>
             <line number="32" hits="111" branch="false"/>
             <line number="33" hits="111" branch="false"/>
             <line number="34" hits="111" branch="false"/>

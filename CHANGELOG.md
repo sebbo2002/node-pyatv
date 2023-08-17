@@ -1,3 +1,7 @@
+## [7.0.2-develop.2](https://github.com/sebbo2002/node-pyatv/compare/v7.0.2-develop.1...v7.0.2-develop.2) (2023-08-17)
+
+## [7.0.2-develop.1](https://github.com/sebbo2002/node-pyatv/compare/v7.0.1...v7.0.2-develop.1) (2023-07-14)
+
 ## [7.0.1](https://github.com/sebbo2002/node-pyatv/compare/v7.0.0...v7.0.1) (2023-07-11)
 
 ## [7.0.1-develop.1](https://github.com/sebbo2002/node-pyatv/compare/v7.0.0...v7.0.1-develop.1) (2023-06-22)

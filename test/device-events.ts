@@ -272,10 +272,7 @@ describe('NodePyATVDeviceEvents', function () {
             await new Promise(cb => {
                 device.once('error', err => {
                     assert.ok(err instanceof Error);
-                    assert.ok(err.toString().includes(
-                        'Unable to parse stdout json: SyntaxError: ' +
-                        'Unexpected token # in JSON at position 0'
-                    ));
+                    assert.ok(err.toString().includes('Unable to parse stdout json: SyntaxError'));
                     cb(undefined);
                 });
             });

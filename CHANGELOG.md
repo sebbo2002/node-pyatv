@@ -1,3 +1,12 @@
+## [7.0.3-develop.2](https://github.com/sebbo2002/node-pyatv/compare/v7.0.3-develop.1...v7.0.3-develop.2) (2023-09-01)
+
+## [7.0.3-develop.1](https://github.com/sebbo2002/node-pyatv/compare/v7.0.2...v7.0.3-develop.1) (2023-08-24)
+
+
+### Reverts
+
+* Revert "ci: Downgrade is-semantic-release till it's fixed" ([91c2ab5](https://github.com/sebbo2002/node-pyatv/commit/91c2ab59d0559a060c11d07973382c465dd3345d))
+
 ## [7.0.2](https://github.com/sebbo2002/node-pyatv/compare/v7.0.1...v7.0.2) (2023-08-17)
 
 ## [7.0.2-develop.2](https://github.com/sebbo2002/node-pyatv/compare/v7.0.2-develop.1...v7.0.2-develop.2) (2023-08-17)

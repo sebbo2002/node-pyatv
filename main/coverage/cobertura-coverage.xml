@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
-<coverage lines-valid="2164" lines-covered="2123" line-rate="0.981" branches-valid="333" branches-covered="316" branch-rate="0.9489" timestamp="1692298646653" complexity="0" version="0.1">
+<coverage lines-valid="2164" lines-covered="2123" line-rate="0.981" branches-valid="333" branches-covered="316" branch-rate="0.9489" timestamp="1695080257341" complexity="0" version="0.1">
   <sources>
     <source>/home/runner/work/node-pyatv/node-pyatv</source>
   </sources>
@@ -192,9 +192,9 @@
                 <line number="280" hits="13"/>
               </lines>
             </method>
-            <method name="listenerCount" hits="211" signature="()V">
+            <method name="listenerCount" hits="206" signature="()V">
               <lines>
-                <line number="286" hits="211"/>
+                <line number="286" hits="206"/>
               </lines>
             </method>
           </methods>
@@ -485,9 +485,9 @@
             <line number="284" hits="13" branch="false"/>
             <line number="285" hits="1" branch="false"/>
             <line number="286" hits="1" branch="true" condition-coverage="100% (1/1)"/>
-            <line number="287" hits="211" branch="true" condition-coverage="100% (1/1)"/>
-            <line number="288" hits="82" branch="false"/>
-            <line number="289" hits="82" branch="false"/>
+            <line number="287" hits="206" branch="true" condition-coverage="100% (1/1)"/>
+            <line number="288" hits="77" branch="false"/>
+            <line number="289" hits="77" branch="false"/>
             <line number="290" hits="129" branch="true" condition-coverage="100% (1/1)"/>
             <line number="291" hits="129" branch="false"/>
             <line number="292" hits="129" branch="true" condition-coverage="100% (1/1)"/>
@@ -2289,12 +2289,12 @@
             <line number="23" hits="111" branch="false"/>
             <line number="24" hits="111" branch="false"/>
             <line number="25" hits="111" branch="true" condition-coverage="100% (1/1)"/>
-            <line number="26" hits="122" branch="false"/>
-            <line number="27" hits="122" branch="true" condition-coverage="100% (1/1)"/>
+            <line number="26" hits="114" branch="false"/>
+            <line number="27" hits="114" branch="true" condition-coverage="100% (1/1)"/>
             <line number="28" hits="111" branch="false"/>
             <line number="29" hits="111" branch="false"/>
             <line number="30" hits="111" branch="false"/>
-            <line number="31" hits="122" branch="false"/>
+            <line number="31" hits="114" branch="false"/>
             <line number="32" hits="111" branch="false"/>
             <line number="33" hits="111" branch="false"/>
             <line number="34" hits="111" branch="false"/>

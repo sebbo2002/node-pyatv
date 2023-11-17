@@ -22,7 +22,8 @@ jobs:
       - name: 🔧 Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.x
+          # https://github.com/aio-libs/aiohttp/issues/7739#issuecomment-1773868351
+          python-version: 3.11
       - name: 🔧 Setup pip cache
         uses: actions/cache@v3
         id: pip-cache
@@ -51,7 +52,7 @@ jobs:
       - name: 🔧 Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.x
+          python-version: 3.11
       - name: 🔧 Setup pip cache
         uses: actions/cache@v3
         id: pip-cache
@@ -107,7 +108,7 @@ jobs:
       - name: 🔧 Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.x
+          python-version: 3.11
       - name: 🔧 Setup pip cache
         uses: actions/cache@v3
         id: pip-cache

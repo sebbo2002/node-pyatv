@@ -1,3 +1,10 @@
+# [7.1.0](https://github.com/sebbo2002/node-pyatv/compare/v7.0.3...v7.1.0) (2023-11-23)
+
+
+### Features
+
+* Log pyatv output of push_updates ([fc2618c](https://github.com/sebbo2002/node-pyatv/commit/fc2618c52e6b4de4202db8a77c72130ee114385d))
+
 ## [7.0.4-develop.2](https://github.com/sebbo2002/node-pyatv/compare/v7.0.4-develop.1...v7.0.4-develop.2) (2023-10-18)
 
 

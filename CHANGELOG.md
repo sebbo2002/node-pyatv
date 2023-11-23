@@ -1,3 +1,12 @@
+## [7.0.4-develop.2](https://github.com/sebbo2002/node-pyatv/compare/v7.0.4-develop.1...v7.0.4-develop.2) (2023-10-18)
+
+
+### Reverts
+
+* Revert "ci: Run tests with node.js v18, v20 and v21" ([1b245a5](https://github.com/sebbo2002/node-pyatv/commit/1b245a58587bc6871e8b1633beff1f1bca05970f))
+
+## [7.0.4-develop.1](https://github.com/sebbo2002/node-pyatv/compare/v7.0.3...v7.0.4-develop.1) (2023-10-17)
+
 ## [7.0.3](https://github.com/sebbo2002/node-pyatv/compare/v7.0.2...v7.0.3) (2023-09-18)
 
 

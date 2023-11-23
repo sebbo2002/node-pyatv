@@ -156,7 +156,10 @@ export default class NodePyATVDeviceEvents extends EventEmitter {
                 .split('\n')
                 .map(s => s.trim())
                 .filter(Boolean)
-                .forEach(s => this.parsePushUpdate(reqId, s));
+                .forEach(s => {
+                    debug(reqId, `> ${s}`, this.options);
+                    this.parsePushUpdate(reqId, s);
+                });
         };
         const onClose = (code: number) => {
             if(this.pyatv === undefined) {

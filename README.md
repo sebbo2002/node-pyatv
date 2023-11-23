@@ -53,7 +53,7 @@ device.on('update:deviceState', (event: NodePyATVDeviceEvent | Error) => {
 ## 📑 API Reference
 
 The API documentation is automatically generated from the code comments and can be found
-[here](https://sebbo2002.github.io/node-pyatv/main/reference/classes/default.html).
+[here](https://sebbo2002.github.io/node-pyatv/main/reference/).
 
 
 ## 📑 Changelog

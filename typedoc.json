@@ -1,11 +1,13 @@
 {
     "entryPoints": ["./src/lib/index.ts"],
-    "exclude": [],
+    "exclude": [
+        "./lib/tools.ts"
+    ],
     "excludeInternal": true,
     "excludePrivate": true,
     "excludeProtected": true,
     "includeVersion": true,
-    "name": "",
+    "name": "node-pyatv",
     "out": "./docs/reference",
     "plugin": [],
     "readme": "README.md",

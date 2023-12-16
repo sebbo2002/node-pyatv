@@ -70,6 +70,13 @@ export default class NodePyATVDevice implements EventEmitter{
     }
 
     /**
+     * Get all IDs of the Apple TV.
+     */
+    get allIDs(): string[] | undefined {
+        return this.options.allIDs;
+    }
+
+    /**
      * Get the used protocol to connect to the Apple TV.
      */
     get protocol(): NodePyATVProtocol | undefined {

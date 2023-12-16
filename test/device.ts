@@ -48,6 +48,27 @@ describe('NodePyATVDevice', function () {
         });
     });
 
+    describe('get allIDs()', function () {
+        it('should return all the IDs', function () {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                id: '*****',
+                allIDs: [
+                    'some_id_1',
+                    'some_id_2',
+                    'some_id_3',
+                ]
+            });
+
+            assert.deepStrictEqual(device.allIDs, [
+                'some_id_1',
+                'some_id_2',
+                'some_id_3',
+            ]);
+        });
+    });
+
     describe('get protocol()', function () {
         it('should return the protocol', function () {
             const device = new NodePyATVDevice({

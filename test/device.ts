@@ -81,6 +81,18 @@ describe('NodePyATVDevice', function () {
         });
     });
 
+    describe('get mac()', function () {
+        it('should return the mac', function () {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                mac: 'AA:BB:CC:DD:EE:FF'
+            });
+
+            assert.strictEqual(device.mac, 'AA:BB:CC:DD:EE:FF');
+        });
+    });
+
     describe('get model()', function () {
         it('should return the model if set by scan', function () {
             const device = new NodePyATVDevice({

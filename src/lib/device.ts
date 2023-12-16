@@ -84,6 +84,13 @@ export default class NodePyATVDevice implements EventEmitter{
     }
 
     /**
+     * Get the MAC address of the Apple TV.
+     */
+    get mac(): string | undefined {
+        return this.options.mac;
+    }
+
+    /**
      * Get the model identifier of the device. Only set, if the
      * device was found using [[find()]]. Requires pyatv ≧ 0.10.3.
      *

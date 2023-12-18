@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">99.38% </span>
+                <span class="strong">99.39% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>806/811</span>
+                <span class='fraction'>820/825</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">96.66% </span>
+                <span class="strong">96.73% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>87/90</span>
+                <span class='fraction'>89/92</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">97.29% </span>
+                <span class="strong">97.36% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>72/74</span>
+                <span class='fraction'>74/76</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">99.38% </span>
+                <span class="strong">99.39% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>806/811</span>
+                <span class='fraction'>820/825</span>
             </div>
         
             
@@ -874,7 +874,21 @@
 <a name='L809'></a><a href='#L809'>809</a>
 <a name='L810'></a><a href='#L810'>810</a>
 <a name='L811'></a><a href='#L811'>811</a>
-<a name='L812'></a><a href='#L812'>812</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L812'></a><a href='#L812'>812</a>
+<a name='L813'></a><a href='#L813'>813</a>
+<a name='L814'></a><a href='#L814'>814</a>
+<a name='L815'></a><a href='#L815'>815</a>
+<a name='L816'></a><a href='#L816'>816</a>
+<a name='L817'></a><a href='#L817'>817</a>
+<a name='L818'></a><a href='#L818'>818</a>
+<a name='L819'></a><a href='#L819'>819</a>
+<a name='L820'></a><a href='#L820'>820</a>
+<a name='L821'></a><a href='#L821'>821</a>
+<a name='L822'></a><a href='#L822'>822</a>
+<a name='L823'></a><a href='#L823'>823</a>
+<a name='L824'></a><a href='#L824'>824</a>
+<a name='L825'></a><a href='#L825'>825</a>
+<a name='L826'></a><a href='#L826'>826</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -909,12 +923,12 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">101x</span>
-<span class="cline-any cline-yes">101x</span>
-<span class="cline-any cline-yes">101x</span>
-<span class="cline-any cline-yes">101x</span>
-<span class="cline-any cline-yes">101x</span>
-<span class="cline-any cline-yes">101x</span>
+<span class="cline-any cline-yes">103x</span>
+<span class="cline-any cline-yes">103x</span>
+<span class="cline-any cline-yes">103x</span>
+<span class="cline-any cline-yes">103x</span>
+<span class="cline-any cline-yes">103x</span>
+<span class="cline-any cline-yes">103x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -949,8 +963,22 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -1757,10 +1785,24 @@ export default class NodePyATVDevice implements EventEmitter{
     }
 &nbsp;
     /**
+     * Get all IDs of the Apple TV.
+     */
+    get allIDs(): string[] | undefined {
+        return this.options.allIDs;
+    }
+&nbsp;
+    /**
      * Get the used protocol to connect to the Apple TV.
      */
     get protocol(): NodePyATVProtocol | undefined {
         return this.options.protocol;
+    }
+&nbsp;
+    /**
+     * Get the MAC address of the Apple TV.
+     */
+    get mac(): string | undefined {
+        return this.options.mac;
     }
 &nbsp;
     /**
@@ -2503,7 +2545,7 @@ export default class NodePyATVDevice implements EventEmitter{
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-12-13T20:52:08.994Z
+                at 2023-12-18T05:20:22.464Z
             </div>
         <script src="prettify.js"></script>
         <script>

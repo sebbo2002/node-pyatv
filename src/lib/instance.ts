@@ -120,7 +120,9 @@ export default class NodePyATVInstance {
             this.device(Object.assign({}, options, {
                 host: device.address,
                 id: device.identifier,
+                allIDs: device.all_identifiers,
                 name: device.name,
+                mac: device.device_info?.mac,
                 model: device.device_info?.model,
                 modelName: device.device_info?.model_str,
                 os: device.device_info?.operating_system,

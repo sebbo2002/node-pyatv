@@ -152,11 +152,13 @@ export interface NodePyATVFindAndInstanceOptions extends NodePyATVInstanceOption
 export interface NodePyATVDeviceOptions extends NodePyATVFindAndInstanceOptions {
     host: string;
     name: string;
+    mac?: string;
     model?: string;
     modelName?: string;
     os?: string;
     version?: string;
     services?: NodePyATVService[];
+    allIDs?: string[];
 }
 
 export interface NodePyATVGetStateOptions {
@@ -175,7 +177,9 @@ export interface NodePyATVInternalScanDevice {
     name: string;
     address: string;
     identifier: string;
+    all_identifiers: string[];
     device_info?: {
+        mac: string | null;
         model: string;
         model_str: string;
         operating_system: string;

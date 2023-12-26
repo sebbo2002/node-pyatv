@@ -1,7 +1,7 @@
 FROM ubuntu:latest
 
-ARG PYATV_VERSION=0.10.3
-ARG NODE_VERSION=16
+ARG PYATV_VERSION=0.14.5
+ARG NODE_VERSION=20
 
 # ensure local python is preferred over distribution python
 ENV PATH /usr/local/bin:$PATH

@@ -1,3 +1,11 @@
+# [7.2.0](https://github.com/sebbo2002/node-pyatv/compare/v7.1.0...v7.2.0) (2023-12-26)
+
+
+### Features
+
+* **core:** add allIDs attribute to device ([02a9c05](https://github.com/sebbo2002/node-pyatv/commit/02a9c055bdb6589a1947ff41204497a92dd87c89)), closes [postlund/pyatv#2282](https://github.com/postlund/pyatv/issues/2282)
+* **core:** add mac attribute to device ([5b0f58c](https://github.com/sebbo2002/node-pyatv/commit/5b0f58ce1f18871fe482da699fbe8bb1d5508af5)), closes [postlund/pyatv#2282](https://github.com/postlund/pyatv/issues/2282)
+
 # [7.1.0](https://github.com/sebbo2002/node-pyatv/compare/v7.0.3...v7.1.0) (2023-11-23)
 
 

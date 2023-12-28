@@ -123,7 +123,7 @@ describe('Tools', function () {
     describe('parseState()', function () {
         it('should work with empty data', function () {
             const input = {};
-            const result = parseState(input, '', {});
+            const result = parseState(input, undefined, '', {});
             assert.deepStrictEqual(result, {
                 dateTime: null,
                 hash: null,
@@ -146,7 +146,7 @@ describe('Tools', function () {
         });
         it('should work without data', function () {
             // @ts-ignore
-            const result = parseState(null, '', {});
+            const result = parseState(null, undefined, '', {});
             assert.deepStrictEqual(result, {
                 dateTime: null,
                 hash: null,
@@ -188,7 +188,7 @@ describe('Tools', function () {
                 focusState: null,
                 volume: null
             };
-            const result = parseState(input, '', {});
+            const result = parseState(input, undefined, '', {});
             assert.deepStrictEqual(result, {
                 dateTime: new Date('2020-11-07T22:38:43.608030+01:00'),
                 hash: '100e0ab6-6ff5-4199-9c04-a7107ff78712',
@@ -217,12 +217,12 @@ describe('Tools', function () {
                 stacktrace: 'Traceback (most recent call last):\n  File \"/Users/free/Library/Python/3.8/lib/python/site-packages/pyatv/scripts/atvscript.py\", line 302, in appstart\n    print(args.output(await _handle_command(args, abort_sem, loop)), flush=True)\n  File \"/Users/free/Library/Python/3.8/lib/python/site-packages/pyatv/scripts/atvscript.py\", line 196, in _handle_command\n    atv = await connect(config, loop, protocol=Protocol.MRP)\n  File \"/Users/free/Library/Python/3.8/lib/python/site-packages/pyatv/__init__.py\", line 96, in connect\n    for setup_data in proto_methods.setup(\n  File \"/Users/free/Library/Python/3.8/lib/python/site-packages/pyatv/protocols/airplay/__init__.py\", line 192, in setup\n    stream = AirPlayStream(config, service)\n  File \"/Users/free/Library/Python/3.8/lib/python/site-packages/pyatv/protocols/airplay/__init__.py\", line 79, in __init__\n    self._credentials: HapCredentials = parse_credentials(self.service.credentials)\n  File \"/Users/free/Library/Python/3.8/lib/python/site-packages/pyatv/auth/hap_pairing.py\", line 139, in parse_credentials\n    raise exceptions.InvalidCredentialsError(\"invalid credentials: \" + detail_string)\npyatv.exceptions.InvalidCredentialsError: invalid credentials: 321\n'
             };
             assert.throws(() => {
-                parseState(input, '', {});
+                parseState(input, undefined, '', {});
             }, /Got pyatv Error: invalid credentials: 321/);
         });
         it('should ignore date if it\'s an invalid date', function () {
             const input = { datetime: 'today' };
-            const result = parseState(input, '', {});
+            const result = parseState(input, undefined, '', {});
             assert.deepStrictEqual(result, {
                 dateTime: null,
                 hash: null,
@@ -264,7 +264,7 @@ describe('Tools', function () {
                 focusState: null,
                 volume: null
             };
-            const result = parseState(input, '', {});
+            const result = parseState(input, undefined, '', {});
             assert.deepStrictEqual(result, {
                 dateTime: null,
                 hash: null,
@@ -292,7 +292,7 @@ describe('Tools', function () {
                 shuffle: 'everything',
                 repeat: 'nothing'
             };
-            const result = parseState(input, '', {});
+            const result = parseState(input, undefined, '', {});
             assert.deepStrictEqual(result, {
                 dateTime: null,
                 hash: null,
@@ -311,6 +311,52 @@ describe('Tools', function () {
                 powerState: null,
                 focusState: null,
                 volume: null
+            });
+        });
+        it('should consider the current state', function () {
+            const input = {
+                result: 'success',
+                datetime: '2020-11-07T22:38:44.608030+01:00',
+                volume: 42
+            };
+            const currentState = {
+                dateTime: new Date('2020-11-07T22:38:43.608030+01:00'),
+                hash: '100e0ab6-6ff5-4199-9c04-a7107ff78712',
+                mediaType: NodePyATVMediaType.video,
+                deviceState: NodePyATVDeviceState.playing,
+                title: 'Solo: A Star Wars Story',
+                artist: null,
+                album: null,
+                genre: null,
+                totalTime: 8097,
+                position: 27,
+                shuffle: NodePyATVShuffleState.off,
+                repeat: NodePyATVRepeatState.off,
+                app: 'Disney+',
+                appId: 'com.disney.disneyplus',
+                powerState: null,
+                focusState: null,
+                volume: null
+            };
+            const result = parseState(input, currentState, '', {});
+            assert.deepStrictEqual(result, {
+                dateTime: new Date('2020-11-07T22:38:44.608030+01:00'),
+                hash: '100e0ab6-6ff5-4199-9c04-a7107ff78712',
+                mediaType: NodePyATVMediaType.video,
+                deviceState: NodePyATVDeviceState.playing,
+                title: 'Solo: A Star Wars Story',
+                artist: null,
+                album: null,
+                genre: null,
+                totalTime: 8097,
+                position: 27,
+                shuffle: NodePyATVShuffleState.off,
+                repeat: NodePyATVRepeatState.off,
+                app: 'Disney+',
+                appId: 'com.disney.disneyplus',
+                powerState: null,
+                focusState: null,
+                volume: 42
             });
         });
     });

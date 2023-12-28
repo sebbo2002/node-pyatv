@@ -34,7 +34,7 @@ export default class NodePyATVDevice implements EventEmitter{
 
     constructor(options: NodePyATVDeviceOptions) {
         this.options = Object.assign({}, options);
-        this.state = parseState({}, '', {});
+        this.state = parseState({}, undefined, '', {});
         this.events = new NodePyATVDeviceEvents(this.state, this, this.options);
 
         // @todo basic validation
@@ -232,7 +232,7 @@ export default class NodePyATVDevice implements EventEmitter{
             const parameters = getParamters(this.options);
 
             const result = await request(id, NodePyATVExecutableType.atvscript, [...parameters, 'playing'], this.options);
-            const newState = parseState(result, id, this.options);
+            const newState = parseState(result, this.state, id, this.options);
 
             this.applyState(newState);
             return newState;
@@ -248,7 +248,7 @@ export default class NodePyATVDevice implements EventEmitter{
      * @category State
      */
     clearState(): void {
-        this.applyState(parseState({}, '', {}));
+        this.applyState(parseState({}, undefined, '', {}));
     }
 
     private applyState(newState: NodePyATVState): void {

@@ -234,7 +234,7 @@ function parseStateStringAttr(
     d(`No ${outputAttr} value found in input (${JSON.stringify(input)})`);
 }
 
-export function parseState(input: NodePyATVInternalState, id: string, options: NodePyATVInstanceOptions): NodePyATVState {
+export function parseState(input: NodePyATVInternalState, currentState: NodePyATVState | undefined, id: string, options: NodePyATVInstanceOptions): NodePyATVState {
     const d = (msg: string) => debug(id, msg, options);
     const result: NodePyATVState = {
         dateTime: null,
@@ -253,7 +253,8 @@ export function parseState(input: NodePyATVInternalState, id: string, options: N
         appId: null,
         powerState: null,
         volume: null,
-        focusState: null
+        focusState: null,
+        ...currentState
     };
     if (!input || typeof input !== 'object') {
         return result;

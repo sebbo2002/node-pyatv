@@ -1,3 +1,10 @@
+## [7.2.1](https://github.com/sebbo2002/node-pyatv/compare/v7.2.0...v7.2.1) (2023-12-29)
+
+
+### Bug Fixes
+
+* **DeviceEvents:** Handle power_state/focus_state/volume events properly ([48010f3](https://github.com/sebbo2002/node-pyatv/commit/48010f397c7f361a1e5ee8de25941a71db739e2e)), closes [/github.com/sebbo2002/pyatv-mqtt-bridge/issues/285#issuecomment-1797978006](https://github.com//github.com/sebbo2002/pyatv-mqtt-bridge/issues/285/issues/issuecomment-1797978006) [#291](https://github.com/sebbo2002/node-pyatv/issues/291)
+
 # [7.2.0](https://github.com/sebbo2002/node-pyatv/compare/v7.1.0...v7.2.0) (2023-12-26)
 
 

@@ -36,7 +36,22 @@ export default class NodePyATVDeviceEvents extends EventEmitter {
     }
 
     applyStateAndEmitEvents(newState: NodePyATVState): void {
-        Object.keys(this.state).forEach((key: string) => {
+        let keys = Object.keys(this.state);
+
+        if('power_state' in newState && newState.power_state) {
+            keys = ['power_state'];
+        }
+        if('focus_state' in newState && newState.focus_state) {
+            keys = ['focus_state'];
+        }
+
+        // Volume events don't hold the complete state…
+        // see https://github.com/sebbo2002/node-pyatv/pull/291
+        if('volume' in newState && newState.volume) {
+            keys = ['volume'];
+        }
+
+        keys.forEach((key: string) => {
 
             // @ts-ignore
             const oldValue = this.state[key];

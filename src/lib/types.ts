@@ -47,7 +47,14 @@ export enum NodePyATVPowerState {
 }
 
 export enum NodePyATVFocusState {
+    // @deprecated Please use `NodePyATVFocusState.focused` instead
     focued = 'focused',
+
+    // Doublicate enum value due to typo, will be removed in next breaking change
+    // @todo remove in next breaking change
+    // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
+    focused = 'focused',
+
     unfocused = 'unfocused'
 }
 

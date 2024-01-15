@@ -4,7 +4,7 @@ import assert from 'assert';
 import { addRequestId, debug, getExecutable, getParameters, parseState, removeRequestId } from '../src/lib/tools.js';
 import {
     NodePyATVDeviceState,
-    NodePyATVExecutableType,
+    NodePyATVExecutableType, NodePyATVInternalState,
     NodePyATVMediaType,
     NodePyATVProtocol,
     NodePyATVRepeatState,
@@ -170,7 +170,7 @@ describe('Tools', function () {
             });
         });
         it('should work with example data', function () {
-            const input = {
+            const input: NodePyATVInternalState = {
                 result: 'success',
                 datetime: '2020-11-07T22:38:43.608030+01:00',
                 hash: '100e0ab6-6ff5-4199-9c04-a7107ff78712',
@@ -189,7 +189,7 @@ describe('Tools', function () {
                 power_state: null,
                 focus_state: null,
                 volume: null,
-                outputDevices: null
+                output_devices: null
             };
             const result = parseState(input, '', {});
             assert.deepStrictEqual(result, {
@@ -214,7 +214,7 @@ describe('Tools', function () {
             });
         });
         it('should throw an error for pyatv exceptions', function () {
-            const input = {
+            const input: NodePyATVInternalState = {
                 result: 'failure',
                 datetime: '2021-11-24T21:13:36.424576+03:00',
                 exception: 'invalid credentials: 321',
@@ -225,7 +225,7 @@ describe('Tools', function () {
             }, /Got pyatv Error: invalid credentials: 321/);
         });
         it('should ignore date if it\'s an invalid date', function () {
-            const input = { datetime: 'today' };
+            const input: NodePyATVInternalState = { datetime: 'today' };
             const result = parseState(input, '', {});
             assert.deepStrictEqual(result, {
                 dateTime: null,
@@ -249,7 +249,7 @@ describe('Tools', function () {
             });
         });
         it('should ignore data if unsupported type', function () {
-            const input = {
+            const input: NodePyATVInternalState = {
                 result: 'success',
                 datetime: true,
                 hash: 1337,
@@ -268,7 +268,7 @@ describe('Tools', function () {
                 power_state: null,
                 focus_state: null,
                 volume: null,
-                outputDevices: null
+                output_devices: null
             };
             const result = parseState(input, '', {});
             assert.deepStrictEqual(result, {
@@ -293,7 +293,7 @@ describe('Tools', function () {
             });
         });
         it('should ignore enums with unsupported valid', function () {
-            const input = {
+            const input: NodePyATVInternalState = {
                 media_type: '3d-experience',
                 device_state: 'initiating',
                 shuffle: 'everything',

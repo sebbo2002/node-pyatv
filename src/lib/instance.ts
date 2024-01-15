@@ -14,7 +14,7 @@ import {
     NodePyATVVersionResponse
 } from './types.js';
 
-import { addRequestId, debug, getParamters, removeRequestId, request } from './tools.js';
+import { addRequestId, debug, getParameters, removeRequestId, request } from './tools.js';
 import { NodePyATVDevice } from '../lib/index.js';
 
 /**
@@ -109,7 +109,7 @@ export default class NodePyATVInstance {
      */
     public static async find (options: NodePyATVFindAndInstanceOptions = {}): Promise<NodePyATVDevice[]> {
         const id = addRequestId();
-        const parameters = getParamters(options);
+        const parameters = getParameters(options);
 
         const result = await request(id, NodePyATVExecutableType.atvscript, [...parameters, 'scan'], options);
         if (typeof result !== 'object' || result.result !== 'success' || !Array.isArray(result.devices)) {

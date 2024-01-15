@@ -1,7 +1,7 @@
 'use strict';
 
 import assert from 'assert';
-import { addRequestId, debug, getExecutable, getParamters, parseState, removeRequestId } from '../src/lib/tools.js';
+import { addRequestId, debug, getExecutable, getParameters, parseState, removeRequestId } from '../src/lib/tools.js';
 import {
     NodePyATVDeviceState,
     NodePyATVExecutableType,
@@ -87,17 +87,17 @@ describe('Tools', function () {
 
     describe('getParameters()', function () {
         it('empty case', async function () {
-            const result = await getParamters();
+            const result = await getParameters();
             assert.deepEqual(result, []);
         });
         it('easy case', async function () {
-            const result = await getParamters({
+            const result = await getParameters({
                 host: '192.168.178.2'
             });
             assert.deepEqual(result, ['-s', '192.168.178.2']);
         });
         it('full case', async function () {
-            const result = await getParamters({
+            const result = await getParameters({
                 hosts: ['192.168.178.2', '192.168.178.3'],
                 id: '****',
                 protocol: NodePyATVProtocol.mrp,

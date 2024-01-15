@@ -58,7 +58,7 @@ export default class NodePyATVDeviceEvents extends EventEmitter {
 
         // Volume events don't hold the complete state…
         // see https://github.com/sebbo2002/node-pyatv/pull/291
-        if('volume' in newState && newState.volume) {
+        if('volume' in newState && newState.volume !== null) {
             keys = ['volume'];
         }
 

@@ -54,6 +54,12 @@ export default class NodePyATVDeviceEvents extends EventEmitter {
             keys = ['volume'];
         }
 
+        // If all values are null, we don't need to emit events at all
+        // https://github.com/sebbo2002/node-pyatv/issues/295#issuecomment-1888640079
+        if(!Object.entries(newState).find(([k, v]) => !['result', 'dateTime'].includes(k) && v !== null)) {
+            return;
+        }
+
         keys.forEach((key: string) => {
 
             // @ts-ignore

@@ -186,8 +186,8 @@ describe('Tools', function () {
                 repeat: 'off',
                 app: 'Disney+',
                 app_id: 'com.disney.disneyplus',
-                powerState: null,
-                focusState: null,
+                power_state: null,
+                focus_state: null,
                 volume: null,
                 outputDevices: null
             };
@@ -265,8 +265,8 @@ describe('Tools', function () {
                 repeat: true,
                 app: 0,
                 app_id: 891645381647289,
-                powerState: null,
-                focusState: null,
+                power_state: null,
+                focus_state: null,
                 volume: null,
                 outputDevices: null
             };

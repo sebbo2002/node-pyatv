@@ -3,6 +3,7 @@
 import assert from 'assert';
 import {createFakeSpawn} from '../src/lib/fake-spawn.js';
 import {NodePyATVDeviceEvent, NodePyATVPowerState, NodePyATVDevice} from '../src/lib/index.js';
+import { NodePyATVFocusState } from '../src/lib/types.js';
 
 describe('NodePyATVDeviceEvents', function () {
     describe('applyStateAndEmitEvents()', function () {
@@ -203,6 +204,162 @@ describe('NodePyATVDeviceEvents', function () {
                     cb(undefined);
                 });
             });
+        });
+        it('should only one event for powerState changes', async function () {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: createFakeSpawn(cp => {
+                    cp.onStdIn(() => cp.end());
+                    cp.stdout({
+                        result: 'success',
+                        datetime: new Date().toJSON(),
+                        power_state: 'off'
+                    });
+                    cp.end();
+                })
+            });
+
+            let counter = 0;
+            device.on('update', event => {
+                assert.ok(event instanceof NodePyATVDeviceEvent);
+                assert.strictEqual(event.key, 'powerState');
+                assert.strictEqual(event.oldValue, null);
+                assert.strictEqual(event.newValue, 'off');
+                assert.strictEqual(event.newValue, NodePyATVPowerState.off);
+                assert.strictEqual(event.value, 'off');
+                assert.strictEqual(event.value, NodePyATVPowerState.off);
+                assert.deepStrictEqual(event.device, device);
+                counter++;
+            });
+
+            await new Promise(cb => setTimeout(cb, 10));
+            assert.strictEqual(counter, 1);
+            device.removeAllListeners('update');
+        });
+        it('should only one event for focusState changes', async function () {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: createFakeSpawn(cp => {
+                    cp.onStdIn(() => cp.end());
+                    cp.stdout({
+                        result: 'success',
+                        datetime: new Date().toJSON(),
+                        focus_state: 'unfocused'
+                    });
+                    cp.end();
+                })
+            });
+
+            let counter = 0;
+            device.on('update', event => {
+                assert.ok(event instanceof NodePyATVDeviceEvent);
+                assert.strictEqual(event.key, 'focusState');
+                assert.strictEqual(event.oldValue, null);
+                assert.strictEqual(event.newValue, 'unfocused');
+                assert.strictEqual(event.newValue, NodePyATVFocusState.unfocused);
+                assert.strictEqual(event.value, 'unfocused');
+                assert.strictEqual(event.value, NodePyATVFocusState.unfocused);
+                assert.deepStrictEqual(event.device, device);
+                counter++;
+            });
+
+            await new Promise(cb => setTimeout(cb, 10));
+            assert.strictEqual(counter, 1);
+            device.removeAllListeners('update');
+        });
+        it('should only one event for outputDevices changes', async function () {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: createFakeSpawn(cp => {
+                    cp.onStdIn(() => cp.end());
+                    cp.stdout({
+                        result: 'success',
+                        datetime: new Date().toJSON(),
+                        output_devices: [{
+                            name: 'Living room',
+                            identifier: 'AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE'
+                        }]
+                    });
+                    cp.end();
+                })
+            });
+
+            let counter = 0;
+            device.on('update', event => {
+                assert.ok(event instanceof NodePyATVDeviceEvent);
+                assert.strictEqual(event.key, 'outputDevices');
+                assert.strictEqual(event.oldValue, null);
+                assert.deepStrictEqual(event.newValue, [{
+                    name: 'Living room',
+                    identifier: 'AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE'
+                }]);
+                assert.deepStrictEqual(event.value, [{
+                    name: 'Living room',
+                    identifier: 'AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE'
+                }]);
+                assert.deepStrictEqual(event.device, device);
+
+                counter++;
+            });
+
+            await new Promise(cb => setTimeout(cb, 10));
+            assert.strictEqual(counter, 1);
+            device.removeAllListeners('update');
+        });
+        it('should only one event for volume changes', async function () {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: createFakeSpawn(cp => {
+                    cp.onStdIn(() => cp.end());
+                    cp.stdout({
+                        result: 'success',
+                        datetime: new Date().toJSON(),
+                        volume: 20.0
+                    });
+                    cp.end();
+                })
+            });
+
+            let counter = 0;
+            device.on('update', event => {
+                assert.ok(event instanceof NodePyATVDeviceEvent);
+                assert.strictEqual(event.key, 'volume');
+                assert.strictEqual(event.oldValue, null);
+                assert.strictEqual(event.newValue, 20);
+                assert.strictEqual(event.value, 20);
+                assert.deepStrictEqual(event.device, device);
+                counter++;
+            });
+
+            await new Promise(cb => setTimeout(cb, 10));
+            assert.strictEqual(counter, 1);
+            device.removeAllListeners('update');
+        });
+        it('should not trigger any events for newly added fields', async function () {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: createFakeSpawn(cp => {
+                    cp.onStdIn(() => cp.end());
+                    cp.stdout({
+                        result: 'success',
+                        datetime: new Date().toJSON(),
+                        foo: 'bar'
+                    });
+                    cp.end();
+                })
+            });
+
+            device.on('update', event => {
+                assert.fail(`Got an update event for a new field: ${event}`);
+            });
+
+            await new Promise(cb => setTimeout(cb, 10));
+            device.removeAllListeners('update');
         });
     });
 

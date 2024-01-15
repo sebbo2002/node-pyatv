@@ -12,7 +12,7 @@ import {ChildProcess} from 'child_process';
 
 import {EventEmitter} from 'events';
 import {NodePyATVDevice, NodePyATVDeviceEvent} from '../lib/index.js';
-import {addRequestId, debug, execute, getParamters, parseState, removeRequestId} from './tools.js';
+import {addRequestId, debug, execute, getParameters, parseState, removeRequestId} from './tools.js';
 import {FakeChildProcess} from './fake-spawn.js';
 
 /**
@@ -156,7 +156,7 @@ export default class NodePyATVDeviceEvents extends EventEmitter {
         this.listenerState = NodePyATVListenerState.starting;
 
         const listenStart = new Date().getTime();
-        const parameters = getParamters(this.options);
+        const parameters = getParameters(this.options);
         this.pyatv = execute(reqId, NodePyATVExecutableType.atvscript, [...parameters, 'push_updates'], this.options);
         if(!this.pyatv) {
             throw new Error('Unable to start listener: Unable to start atvscript');

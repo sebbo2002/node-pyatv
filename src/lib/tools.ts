@@ -185,7 +185,7 @@ export async function request(
     return result.stdout;
 }
 
-export function getParamters(options: NodePyATVFindAndInstanceOptions = {}): string[] {
+export function getParameters(options: NodePyATVFindAndInstanceOptions = {}): string[] {
     const parameters: string[] = [];
 
     if (options.hosts) {

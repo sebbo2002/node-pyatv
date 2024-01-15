@@ -407,3 +407,12 @@ export function parseState(input: NodePyATVInternalState, id: string, options: N
 
     return result;
 }
+
+export function compareOutputDevices (a: NodePyATVState['outputDevices'], b: NodePyATVState['outputDevices']) {
+    return Boolean(
+        Array.isArray(a) &&
+        Array.isArray(b) &&
+        JSON.stringify(a.sort((a, b) => a < b ? -1 : 1)) ===
+        JSON.stringify(b.sort((a, b) => a < b ? -1 : 1))
+    );
+}

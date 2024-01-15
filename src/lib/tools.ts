@@ -253,7 +253,8 @@ export function parseState(input: NodePyATVInternalState, id: string, options: N
         appId: null,
         powerState: null,
         volume: null,
-        focusState: null
+        focusState: null,
+        outputDevices: null
     };
     if (!input || typeof input !== 'object') {
         return result;
@@ -390,13 +391,18 @@ export function parseState(input: NodePyATVInternalState, id: string, options: N
     if(typeof input.focus_state === 'string') {
         const validValues = Object.keys(NodePyATVFocusState).map(o => String(o));
         if (validValues.includes(input.focus_state)) {
-            result.focusState = NodePyATVFocusState[input.power_state as NodePyATVFocusState];
+            result.focusState = NodePyATVFocusState[input.focus_state as NodePyATVFocusState];
         }
         else {
             d(`Unsupported focusState value ${input.focus_state}, ignore attribute`);
         }
     } else {
         d(`No focusState value found in input (${JSON.stringify(input)})`);
+    }
+
+    // outputDevices
+    if (Array.isArray(input.output_devices)) {
+        result.outputDevices = input.output_devices;
     }
 
     return result;

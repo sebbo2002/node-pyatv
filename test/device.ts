@@ -392,7 +392,8 @@ describe('NodePyATVDevice', function () {
                 repeat: NodePyATVRepeatState.off,
                 app: 'Disney+',
                 appId: 'com.disney.disneyplus',
-                powerState: null
+                powerState: null,
+                outputDevices: null
             });
         });
         it('should reject with error if pyatv fails', async function () {

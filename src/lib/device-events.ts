@@ -38,11 +38,14 @@ export default class NodePyATVDeviceEvents extends EventEmitter {
     applyStateAndEmitEvents(newState: NodePyATVState): void {
         let keys = Object.keys(this.state);
 
-        if('power_state' in newState && newState.power_state) {
-            keys = ['power_state'];
+        if('powerState' in newState && newState.powerState) {
+            keys = ['powerState'];
         }
-        if('focus_state' in newState && newState.focus_state) {
-            keys = ['focus_state'];
+        if('focusState' in newState && newState.focusState) {
+            keys = ['focusState'];
+        }
+        if('outputDevices' in newState && newState.outputDevices) {
+            keys = ['outputDevices'];
         }
 
         // Volume events don't hold the complete state…

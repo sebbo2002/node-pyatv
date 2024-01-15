@@ -12,7 +12,15 @@ import {ChildProcess} from 'child_process';
 
 import {EventEmitter} from 'events';
 import {NodePyATVDevice, NodePyATVDeviceEvent} from '../lib/index.js';
-import {addRequestId, debug, execute, getParameters, parseState, removeRequestId} from './tools.js';
+import {
+    addRequestId,
+    compareOutputDevices,
+    debug,
+    execute,
+    getParameters,
+    parseState,
+    removeRequestId
+} from './tools.js';
 import {FakeChildProcess} from './fake-spawn.js';
 
 /**
@@ -69,6 +77,9 @@ export default class NodePyATVDeviceEvents extends EventEmitter {
             const newValue = newState[key];
 
             if(oldValue === undefined || newValue === undefined || oldValue === newValue) {
+                return;
+            }
+            if(key === 'outputDevices' && compareOutputDevices(oldValue, newValue)) {
                 return;
             }
 

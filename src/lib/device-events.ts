@@ -14,6 +14,7 @@ import {EventEmitter} from 'events';
 import {NodePyATVDevice, NodePyATVDeviceEvent} from '../lib/index.js';
 import {addRequestId, debug, execute, getParamters, parseState, removeRequestId} from './tools.js';
 import {FakeChildProcess} from './fake-spawn.js';
+import deepEqual from './deepEqual.js';
 
 /**
  * @internal
@@ -68,7 +69,7 @@ export default class NodePyATVDeviceEvents extends EventEmitter {
             // @ts-ignore
             const newValue = newState[key];
 
-            if(oldValue === undefined || newValue === undefined || oldValue === newValue) {
+            if(oldValue === undefined || newValue === undefined || deepEqual(oldValue, newValue)) {
                 return;
             }
 

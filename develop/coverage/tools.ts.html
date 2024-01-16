@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">98.53% </span>
+                <span class="strong">98.08% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>403/409</span>
+                <span class='fraction'>410/418</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">97.41% </span>
+                <span class="strong">95.79% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>113/116</span>
+                <span class='fraction'>114/119</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>19/19</span>
+                <span class='fraction'>20/20</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">98.53% </span>
+                <span class="strong">98.08% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>403/409</span>
+                <span class='fraction'>410/418</span>
             </div>
         
             
@@ -472,7 +472,16 @@
 <a name='L407'></a><a href='#L407'>407</a>
 <a name='L408'></a><a href='#L408'>408</a>
 <a name='L409'></a><a href='#L409'>409</a>
-<a name='L410'></a><a href='#L410'>410</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L410'></a><a href='#L410'>410</a>
+<a name='L411'></a><a href='#L411'>411</a>
+<a name='L412'></a><a href='#L412'>412</a>
+<a name='L413'></a><a href='#L413'>413</a>
+<a name='L414'></a><a href='#L414'>414</a>
+<a name='L415'></a><a href='#L415'>415</a>
+<a name='L416'></a><a href='#L416'>416</a>
+<a name='L417'></a><a href='#L417'>417</a>
+<a name='L418'></a><a href='#L418'>418</a>
+<a name='L419'></a><a href='#L419'>419</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -497,20 +506,20 @@
 <span class="cline-any cline-yes">116x</span>
 <span class="cline-any cline-yes">116x</span>
 <span class="cline-any cline-yes">116x</span>
-<span class="cline-any cline-yes">119x</span>
-<span class="cline-any cline-yes">119x</span>
+<span class="cline-any cline-yes">121x</span>
+<span class="cline-any cline-yes">121x</span>
 <span class="cline-any cline-yes">116x</span>
 <span class="cline-any cline-yes">116x</span>
 <span class="cline-any cline-yes">116x</span>
-<span class="cline-any cline-yes">119x</span>
+<span class="cline-any cline-yes">121x</span>
 <span class="cline-any cline-yes">116x</span>
 <span class="cline-any cline-yes">116x</span>
 <span class="cline-any cline-yes">116x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">128x</span>
-<span class="cline-any cline-yes">103x</span>
-<span class="cline-any cline-yes">103x</span>
+<span class="cline-any cline-yes">104x</span>
+<span class="cline-any cline-yes">104x</span>
 <span class="cline-any cline-yes">128x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -881,6 +890,15 @@
 <span class="cline-any cline-yes">149x</span>
 <span class="cline-any cline-yes">149x</span>
 <span class="cline-any cline-yes">149x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">'use strict';
 &nbsp;
 import {
@@ -1290,6 +1308,15 @@ export function parseState(input: NodePyATVInternalState, id: string, options: N
 &nbsp;
     return result;
 }
+&nbsp;
+export function compareOutputDevices (a: NodePyATVState['outputDevices'], b: NodePyATVState['outputDevices']) {
+    return Boolean(
+        Array.isArray(a)<span class="branch-0 cbranch-no" title="branch not covered" > &amp;&amp;</span>
+        Array.isArray(b)<span class="branch-0 cbranch-no" title="branch not covered" > &amp;&amp;</span>
+<span class="cstat-no" title="statement not covered" >        JSON.stringify(a.sort((a, b) =&gt; a.identifier &lt; b.identifier ? -1 : 1)) ===</span>
+<span class="cstat-no" title="statement not covered" >        JSON.stringify(b.sort((a, b) =&gt; a.identifier &lt; b.identifier ? -1 : 1))</span>
+    );
+}
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -1297,7 +1324,7 @@ export function parseState(input: NodePyATVInternalState, id: string, options: N
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-01-15T17:32:59.747Z
+                at 2024-01-16T08:57:42.107Z
             </div>
         <script src="prettify.js"></script>
         <script>

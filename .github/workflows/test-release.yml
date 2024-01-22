@@ -25,7 +25,7 @@ jobs:
           # https://github.com/aio-libs/aiohttp/issues/7739#issuecomment-1773868351
           python-version: 3.11
       - name: 🔧 Setup pip cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: pip-cache
         with:
           path: ~/.cache/pip
@@ -54,7 +54,7 @@ jobs:
         with:
           python-version: 3.11
       - name: 🔧 Setup pip cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: pip-cache
         with:
           path: ~/.cache/pip
@@ -110,7 +110,7 @@ jobs:
         with:
           python-version: 3.11
       - name: 🔧 Setup pip cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: pip-cache
         with:
           path: ~/.cache/pip

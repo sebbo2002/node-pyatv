@@ -1,3 +1,18 @@
+# [7.3.0](https://github.com/sebbo2002/node-pyatv/compare/v7.2.1...v7.3.0) (2024-01-30)
+
+
+### Bug Fixes
+
+* **core:** fix typo getParameters ([e28b86b](https://github.com/sebbo2002/node-pyatv/commit/e28b86b12be91ccd032336a1dd5099150339c6cb))
+* **core:** fix unintentional event trigger ([c4bd9a5](https://github.com/sebbo2002/node-pyatv/commit/c4bd9a5b8fdd98a23698e3810cb425783ad51f77))
+* Do not reset state to initial default state on unsupported messages ([876c9b4](https://github.com/sebbo2002/node-pyatv/commit/876c9b4c87724ebb7333c288786025d7fe7fca80)), closes [#295](https://github.com/sebbo2002/node-pyatv/issues/295)
+* **Types:** Fix `NodePyATVFocusState` typo ([cc96a83](https://github.com/sebbo2002/node-pyatv/commit/cc96a837bbe9a9aa1aaf839ece31cf2febdb89b2))
+
+
+### Features
+
+* Add `outputDevices` Support ([cf194fd](https://github.com/sebbo2002/node-pyatv/commit/cf194fda9216f2790ca24e4622263e60d37964a6)), closes [#295](https://github.com/sebbo2002/node-pyatv/issues/295)
+
 ## [7.2.1](https://github.com/sebbo2002/node-pyatv/compare/v7.2.0...v7.2.1) (2023-12-29)
 
 

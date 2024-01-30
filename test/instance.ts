@@ -187,7 +187,7 @@ describe('NodePyATVInstance', function () {
 
     describe('static find()', function () {
         it('should work [L]', async function () {
-            this.timeout(8000);
+            this.timeout(10000);
             const result = await NodePyATVInstance.find();
             assert.ok(Array.isArray(result));
         });

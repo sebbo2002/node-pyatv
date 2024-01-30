@@ -47,7 +47,14 @@ export enum NodePyATVPowerState {
 }
 
 export enum NodePyATVFocusState {
+    // @deprecated Please use `NodePyATVFocusState.focused` instead
     focued = 'focused',
+
+    // Doublicate enum value due to typo, will be removed in next breaking change
+    // @todo remove in next breaking change
+    // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
+    focused = 'focused',
+
     unfocused = 'unfocused'
 }
 
@@ -214,6 +221,7 @@ export interface NodePyATVInternalState {
     connection?: string | unknown;
     volume?: number | unknown;
     focus_state?: string | unknown;
+    output_devices?: Array<{ name: string; identifier: string; }>;
 }
 
 export interface NodePyATVState {
@@ -234,6 +242,7 @@ export interface NodePyATVState {
     powerState: NodePyATVPowerState | null;
     volume: number | null;
     focusState: NodePyATVFocusState | null;
+    outputDevices: Array<{ name: string; identifier: string; }> | null;
 }
 
 export interface NodePyATVApp {

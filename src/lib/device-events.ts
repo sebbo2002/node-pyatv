@@ -12,7 +12,15 @@ import {ChildProcess} from 'child_process';
 
 import {EventEmitter} from 'events';
 import {NodePyATVDevice, NodePyATVDeviceEvent} from '../lib/index.js';
-import {addRequestId, debug, execute, getParamters, parseState, removeRequestId} from './tools.js';
+import {
+    addRequestId,
+    compareOutputDevices,
+    debug,
+    execute,
+    getParameters,
+    parseState,
+    removeRequestId
+} from './tools.js';
 import {FakeChildProcess} from './fake-spawn.js';
 
 /**
@@ -38,17 +46,26 @@ export default class NodePyATVDeviceEvents extends EventEmitter {
     applyStateAndEmitEvents(newState: NodePyATVState): void {
         let keys = Object.keys(this.state);
 
-        if('power_state' in newState && newState.power_state) {
-            keys = ['power_state'];
+        if('powerState' in newState && newState.powerState) {
+            keys = ['powerState'];
         }
-        if('focus_state' in newState && newState.focus_state) {
-            keys = ['focus_state'];
+        if('focusState' in newState && newState.focusState) {
+            keys = ['focusState'];
+        }
+        if('outputDevices' in newState && newState.outputDevices) {
+            keys = ['outputDevices'];
         }
 
         // Volume events don't hold the complete state…
         // see https://github.com/sebbo2002/node-pyatv/pull/291
-        if('volume' in newState && newState.volume) {
+        if('volume' in newState && newState.volume !== null) {
             keys = ['volume'];
+        }
+
+        // If all values are null, we don't need to emit events at all
+        // https://github.com/sebbo2002/node-pyatv/issues/295#issuecomment-1888640079
+        if(!Object.entries(newState).find(([k, v]) => !['result', 'dateTime'].includes(k) && v !== null)) {
+            return;
         }
 
         keys.forEach((key: string) => {
@@ -60,6 +77,9 @@ export default class NodePyATVDeviceEvents extends EventEmitter {
             const newValue = newState[key];
 
             if(oldValue === undefined || newValue === undefined || oldValue === newValue) {
+                return;
+            }
+            if(key === 'outputDevices' && compareOutputDevices(oldValue, newValue)) {
                 return;
             }
 
@@ -147,7 +167,7 @@ export default class NodePyATVDeviceEvents extends EventEmitter {
         this.listenerState = NodePyATVListenerState.starting;
 
         const listenStart = new Date().getTime();
-        const parameters = getParamters(this.options);
+        const parameters = getParameters(this.options);
         this.pyatv = execute(reqId, NodePyATVExecutableType.atvscript, [...parameters, 'push_updates'], this.options);
         if(!this.pyatv) {
             throw new Error('Unable to start listener: Unable to start atvscript');

@@ -16,7 +16,7 @@ import {
     NodePyATVState
 } from './types.js';
 
-import { addRequestId, getParamters, parseState, removeRequestId, request } from './tools.js';
+import { addRequestId, getParameters, parseState, removeRequestId, request } from './tools.js';
 import { NodePyATVDeviceEvent, NodePyATVDeviceEvents } from '../lib/index.js';
 import { EventEmitter } from 'events';
 
@@ -229,7 +229,7 @@ export default class NodePyATVDevice implements EventEmitter{
         const id = addRequestId();
 
         try {
-            const parameters = getParamters(this.options);
+            const parameters = getParameters(this.options);
 
             const result = await request(id, NodePyATVExecutableType.atvscript, [...parameters, 'playing'], this.options);
             const newState = parseState(result, id, this.options);
@@ -401,7 +401,7 @@ export default class NodePyATVDevice implements EventEmitter{
      */
     async listApps(): Promise<NodePyATVApp[]> {
         const id = addRequestId();
-        const parameters = getParamters(this.options);
+        const parameters = getParameters(this.options);
 
         const result = await request(id, NodePyATVExecutableType.atvremote, [...parameters, 'app_list'], this.options);
         if(typeof result !== 'string' || !result.startsWith('App: ')) {
@@ -426,7 +426,7 @@ export default class NodePyATVDevice implements EventEmitter{
 
     private async _pressKey(key: NodePyATVInternalKeys | string, executableType: NodePyATVExecutableType) {
         const id = addRequestId();
-        const parameters = getParamters(this.options);
+        const parameters = getParameters(this.options);
 
         const result = await request(id, executableType, [...parameters, key], this.options);
         if (

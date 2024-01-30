@@ -185,7 +185,7 @@ export async function request(
     return result.stdout;
 }
 
-export function getParamters(options: NodePyATVFindAndInstanceOptions = {}): string[] {
+export function getParameters(options: NodePyATVFindAndInstanceOptions = {}): string[] {
     const parameters: string[] = [];
 
     if (options.hosts) {
@@ -253,7 +253,8 @@ export function parseState(input: NodePyATVInternalState, id: string, options: N
         appId: null,
         powerState: null,
         volume: null,
-        focusState: null
+        focusState: null,
+        outputDevices: null
     };
     if (!input || typeof input !== 'object') {
         return result;
@@ -390,7 +391,7 @@ export function parseState(input: NodePyATVInternalState, id: string, options: N
     if(typeof input.focus_state === 'string') {
         const validValues = Object.keys(NodePyATVFocusState).map(o => String(o));
         if (validValues.includes(input.focus_state)) {
-            result.focusState = NodePyATVFocusState[input.power_state as NodePyATVFocusState];
+            result.focusState = NodePyATVFocusState[input.focus_state as NodePyATVFocusState];
         }
         else {
             d(`Unsupported focusState value ${input.focus_state}, ignore attribute`);
@@ -399,5 +400,19 @@ export function parseState(input: NodePyATVInternalState, id: string, options: N
         d(`No focusState value found in input (${JSON.stringify(input)})`);
     }
 
+    // outputDevices
+    if (Array.isArray(input.output_devices)) {
+        result.outputDevices = input.output_devices;
+    }
+
     return result;
+}
+
+export function compareOutputDevices (a: NodePyATVState['outputDevices'], b: NodePyATVState['outputDevices']) {
+    return Boolean(
+        Array.isArray(a) &&
+        Array.isArray(b) &&
+        JSON.stringify(a.sort((a, b) => a.identifier < b.identifier ? -1 : 1)) ===
+        JSON.stringify(b.sort((a, b) => a.identifier < b.identifier ? -1 : 1))
+    );
 }

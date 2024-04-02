@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
-<coverage lines-valid="2248" lines-covered="2209" line-rate="0.9826" branches-valid="377" branches-covered="358" branch-rate="0.9495999999999999" timestamp="1711452790287" complexity="0" version="0.1">
+<coverage lines-valid="2248" lines-covered="2209" line-rate="0.9826" branches-valid="377" branches-covered="358" branch-rate="0.9495999999999999" timestamp="1712046199484" complexity="0" version="0.1">
   <sources>
     <source>/home/runner/work/node-pyatv/node-pyatv</source>
   </sources>

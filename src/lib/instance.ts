@@ -9,6 +9,7 @@ import {
     NodePyATVDeviceOptions,
     NodePyATVExecutableType,
     NodePyATVFindAndInstanceOptions,
+    NodePyATVFindResponseObject,
     NodePyATVInstanceOptions,
     NodePyATVInternalScanDevice,
     NodePyATVVersionResponse
@@ -105,34 +106,68 @@ export default class NodePyATVInstance {
      * console.log(devices);
      * ```
      *
+     * Normally `node-pyatv` ignores error messages if at least one device has been found, but if you
+     * always want to receive the error messages, you can set the second argument to `true`:
+     *
+     * ```typescript
+     * const result = await pyatv.find({}, true);
+     * console.log(result.devices);
+     * console.log(result.errors);
+     * ```
+     *
      * @param options
      */
-    public static async find (options: NodePyATVFindAndInstanceOptions = {}): Promise<NodePyATVDevice[]> {
+    public static async find (options?: NodePyATVFindAndInstanceOptions): Promise<NodePyATVDevice[]>;
+    public static async find (options: NodePyATVFindAndInstanceOptions, returnDevicesAndErrors: true): Promise<NodePyATVFindResponseObject>
+    public static async find (options: NodePyATVFindAndInstanceOptions = {}, returnDevicesAndErrors?: boolean): Promise<NodePyATVDevice[]|NodePyATVFindResponseObject> {
         const id = addRequestId();
         const parameters = getParameters(options);
 
-        const result = await request(id, NodePyATVExecutableType.atvscript, [...parameters, 'scan'], options);
-        if (typeof result !== 'object' || result.result !== 'success' || !Array.isArray(result.devices)) {
-            throw new Error(`Unable to parse pyatv response: ${JSON.stringify(result, null, '  ')}`);
-        }
-
-        const objects = result.devices.map((device: NodePyATVInternalScanDevice) =>
-            this.device(Object.assign({}, options, {
-                host: device.address,
-                id: device.identifier,
-                allIDs: device.all_identifiers,
-                name: device.name,
-                mac: device.device_info?.mac,
-                model: device.device_info?.model,
-                modelName: device.device_info?.model_str,
-                os: device.device_info?.operating_system,
-                version: device.device_info?.version,
-                services: device.services
-            }))
+        const devices: NodePyATVDevice[] = [];
+        const errors: Record<string, unknown>[] = [];
+        const response = await request(
+            id,
+            NodePyATVExecutableType.atvscript,
+            [...parameters, 'scan'],
+            { ...(options || {}), allowMultipleResponses: true }
         );
 
+        for (const item of response) {
+            if (typeof item === 'object' && 'result' in item && item.result === 'failure') {
+                errors.push(item);
+            }
+            else if (typeof item === 'object' && 'result' in item && item.result === 'success' && Array.isArray(item.devices)) {
+                devices.push(
+                    ...item.devices.map((device: NodePyATVInternalScanDevice) =>
+                        this.device(Object.assign({}, options, {
+                            host: device.address,
+                            id: device.identifier,
+                            allIDs: device.all_identifiers,
+                            name: device.name,
+                            mac: device.device_info?.mac,
+                            model: device.device_info?.model,
+                            modelName: device.device_info?.model_str,
+                            os: device.device_info?.operating_system,
+                            version: device.device_info?.version,
+                            services: device.services
+                        }))
+                    )
+                );
+            }
+            else {
+                throw new Error(`Unable to parse pyatv response: ${JSON.stringify(item, null, '  ')}`);
+            }
+        }
         removeRequestId(id);
-        return objects;
+
+        if (returnDevicesAndErrors) {
+            return { devices, errors };
+        }
+        if(!devices.length && errors.length) {
+            throw new Error(`Unable to find any devices, but received ${errors.length} error${errors.length !== 1 ? 's' : ''}: ${JSON.stringify(errors, null, '  ')}`);
+        }
+
+        return devices;
     }
 
     /**

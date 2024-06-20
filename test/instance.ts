@@ -222,6 +222,22 @@ describe('NodePyATVInstance', function () {
                 });
             }, /Hello world!/);
         });
+        it('should throw error on pyatv failure', async function () {
+            await assert.rejects(async () => {
+                await NodePyATVInstance.find({
+                    spawn: createFakeSpawn(cp => {
+                        // Example output from @maxileith
+                        // https://github.com/sebbo2002/node-pyatv/issues/324#issue-2360854902
+                        cp.stdout({
+                            result: 'failure',
+                            datetime: '2020-11-06T20:47:30.840022+01:00',
+                            error: 'Task exception was never retrieved',
+                            exception: '[Errno 113] Connect call failed'
+                        }).code(1).end();
+                    })
+                });
+            }, /Unable to find any devices, but received 1 error: /);
+        });
         it('should throw error if atvscript result is not valid json', async function () {
             await assert.rejects(async () => {
                 await NodePyATVInstance.find({
@@ -335,6 +351,68 @@ describe('NodePyATVInstance', function () {
                     port: 7000
                 }
             ]);
+        });
+        it('should work for unicast scans', async function () {
+            const devices = await NodePyATVInstance.find({
+                spawn: createFakeSpawn(cp => {
+                    // Example output from @maxileith
+                    // https://github.com/sebbo2002/node-pyatv/issues/324#issue-2360854902
+                    cp.stdout(`{"result": "failure", "datetime": "2024-05-18T16:20:18.103087-06:00", "error": "Task exception was never retrieved", "exception": "[Errno 113] Connect call failed ('10.0.0.232', 32498)", "stacktrace": "Traceback (most recent call last):\\n  File \\"/var/lib/homebridge/appletv-enhanced/.venv/lib/python3.11/site-packages/pyatv/support/knock.py\\", line 28, in _async_knock\\n    _, writer = await asyncio.wait_for(\\n                ^^^^^^^^^^^^^^^^^^^^^^^\\n  File \\"/usr/lib/python3.11/asyncio/tasks.py\\", line 479, in wait_for\\n    return fut.result()\\n           ^^^^^^^^^^^^\\n  File \\"/usr/lib/python3.11/asyncio/streams.py\\", line 48, in open_connection\\n    transport, _ = await loop.create_connection(\\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \\"/usr/lib/python3.11/asyncio/base_events.py\\", line 1085, in create_connection\\n    raise exceptions[0]\\n  File \\"/usr/lib/python3.11/asyncio/base_events.py\\", line 1069, in create_connection\\n    sock = await self._connect_sock(\\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \\"/usr/lib/python3.11/asyncio/base_events.py\\", line 973, in _connect_sock\\n    await self.sock_connect(sock, address)\\n  File \\"/usr/lib/python3.11/asyncio/selector_events.py\\", line 634, in sock_connect\\n    return await fut\\n           ^^^^^^^^^\\n  File \\"/usr/lib/python3.11/asyncio/selector_events.py\\", line 674, in _sock_connect_cb\\n    raise OSError(err, f'Connect call failed {address}')\\nOSError: [Errno 113] Connect call failed ('10.0.0.232', 32498)\\n"}
+{"result": "failure", "datetime": "2024-05-18T16:20:18.114744-06:00", "error": "Task exception was never retrieved", "exception": "[Errno 113] Connect call failed ('10.0.0.229', 32498)", "stacktrace": "Traceback (most recent call last):\\n  File \\"/var/lib/homebridge/appletv-enhanced/.venv/lib/python3.11/site-packages/pyatv/support/knock.py\\", line 28, in _async_knock\\n    _, writer = await asyncio.wait_for(\\n                ^^^^^^^^^^^^^^^^^^^^^^^\\n  File \\"/usr/lib/python3.11/asyncio/tasks.py\\", line 479, in wait_for\\n    return fut.result()\\n           ^^^^^^^^^^^^\\n  File \\"/usr/lib/python3.11/asyncio/streams.py\\", line 48, in open_connection\\n    transport, _ = await loop.create_connection(\\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \\"/usr/lib/python3.11/asyncio/base_events.py\\", line 1085, in create_connection\\n    raise exceptions[0]\\n  File \\"/usr/lib/python3.11/asyncio/base_events.py\\", line 1069, in create_connection\\n    sock = await self._connect_sock(\\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \\"/usr/lib/python3.11/asyncio/base_events.py\\", line 973, in _connect_sock\\n    await self.sock_connect(sock, address)\\n  File \\"/usr/lib/python3.11/asyncio/selector_events.py\\", line 634, in sock_connect\\n    return await fut\\n           ^^^^^^^^^\\n  File \\"/usr/lib/python3.11/asyncio/selector_events.py\\", line 674, in _sock_connect_cb\\n    raise OSError(err, f'Connect call failed {address}')\\nOSError: [Errno 113] Connect call failed ('10.0.0.229', 32498)\\n"}
+{"result": "success", "datetime": "2024-05-18T16:20:20.042648-06:00", "devices": [{"name": "Living Room", "address": "10.0.0.30", "identifier": "37323C0E-99E6-4CC3-A006-1ED5368FFF8C", "all_identifiers": ["86B730B2-5189-4B6A-BCAA-CDDB18F05FA8", "C8:D0:83:E9:D0:49", "37323C0E-99E6-4CC3-A006-1ED5368FFF8C", "C8D083E9D049"], "device_info": {"mac": "C8:D0:83:E9:D0:49", "model": "Gen4K", "model_str": "Apple TV 4K", "operating_system": "TvOS", "version": "17.5"}, "services": [{"protocol": "companion", "port": 49153}, {"protocol": "airplay", "port": 7000}, {"protocol": "mrp", "port": 49154}, {"protocol": "raop", "port": 7000}]}, {"name": "Kitchen", "address": "10.0.0.79", "identifier": "45B6A67A-9FAD-497D-95EF-7FC5ECB3371C", "all_identifiers": ["B163C908-000F-4983-BDC7-BEFD76887EF5", "C8:69:CD:63:2A:11", "45B6A67A-9FAD-497D-95EF-7FC5ECB3371C", "C869CD632A11"], "device_info": {"mac": "C8:69:CD:63:2A:11", "model": "Gen4", "model_str": "Apple TV 4", "operating_system": "TvOS", "version": "17.4"}, "services": [{"protocol": "companion", "port": 49153}, {"protocol": "airplay", "port": 7000}, {"protocol": "mrp", "port": 49157}, {"protocol": "raop", "port": 7000}]}, {"name": "Bedroom", "address": "10.0.0.20", "identifier": "CA55DA36-ADEF-4DBC-A0B3-BA68B0C53E40", "all_identifiers": ["08:66:98:BC:37:1F", "108F35A0-FF21-4884-96C2-145AAAB1B4C4", "CA55DA36-ADEF-4DBC-A0B3-BA68B0C53E40", "086698BC371F"], "device_info": {"mac": "08:66:98:BC:37:1F", "model": "Gen4", "model_str": "Apple TV 4", "operating_system": "TvOS", "version": "17.4"}, "services": [{"protocol": "airplay", "port": 7000}, {"protocol": "companion", "port": 49153}, {"protocol": "mrp", "port": 49154}, {"protocol": "raop", "port": 7000}]}, {"name": "Basement", "address": "10.0.0.156", "identifier": "C02B27DB-2AF3-43E7-8EF7-885E1E9AB3B4", "all_identifiers": ["8BDB6773-479F-4C01-A185-29FF5516F2C2", "D0:03:4B:4C:2A:2E", "C02B27DB-2AF3-43E7-8EF7-885E1E9AB3B4", "D0034B4C2A2E"], "device_info": {"mac": "D0:03:4B:4C:2A:2E", "model": "Gen4", "model_str": "Apple TV 4", "operating_system": "TvOS", "version": "17.4"}, "services": [{"protocol": "companion", "port": 49153}, {"protocol": "airplay", "port": 7000}, {"protocol": "mrp", "port": 49154}, {"protocol": "raop", "port": 7000}]}]}`).code(1).end();
+                })
+            });
+
+            assert.strictEqual(devices.length, 4);
+
+            assert.strictEqual(devices[0].name, 'Living Room');
+            assert.strictEqual(devices[0].host, '10.0.0.30');
+            assert.strictEqual(devices[0].id, '37323C0E-99E6-4CC3-A006-1ED5368FFF8C');
+
+            assert.strictEqual(devices[1].name, 'Kitchen');
+            assert.strictEqual(devices[1].host, '10.0.0.79');
+            assert.strictEqual(devices[1].id, '45B6A67A-9FAD-497D-95EF-7FC5ECB3371C');
+
+            assert.strictEqual(devices[2].name, 'Bedroom');
+            assert.strictEqual(devices[2].host, '10.0.0.20');
+            assert.strictEqual(devices[2].id, 'CA55DA36-ADEF-4DBC-A0B3-BA68B0C53E40');
+
+            assert.strictEqual(devices[3].name, 'Basement');
+            assert.strictEqual(devices[3].host, '10.0.0.156');
+            assert.strictEqual(devices[3].id, 'C02B27DB-2AF3-43E7-8EF7-885E1E9AB3B4');
+        });
+        it('should work for unicast scans with returnDevicesAndErrors = true', async function () {
+            const response = await NodePyATVInstance.find({
+                spawn: createFakeSpawn(cp => {
+                    // Example output from @maxileith
+                    // https://github.com/sebbo2002/node-pyatv/issues/324#issue-2360854902
+                    cp.stdout(`{"result": "failure", "datetime": "2024-05-18T16:20:18.103087-06:00", "error": "Task exception was never retrieved", "exception": "[Errno 113] Connect call failed ('10.0.0.232', 32498)", "stacktrace": "Traceback (most recent call last):\\n  File \\"/var/lib/homebridge/appletv-enhanced/.venv/lib/python3.11/site-packages/pyatv/support/knock.py\\", line 28, in _async_knock\\n    _, writer = await asyncio.wait_for(\\n                ^^^^^^^^^^^^^^^^^^^^^^^\\n  File \\"/usr/lib/python3.11/asyncio/tasks.py\\", line 479, in wait_for\\n    return fut.result()\\n           ^^^^^^^^^^^^\\n  File \\"/usr/lib/python3.11/asyncio/streams.py\\", line 48, in open_connection\\n    transport, _ = await loop.create_connection(\\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \\"/usr/lib/python3.11/asyncio/base_events.py\\", line 1085, in create_connection\\n    raise exceptions[0]\\n  File \\"/usr/lib/python3.11/asyncio/base_events.py\\", line 1069, in create_connection\\n    sock = await self._connect_sock(\\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \\"/usr/lib/python3.11/asyncio/base_events.py\\", line 973, in _connect_sock\\n    await self.sock_connect(sock, address)\\n  File \\"/usr/lib/python3.11/asyncio/selector_events.py\\", line 634, in sock_connect\\n    return await fut\\n           ^^^^^^^^^\\n  File \\"/usr/lib/python3.11/asyncio/selector_events.py\\", line 674, in _sock_connect_cb\\n    raise OSError(err, f'Connect call failed {address}')\\nOSError: [Errno 113] Connect call failed ('10.0.0.232', 32498)\\n"}
+{"result": "failure", "datetime": "2024-05-18T16:20:18.114744-06:00", "error": "Task exception was never retrieved", "exception": "[Errno 113] Connect call failed ('10.0.0.229', 32498)", "stacktrace": "Traceback (most recent call last):\\n  File \\"/var/lib/homebridge/appletv-enhanced/.venv/lib/python3.11/site-packages/pyatv/support/knock.py\\", line 28, in _async_knock\\n    _, writer = await asyncio.wait_for(\\n                ^^^^^^^^^^^^^^^^^^^^^^^\\n  File \\"/usr/lib/python3.11/asyncio/tasks.py\\", line 479, in wait_for\\n    return fut.result()\\n           ^^^^^^^^^^^^\\n  File \\"/usr/lib/python3.11/asyncio/streams.py\\", line 48, in open_connection\\n    transport, _ = await loop.create_connection(\\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \\"/usr/lib/python3.11/asyncio/base_events.py\\", line 1085, in create_connection\\n    raise exceptions[0]\\n  File \\"/usr/lib/python3.11/asyncio/base_events.py\\", line 1069, in create_connection\\n    sock = await self._connect_sock(\\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \\"/usr/lib/python3.11/asyncio/base_events.py\\", line 973, in _connect_sock\\n    await self.sock_connect(sock, address)\\n  File \\"/usr/lib/python3.11/asyncio/selector_events.py\\", line 634, in sock_connect\\n    return await fut\\n           ^^^^^^^^^\\n  File \\"/usr/lib/python3.11/asyncio/selector_events.py\\", line 674, in _sock_connect_cb\\n    raise OSError(err, f'Connect call failed {address}')\\nOSError: [Errno 113] Connect call failed ('10.0.0.229', 32498)\\n"}
+{"result": "success", "datetime": "2024-05-18T16:20:20.042648-06:00", "devices": [{"name": "Living Room", "address": "10.0.0.30", "identifier": "37323C0E-99E6-4CC3-A006-1ED5368FFF8C", "all_identifiers": ["86B730B2-5189-4B6A-BCAA-CDDB18F05FA8", "C8:D0:83:E9:D0:49", "37323C0E-99E6-4CC3-A006-1ED5368FFF8C", "C8D083E9D049"], "device_info": {"mac": "C8:D0:83:E9:D0:49", "model": "Gen4K", "model_str": "Apple TV 4K", "operating_system": "TvOS", "version": "17.5"}, "services": [{"protocol": "companion", "port": 49153}, {"protocol": "airplay", "port": 7000}, {"protocol": "mrp", "port": 49154}, {"protocol": "raop", "port": 7000}]}, {"name": "Kitchen", "address": "10.0.0.79", "identifier": "45B6A67A-9FAD-497D-95EF-7FC5ECB3371C", "all_identifiers": ["B163C908-000F-4983-BDC7-BEFD76887EF5", "C8:69:CD:63:2A:11", "45B6A67A-9FAD-497D-95EF-7FC5ECB3371C", "C869CD632A11"], "device_info": {"mac": "C8:69:CD:63:2A:11", "model": "Gen4", "model_str": "Apple TV 4", "operating_system": "TvOS", "version": "17.4"}, "services": [{"protocol": "companion", "port": 49153}, {"protocol": "airplay", "port": 7000}, {"protocol": "mrp", "port": 49157}, {"protocol": "raop", "port": 7000}]}, {"name": "Bedroom", "address": "10.0.0.20", "identifier": "CA55DA36-ADEF-4DBC-A0B3-BA68B0C53E40", "all_identifiers": ["08:66:98:BC:37:1F", "108F35A0-FF21-4884-96C2-145AAAB1B4C4", "CA55DA36-ADEF-4DBC-A0B3-BA68B0C53E40", "086698BC371F"], "device_info": {"mac": "08:66:98:BC:37:1F", "model": "Gen4", "model_str": "Apple TV 4", "operating_system": "TvOS", "version": "17.4"}, "services": [{"protocol": "airplay", "port": 7000}, {"protocol": "companion", "port": 49153}, {"protocol": "mrp", "port": 49154}, {"protocol": "raop", "port": 7000}]}, {"name": "Basement", "address": "10.0.0.156", "identifier": "C02B27DB-2AF3-43E7-8EF7-885E1E9AB3B4", "all_identifiers": ["8BDB6773-479F-4C01-A185-29FF5516F2C2", "D0:03:4B:4C:2A:2E", "C02B27DB-2AF3-43E7-8EF7-885E1E9AB3B4", "D0034B4C2A2E"], "device_info": {"mac": "D0:03:4B:4C:2A:2E", "model": "Gen4", "model_str": "Apple TV 4", "operating_system": "TvOS", "version": "17.4"}, "services": [{"protocol": "companion", "port": 49153}, {"protocol": "airplay", "port": 7000}, {"protocol": "mrp", "port": 49154}, {"protocol": "raop", "port": 7000}]}]}`).code(1).end();
+                })
+            }, true);
+
+            assert.strictEqual(response.devices.length, 4);
+            assert.strictEqual(response.errors.length, 2);
+
+            assert.strictEqual(response.devices[0].name, 'Living Room');
+            assert.strictEqual(response.devices[0].host, '10.0.0.30');
+            assert.strictEqual(response.devices[0].id, '37323C0E-99E6-4CC3-A006-1ED5368FFF8C');
+
+            assert.strictEqual(response.devices[1].name, 'Kitchen');
+            assert.strictEqual(response.devices[1].host, '10.0.0.79');
+            assert.strictEqual(response.devices[1].id, '45B6A67A-9FAD-497D-95EF-7FC5ECB3371C');
+
+            assert.strictEqual(response.devices[2].name, 'Bedroom');
+            assert.strictEqual(response.devices[2].host, '10.0.0.20');
+            assert.strictEqual(response.devices[2].id, 'CA55DA36-ADEF-4DBC-A0B3-BA68B0C53E40');
+
+            assert.strictEqual(response.devices[3].name, 'Basement');
+            assert.strictEqual(response.devices[3].host, '10.0.0.156');
+            assert.strictEqual(response.devices[3].id, 'C02B27DB-2AF3-43E7-8EF7-885E1E9AB3B4');
+
+            assert.strictEqual(response.errors[0].exception, '[Errno 113] Connect call failed (\'10.0.0.232\', 32498)');
+            assert.strictEqual(response.errors[1].exception, '[Errno 113] Connect call failed (\'10.0.0.229\', 32498)');
         });
     });
 

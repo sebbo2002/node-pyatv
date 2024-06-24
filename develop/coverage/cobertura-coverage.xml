@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
-<coverage lines-valid="2326" lines-covered="2286" line-rate="0.9828" branches-valid="391" branches-covered="370" branch-rate="0.9462" timestamp="1718905820132" complexity="0" version="0.1">
+<coverage lines-valid="2328" lines-covered="2288" line-rate="0.9828" branches-valid="391" branches-covered="370" branch-rate="0.9462" timestamp="1719237154022" complexity="0" version="0.1">
   <sources>
     <source>/home/runner/work/node-pyatv/node-pyatv</source>
   </sources>
@@ -1977,6 +1977,8 @@
             <line number="27" hits="1" branch="false"/>
             <line number="28" hits="1" branch="false"/>
             <line number="29" hits="1" branch="false"/>
+            <line number="30" hits="1" branch="false"/>
+            <line number="31" hits="1" branch="false"/>
           </lines>
         </class>
         <class name="instance.ts" filename="src/lib/instance.ts" line-rate="0.9795999999999999" branch-rate="0.8887999999999999">
@@ -2406,12 +2408,12 @@
             <line number="24" hits="119" branch="false"/>
             <line number="25" hits="119" branch="false"/>
             <line number="26" hits="119" branch="true" condition-coverage="100% (1/1)"/>
-            <line number="27" hits="122" branch="false"/>
-            <line number="28" hits="122" branch="true" condition-coverage="100% (1/1)"/>
+            <line number="27" hits="129" branch="false"/>
+            <line number="28" hits="129" branch="true" condition-coverage="100% (1/1)"/>
             <line number="29" hits="119" branch="false"/>
             <line number="30" hits="119" branch="false"/>
             <line number="31" hits="119" branch="false"/>
-            <line number="32" hits="122" branch="false"/>
+            <line number="32" hits="129" branch="false"/>
             <line number="33" hits="119" branch="false"/>
             <line number="34" hits="119" branch="false"/>
             <line number="35" hits="119" branch="false"/>

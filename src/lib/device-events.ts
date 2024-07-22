@@ -46,6 +46,11 @@ export default class NodePyATVDeviceEvents extends EventEmitter {
     applyStateAndEmitEvents(newState: NodePyATVState): void {
         let keys = Object.keys(this.state);
 
+        // Remove special fields from the list
+        keys = keys.filter(k =>
+        	!['powerState', 'focusState', 'outputDevices', 'volume'].includes(k)
+        );
+
         if('powerState' in newState && newState.powerState) {
             keys = ['powerState'];
         }

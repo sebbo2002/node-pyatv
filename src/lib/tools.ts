@@ -10,6 +10,7 @@ import {
     NodePyATVMediaType,
     NodePyATVPowerState,
     NodePyATVRepeatState,
+    NodePyATVRequestOptions,
     NodePyATVShuffleState,
     NodePyATVState
 } from './types.js';
@@ -119,12 +120,28 @@ export function execute(
     return child;
 }
 
-export async function request(
+type NodePyATVScriptResponse<O extends NodePyATVRequestOptions> = O['allowMultipleResponses'] extends true
+    ? Record<string,unknown>[]
+    : Record<string,unknown>;
+
+export async function request<O extends NodePyATVRequestOptions>(
+    requestId: string,
+    executableType: NodePyATVExecutableType.atvscript,
+    parameters: string[],
+    options: O
+): Promise<NodePyATVScriptResponse<O>>;
+export async function request<O extends NodePyATVRequestOptions>(
+    requestId: string,
+    executableType: NodePyATVExecutableType.atvremote,
+    parameters: string[],
+    options: O
+): Promise<string>;
+export async function request<O extends NodePyATVRequestOptions>(
     requestId: string,
     executableType: NodePyATVExecutableType,
     parameters: string[],
-    options: NodePyATVInstanceOptions
-): Promise<string|Record<string,unknown>> {
+    options: O
+): Promise<string|Record<string,unknown>[]|Record<string,unknown>> {
     const result = {
         stdout: '',
         stderr: '',
@@ -171,8 +188,19 @@ export async function request(
         debug(requestId, msg, options);
         throw new Error(msg);
     }
+
     if (executableType === NodePyATVExecutableType.atvscript) {
         try {
+
+            // response with multiple lines
+            // https://github.com/sebbo2002/node-pyatv/issues/324
+            if (options.allowMultipleResponses) {
+                return result.stdout
+                    .split('\n')
+                    .filter(line => line.trim().length > 0)
+                    .map(line => JSON.parse(line));
+            }
+
             return JSON.parse(result.stdout);
         }
         catch (error) {

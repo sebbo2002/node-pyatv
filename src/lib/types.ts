@@ -231,7 +231,7 @@ export interface NodePyATVInternalState {
     connection?: string | unknown;
     volume?: number | unknown;
     focus_state?: string | unknown;
-    output_devices?: Array<{ name: string; identifier: string; }>;
+    output_devices?: Array<{ name: string; identifier: string; }> | null;
 }
 
 export interface NodePyATVState {

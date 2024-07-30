@@ -75,10 +75,10 @@ export default class NodePyATVDeviceEvents extends EventEmitter {
 
         keys.forEach((key: string) => {
 
-            // @ts-ignore
+            // @ts-expect-error this.state has no index signature
             const oldValue = this.state[key];
 
-            // @ts-ignore
+            // @ts-expect-error same here
             const newValue = newState[key];
 
             if(oldValue === undefined || newValue === undefined || oldValue === newValue) {
@@ -95,7 +95,7 @@ export default class NodePyATVDeviceEvents extends EventEmitter {
                 device: this.device
             });
 
-            // @ts-ignore
+            // @ts-expect-error and here
             this.state[key] = newState[key];
 
             try {

@@ -409,7 +409,7 @@ export default class NodePyATVDevice implements EventEmitter{
         }
 
         removeRequestId(id);
-        const regex = /(.+) \(([^\)]+)\)$/i;
+        const regex = /(.+) \(([^)]+)\)$/i;
         const items = result.substring(5, ).split(', App: ').map(i => {
             const m = i.match(regex);
             if (m !== null) {
@@ -725,7 +725,7 @@ export default class NodePyATVDevice implements EventEmitter{
      * @param event
      * @category Event
      */
-    // eslint-disable-next-line @typescript-eslint/ban-types
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
     listeners(event: string | symbol): Function[] {
         return this.events.listeners(event);
     }
@@ -791,7 +791,7 @@ export default class NodePyATVDevice implements EventEmitter{
      * @param event
      * @category Event
      */
-    // eslint-disable-next-line @typescript-eslint/ban-types
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
     rawListeners(event: string | symbol): Function[] {
         return this.events.rawListeners(event);
     }

@@ -1,5 +1,6 @@
 import {ChildProcess, SpawnOptions} from 'child_process';
 import {FakeChildProcess} from './fake-spawn.js';
+import type NodePyATVDevice from './device.js';
 
 export enum NodePyATVExecutableType {
     atvremote = 'atvremote',
@@ -135,6 +136,10 @@ export interface NodePyATVInstanceOptions {
     spawn?: (command: string, args: Array<string>, options: SpawnOptions) => (ChildProcess | FakeChildProcess);
 }
 
+export interface NodePyATVRequestOptions extends NodePyATVInstanceOptions {
+    allowMultipleResponses?: boolean;
+}
+
 export interface NodePyATVVersionResponse {
     pyatv: string | null;
     module: string | null;
@@ -154,6 +159,11 @@ export interface NodePyATVFindOptions {
 
 export interface NodePyATVFindAndInstanceOptions extends NodePyATVInstanceOptions, NodePyATVFindOptions {
 
+}
+
+export interface NodePyATVFindResponseObject {
+    devices: NodePyATVDevice[];
+    errors: Record<string, unknown>[];
 }
 
 export interface NodePyATVDeviceOptions extends NodePyATVFindAndInstanceOptions {
@@ -221,7 +231,7 @@ export interface NodePyATVInternalState {
     connection?: string | unknown;
     volume?: number | unknown;
     focus_state?: string | unknown;
-    output_devices?: Array<{ name: string; identifier: string; }>;
+    output_devices?: Array<{ name: string; identifier: string; }> | null;
 }
 
 export interface NodePyATVState {

@@ -1,3 +1,16 @@
+# [7.4.0](https://github.com/sebbo2002/node-pyatv/compare/v7.3.0...v7.4.0) (2024-08-04)
+
+
+### Bug Fixes
+
+* Do not trigger "special" events when they are not received ([c63dfe6](https://github.com/sebbo2002/node-pyatv/commit/c63dfe6a55c71f92905f1b881e520c30c028c5f1)), closes [#326](https://github.com/sebbo2002/node-pyatv/issues/326)
+
+
+### Features
+
+* Export `NodePyATVFindResponseObject` and `NodePyATVRequestOptions` ([c668148](https://github.com/sebbo2002/node-pyatv/commit/c668148b823fe945a3f53e379fffd4b7cf2079ca)), closes [#324](https://github.com/sebbo2002/node-pyatv/issues/324)
+* Support unicast scans ([2b25f7e](https://github.com/sebbo2002/node-pyatv/commit/2b25f7ef9686c7d1d424ffd5acb9f29c3b6eac9d)), closes [#324](https://github.com/sebbo2002/node-pyatv/issues/324)
+
 # [7.3.0](https://github.com/sebbo2002/node-pyatv/compare/v7.2.1...v7.3.0) (2024-01-30)
 
 

@@ -1,12 +1,12 @@
 'use strict';
 
 import {
-    NodePyATVDeviceOptions,
     NodePyATVExecutableType,
-    NodePyATVInternalState,
     NodePyATVListenerState,
-    NodePyATVState,
-    NodePyATVStateIndex
+    type NodePyATVDeviceOptions,
+    type NodePyATVInternalState,
+    type NodePyATVState,
+    type NodePyATVStateIndex
 } from './types.js';
 import {ChildProcess} from 'child_process';
 

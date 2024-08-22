@@ -1,26 +1,26 @@
 'use strict';
 
 export {
-    NodePyATVDeviceOptions,
     NodePyATVDeviceState,
-    NodePyATVEventValueType,
     NodePyATVExecutableType,
-    NodePyATVFindAndInstanceOptions,
-    NodePyATVFindOptions,
-    NodePyATVFindResponseObject,
-    NodePyATVGetStateOptions,
-    NodePyATVInstanceOptions,
     NodePyATVKeys,
     NodePyATVListenerState,
     NodePyATVMediaType,
     NodePyATVPowerState,
     NodePyATVProtocol,
     NodePyATVRepeatState,
-    NodePyATVRequestOptions,
-    NodePyATVService,
     NodePyATVShuffleState,
-    NodePyATVState,
-    NodePyATVVersionResponse
+    type NodePyATVDeviceOptions,
+    type NodePyATVEventValueType,
+    type NodePyATVFindAndInstanceOptions,
+    type NodePyATVFindOptions,
+    type NodePyATVFindResponseObject,
+    type NodePyATVGetStateOptions,
+    type NodePyATVInstanceOptions,
+    type NodePyATVRequestOptions,
+    type NodePyATVService,
+    type NodePyATVState,
+    type NodePyATVVersionResponse
 } from './types.js';
 
 export {default as NodePyATVDeviceEvent} from './device-event.js';

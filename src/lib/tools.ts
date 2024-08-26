@@ -3,19 +3,19 @@
 import {
     NodePyATVDeviceState,
     NodePyATVExecutableType,
-    NodePyATVFindAndInstanceOptions,
     NodePyATVFocusState,
-    NodePyATVInstanceOptions,
-    NodePyATVInternalState,
     NodePyATVMediaType,
     NodePyATVPowerState,
     NodePyATVRepeatState,
-    NodePyATVRequestOptions,
     NodePyATVShuffleState,
-    NodePyATVState
+    type NodePyATVFindAndInstanceOptions,
+    type NodePyATVInstanceOptions,
+    type NodePyATVInternalState,
+    type NodePyATVRequestOptions,
+    type NodePyATVState
 } from './types.js';
 
-import {ChildProcess, spawn, SpawnOptions} from 'child_process';
+import {ChildProcess, spawn, type SpawnOptions} from 'child_process';
 import {FakeChildProcess} from './fake-spawn.js';
 
 const requestIds: string[] = [];

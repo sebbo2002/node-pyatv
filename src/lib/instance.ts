@@ -6,13 +6,13 @@ import { fileURLToPath } from 'url';
 import { promises as fsPromises } from 'fs';
 
 import {
-    NodePyATVDeviceOptions,
     NodePyATVExecutableType,
-    NodePyATVFindAndInstanceOptions,
-    NodePyATVFindResponseObject,
-    NodePyATVInstanceOptions,
-    NodePyATVInternalScanDevice,
-    NodePyATVVersionResponse
+    type NodePyATVDeviceOptions,
+    type NodePyATVFindAndInstanceOptions,
+    type NodePyATVFindResponseObject,
+    type NodePyATVInstanceOptions,
+    type NodePyATVInternalScanDevice,
+    type NodePyATVVersionResponse
 } from './types.js';
 
 import { addRequestId, debug, getParameters, removeRequestId, request } from './tools.js';

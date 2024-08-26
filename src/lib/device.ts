@@ -1,19 +1,19 @@
 'use strict';
 
 import {
-    NodePyATVApp,
-    NodePyATVDeviceOptions,
     NodePyATVDeviceState,
     NodePyATVExecutableType,
-    NodePyATVGetStateOptions,
     NodePyATVInternalKeys,
     NodePyATVKeys,
     NodePyATVMediaType,
     NodePyATVProtocol,
     NodePyATVRepeatState,
-    NodePyATVService,
     NodePyATVShuffleState,
-    NodePyATVState
+    type NodePyATVApp,
+    type NodePyATVDeviceOptions,
+    type NodePyATVGetStateOptions,
+    type NodePyATVService,
+    type NodePyATVState
 } from './types.js';
 
 import { addRequestId, getParameters, parseState, removeRequestId, request } from './tools.js';

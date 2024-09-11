@@ -30,16 +30,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">88.63% </span>
+                <span class="strong">89.13% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>39/44</span>
+                <span class='fraction'>41/46</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>10/10</span>
+                <span class='fraction'>12/12</span>
             </div>
         
             
@@ -354,10 +354,10 @@
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">5x</span>
@@ -442,7 +442,7 @@
 <span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-yes">5x</span>
@@ -469,7 +469,7 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -477,9 +477,9 @@
 <span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
@@ -563,13 +563,13 @@ import { fileURLToPath } from 'url';
 import { promises as fsPromises } from 'fs';
 &nbsp;
 import {
-    NodePyATVDeviceOptions,
     NodePyATVExecutableType,
-    NodePyATVFindAndInstanceOptions,
-    NodePyATVFindResponseObject,
-    NodePyATVInstanceOptions,
-    NodePyATVInternalScanDevice,
-    NodePyATVVersionResponse
+    type NodePyATVDeviceOptions,
+    type NodePyATVFindAndInstanceOptions,
+    type NodePyATVFindResponseObject,
+    type NodePyATVInstanceOptions,
+    type NodePyATVInternalScanDevice,
+    type NodePyATVVersionResponse
 } from './types.js';
 &nbsp;
 import { addRequestId, debug, getParameters, removeRequestId, request } from './tools.js';
@@ -636,8 +636,8 @@ export default class NodePyATVInstance {
         try {
             const packageJsonPath = join(dirname(fileURLToPath(import.meta.url)), '..', '..', 'package.json');
             const json = JSON.parse(await fsPromises.readFile(packageJsonPath, 'utf8'));
-            module = json?.version<span class="branch-0 cbranch-no" title="branch not covered" > || null;</span>
-        } <span class="branch-0 cbranch-no" title="branch not covered" >catch (error) {</span>
+            module = json?.<span class="branch-0 cbranch-no" title="branch not covered" >version || null;</span>
+<span class="branch-0 cbranch-no" title="branch not covered" >        } catch (error) {</span>
 <span class="cstat-no" title="statement not covered" >            debug(id, `Unable to get module version due to ${error}`, options);</span>
 <span class="cstat-no" title="statement not covered" >        }</span>
         if (module &amp;&amp; !semver.valid(module)) <span class="branch-0 cbranch-no" title="branch not covered" >{</span>
@@ -686,7 +686,7 @@ export default class NodePyATVInstance {
             id,
             NodePyATVExecutableType.atvscript,
             [...parameters, 'scan'],
-            { ...(options<span class="branch-0 cbranch-no" title="branch not covered" > || {})</span>, allowMultipleResponses: true }
+            { ...(<span class="branch-0 cbranch-no" title="branch not covered" >options || {}), a</span>llowMultipleResponses: true }
         );
 &nbsp;
         for (const item of response) {
@@ -721,7 +721,7 @@ export default class NodePyATVInstance {
             return { devices, errors };
         }
         if(!devices.length &amp;&amp; errors.length) {
-            throw new Error(`Unable to find any devices, but received ${errors.length} error${errors.length !== 1 <span class="branch-0 cbranch-no" title="branch not covered" >? 's' </span>: ''}: ${JSON.stringify(errors, null, '  ')}`);
+            throw new Error(`Unable to find any devices, but received ${errors.length} error${errors.length !== <span class="branch-0 cbranch-no" title="branch not covered" >1 ? 's' : '</span>'}: ${JSON.stringify(errors, null, '  ')}`);
         }
 &nbsp;
         return devices;
@@ -808,7 +808,7 @@ export default class NodePyATVInstance {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-08-20T12:55:23.115Z
+                at 2024-09-11T08:33:28.059Z
             </div>
         <script src="prettify.js"></script>
         <script>

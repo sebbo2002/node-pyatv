@@ -4,8 +4,10 @@ import assert from 'assert';
 import NodePyATVDevice from '../src/lib/device.js';
 import {
     NodePyATVDeviceState,
+    NodePyATVFocusState,
     NodePyATVKeys,
     NodePyATVMediaType,
+    NodePyATVPowerState,
     NodePyATVProtocol,
     NodePyATVRepeatState,
     NodePyATVShuffleState
@@ -391,7 +393,11 @@ describe('NodePyATVDevice', function () {
                 app: 'Disney+',
                 appId: 'com.disney.disneyplus',
                 powerState: null,
-                outputDevices: null
+                outputDevices: null,
+                contentIdentifier: null,
+                episodeNumber: null,
+                seasonNumber: null,
+                seasonName: null
             });
         });
         it('should reject with error if pyatv fails', async function () {
@@ -757,6 +763,156 @@ describe('NodePyATVDevice', function () {
 
             const result = await device.getAppId();
             assert.strictEqual(result, 'app.example.com');
+        });
+    });
+
+    describe('getPowerState()', function () {
+        it('should work', async function () {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: createFakeSpawn(cp => {
+                    cp.end({
+                        result: 'success',
+                        power_state: 'on'
+                    });
+                })
+            });
+
+            const result = await device.getPowerState();
+            assert.strictEqual(result, NodePyATVPowerState.on);
+        });
+    });
+
+    describe('getVolume()', function () {
+        it('should work', async function () {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: createFakeSpawn(cp => {
+                    cp.end({
+                        result: 'success',
+                        volume: 50
+                    });
+                })
+            });
+
+            const result = await device.getVolume();
+            assert.strictEqual(result, 50);
+        });
+    });
+
+    describe('getFocusState()', function () {
+        it('should work', async function () {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: createFakeSpawn(cp => {
+                    cp.end({
+                        result: 'success',
+                        focus_state: 'focused'
+                    });
+                })
+            });
+
+            const result = await device.getFocusState();
+            assert.strictEqual(result, NodePyATVFocusState.focused);
+        });
+    });
+
+    describe('getOutputDevices()', function () {
+        it('should work', async function () {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: createFakeSpawn(cp => {
+                    cp.end({
+                        result: 'success',
+                        output_devices: [{
+                            identifier: 'foo',
+                            name: 'Apple TV'
+                        }]
+                    });
+                })
+            });
+
+            const result = await device.getOutputDevices();
+            assert.deepStrictEqual(result, [{
+                identifier: 'foo',
+                name: 'Apple TV'
+            }]);
+        });
+    });
+
+    describe('getContentIdentifier()', function () {
+        it('should work', async function () {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: createFakeSpawn(cp => {
+                    cp.end({
+                        result: 'success',
+                        content_identifier: '1234'
+                    });
+                })
+            });
+
+            const result = await device.getContentIdentifier();
+            assert.strictEqual(result, '1234');
+        });
+    });
+
+    describe('getEpisodeNumber()', function () {
+        it('should work', async function () {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: createFakeSpawn(cp => {
+                    cp.end({
+                        result: 'success',
+                        episode_number: 12
+                    });
+                })
+            });
+
+            const result = await device.getEpisodeNumber();
+            assert.strictEqual(result, 12);
+        });
+    });
+
+    describe('getSeasonNumber()', function () {
+        it('should work', async function () {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: createFakeSpawn(cp => {
+                    cp.end({
+                        result: 'success',
+                        season_number: 2
+                    });
+                })
+            });
+
+            const result = await device.getSeasonNumber();
+            assert.strictEqual(result, 2);
+        });
+    });
+
+    describe('getSeasonName()', function () {
+        it('should work', async function () {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: createFakeSpawn(cp => {
+                    cp.end({
+                        result: 'success',
+                        season_name: 'The Testing Disaster'
+                    });
+                })
+            });
+
+            const result = await device.getSeasonName();
+            assert.strictEqual(result, 'The Testing Disaster');
         });
     });
 

@@ -232,6 +232,10 @@ export interface NodePyATVInternalState {
     volume?: number | unknown;
     focus_state?: string | unknown;
     output_devices?: Array<{ name: string; identifier: string; }> | null;
+    content_identifier?: string | null;
+    episode_number?: number | null;
+    season_number?: number | null;
+    season_name?: string | null;
 }
 
 export interface NodePyATVState {
@@ -253,6 +257,10 @@ export interface NodePyATVState {
     volume: number | null;
     focusState: NodePyATVFocusState | null;
     outputDevices: Array<{ name: string; identifier: string; }> | null;
+    contentIdentifier: string | null;
+    episodeNumber: number | null;
+    seasonNumber: number | null;
+    seasonName: string | null;
 }
 
 export interface NodePyATVApp {

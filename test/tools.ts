@@ -146,7 +146,7 @@ describe('Tools', function () {
                 contentIdentifier: null,
                 episodeNumber: null,
                 seasonNumber: null,
-                seasonName: null
+                seriesName: null
             });
         });
         it('should work without data', function () {
@@ -174,7 +174,7 @@ describe('Tools', function () {
                 contentIdentifier: null,
                 episodeNumber: null,
                 seasonNumber: null,
-                seasonName: null
+                seriesName: null
             });
         });
         it('should work with example data', function () {
@@ -201,7 +201,7 @@ describe('Tools', function () {
                 content_identifier: null,
                 episode_number: null,
                 season_number: null,
-                season_name: null
+                series_name: null
             };
             const result = parseState(input, '', {});
             assert.deepStrictEqual(result, {
@@ -226,7 +226,7 @@ describe('Tools', function () {
                 contentIdentifier: null,
                 episodeNumber: null,
                 seasonNumber: null,
-                seasonName: null
+                seriesName: null
             });
         });
         it('should throw an error for pyatv exceptions', function () {
@@ -265,7 +265,7 @@ describe('Tools', function () {
                 contentIdentifier: null,
                 episodeNumber: null,
                 seasonNumber: null,
-                seasonName: null
+                seriesName: null
             });
         });
         it('should ignore data if unsupported type', function () {
@@ -292,7 +292,7 @@ describe('Tools', function () {
                 content_identifier: null,
                 episode_number: null,
                 season_number: null,
-                season_name: null
+                series_name: null
             };
             const result = parseState(input, '', {});
             assert.deepStrictEqual(result, {
@@ -317,7 +317,7 @@ describe('Tools', function () {
                 contentIdentifier: null,
                 episodeNumber: null,
                 seasonNumber: null,
-                seasonName: null
+                seriesName: null
             });
         });
         it('should ignore enums with unsupported valid', function () {
@@ -350,7 +350,7 @@ describe('Tools', function () {
                 contentIdentifier: null,
                 episodeNumber: null,
                 seasonNumber: null,
-                seasonName: null
+                seriesName: null
             });
         });
     });

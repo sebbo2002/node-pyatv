@@ -397,7 +397,7 @@ describe('NodePyATVDevice', function () {
                 contentIdentifier: null,
                 episodeNumber: null,
                 seasonNumber: null,
-                seasonName: null
+                seriesName: null
             });
         });
         it('should reject with error if pyatv fails', async function () {
@@ -898,7 +898,7 @@ describe('NodePyATVDevice', function () {
         });
     });
 
-    describe('getSeasonName()', function () {
+    describe('getSeriesName()', function () {
         it('should work', async function () {
             const device = new NodePyATVDevice({
                 name: 'My Testdevice',
@@ -906,12 +906,12 @@ describe('NodePyATVDevice', function () {
                 spawn: createFakeSpawn(cp => {
                     cp.end({
                         result: 'success',
-                        season_name: 'The Testing Disaster'
+                        series_name: 'The Testing Disaster'
                     });
                 })
             });
 
-            const result = await device.getSeasonName();
+            const result = await device.getSeriesName();
             assert.strictEqual(result, 'The Testing Disaster');
         });
     });

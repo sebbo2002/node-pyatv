@@ -468,8 +468,8 @@ export default class NodePyATVDevice implements EventEmitter{
      * @param options
      * @category State
      */
-    async getSeasonName(options: NodePyATVGetStateOptions = {}): Promise<string | null> {
-        return this.getState(options).then(state => state.seasonName);
+    async getSeriesName(options: NodePyATVGetStateOptions = {}): Promise<string | null> {
+        return this.getState(options).then(state => state.seriesName);
     }
 
     /**

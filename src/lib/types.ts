@@ -235,7 +235,7 @@ export interface NodePyATVInternalState {
     content_identifier?: string | null;
     episode_number?: number | null;
     season_number?: number | null;
-    season_name?: string | null;
+    series_name?: string | null;
 }
 
 export interface NodePyATVState {
@@ -260,7 +260,7 @@ export interface NodePyATVState {
     contentIdentifier: string | null;
     episodeNumber: number | null;
     seasonNumber: number | null;
-    seasonName: string | null;
+    seriesName: string | null;
 }
 
 export interface NodePyATVApp {

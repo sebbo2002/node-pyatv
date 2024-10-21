@@ -250,8 +250,8 @@ export function getParameters(options: NodePyATVFindAndInstanceOptions = {}): st
 function parseStateStringAttr(
     input: NodePyATVInternalState,
     output: NodePyATVState,
-    inputAttr: ('hash' | 'title' | 'album' | 'artist' | 'genre' | 'app' | 'app_id' | 'content_identifier' | 'season_name'),
-    outputAttr: ('hash' | 'title' | 'album' | 'artist' | 'genre' | 'app' | 'appId' | 'contentIdentifier' | 'seasonName'),
+    inputAttr: ('hash' | 'title' | 'album' | 'artist' | 'genre' | 'app' | 'app_id' | 'content_identifier' | 'series_name'),
+    outputAttr: ('hash' | 'title' | 'album' | 'artist' | 'genre' | 'app' | 'appId' | 'contentIdentifier' | 'seriesName'),
     d: (msg: string) => void
 ): void {
     if (typeof input[inputAttr] === 'string') {
@@ -301,7 +301,7 @@ export function parseState(input: NodePyATVInternalState, id: string, options: N
         contentIdentifier: null,
         episodeNumber: null,
         seasonNumber: null,
-        seasonName: null
+        seriesName: null
     };
     if (!input || typeof input !== 'object') {
         return result;
@@ -449,8 +449,8 @@ export function parseState(input: NodePyATVInternalState, id: string, options: N
     // seasonNumber
     parseStateNumberAttr(input, result, 'season_number', 'seasonNumber', d);
 
-    // seasonName
-    parseStateStringAttr(input, result, 'season_name', 'seasonName', d);
+    // seriesName
+    parseStateStringAttr(input, result, 'series_name', 'seriesName', d);
 
     return result;
 }

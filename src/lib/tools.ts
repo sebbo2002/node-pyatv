@@ -265,8 +265,8 @@ function parseStateStringAttr(
 function parseStateNumberAttr(
     input: NodePyATVInternalState,
     output: NodePyATVState,
-    inputAttr: ('total_time' | 'position' | 'volume' | 'episode_number' | 'season_number'),
-    outputAttr: ('totalTime' | 'position' | 'volume' | 'episodeNumber' | 'seasonNumber'),
+    inputAttr: ('total_time' | 'position' | 'volume' | 'episode_number' | 'season_number' | 'itunes_store_identifier'),
+    outputAttr: ('totalTime' | 'position' | 'volume' | 'episodeNumber' | 'seasonNumber' | 'iTunesStoreIdentifier'),
     d: (msg: string) => void
 ): void {
     if (typeof input[inputAttr] === 'number') {
@@ -299,6 +299,7 @@ export function parseState(input: NodePyATVInternalState, id: string, options: N
         focusState: null,
         outputDevices: null,
         contentIdentifier: null,
+        iTunesStoreIdentifier: null,
         episodeNumber: null,
         seasonNumber: null,
         seriesName: null
@@ -442,6 +443,9 @@ export function parseState(input: NodePyATVInternalState, id: string, options: N
 
     // contentIdentifier
     parseStateStringAttr(input, result, 'content_identifier', 'contentIdentifier', d);
+
+    // iTunesStoreIdentifier
+    parseStateNumberAttr(input, result, 'itunes_store_identifier', 'iTunesStoreIdentifier', d);
 
     // episodeNumber
     parseStateNumberAttr(input, result, 'episode_number', 'episodeNumber', d);

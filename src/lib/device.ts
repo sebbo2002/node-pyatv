@@ -443,6 +443,20 @@ export default class NodePyATVDevice implements EventEmitter{
     }
 
     /**
+     * Returns the iTunes Store identifier if available.
+     * Requires pyatv >= 0.16.0
+     * @param options
+     * @category State
+     * @alias getiTunesStoreIdentifier
+     */
+    async getITunesStoreIdentifier(options: NodePyATVGetStateOptions = {}): Promise<number | null> {
+        return this.getState(options).then(state => state.iTunesStoreIdentifier);
+    }
+    async getiTunesStoreIdentifier(options: NodePyATVGetStateOptions = {}): Promise<number | null> {
+        return this.getITunesStoreIdentifier(options);
+    }
+
+    /**
      * Returns the episode number.
      * Probably only set [if MRP is used](https://pyatv.dev/development/metadata/#currently-playing).
      * @param options

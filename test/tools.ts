@@ -144,6 +144,7 @@ describe('Tools', function () {
                 volume: null,
                 outputDevices: null,
                 contentIdentifier: null,
+                iTunesStoreIdentifier: null,
                 episodeNumber: null,
                 seasonNumber: null,
                 seriesName: null
@@ -172,6 +173,7 @@ describe('Tools', function () {
                 volume: null,
                 outputDevices: null,
                 contentIdentifier: null,
+                iTunesStoreIdentifier: null,
                 episodeNumber: null,
                 seasonNumber: null,
                 seriesName: null
@@ -199,6 +201,7 @@ describe('Tools', function () {
                 volume: null,
                 output_devices: null,
                 content_identifier: null,
+                itunes_store_identifier: null,
                 episode_number: null,
                 season_number: null,
                 series_name: null
@@ -224,6 +227,7 @@ describe('Tools', function () {
                 volume: null,
                 outputDevices: null,
                 contentIdentifier: null,
+                iTunesStoreIdentifier: null,
                 episodeNumber: null,
                 seasonNumber: null,
                 seriesName: null
@@ -263,6 +267,7 @@ describe('Tools', function () {
                 volume: null,
                 outputDevices: null,
                 contentIdentifier: null,
+                iTunesStoreIdentifier: null,
                 episodeNumber: null,
                 seasonNumber: null,
                 seriesName: null
@@ -290,6 +295,7 @@ describe('Tools', function () {
                 volume: null,
                 output_devices: null,
                 content_identifier: null,
+                itunes_store_identifier: null,
                 episode_number: null,
                 season_number: null,
                 series_name: null
@@ -315,6 +321,7 @@ describe('Tools', function () {
                 volume: null,
                 outputDevices: null,
                 contentIdentifier: null,
+                iTunesStoreIdentifier: null,
                 episodeNumber: null,
                 seasonNumber: null,
                 seriesName: null
@@ -348,6 +355,7 @@ describe('Tools', function () {
                 volume: null,
                 outputDevices: null,
                 contentIdentifier: null,
+                iTunesStoreIdentifier: null,
                 episodeNumber: null,
                 seasonNumber: null,
                 seriesName: null

@@ -395,6 +395,7 @@ describe('NodePyATVDevice', function () {
                 powerState: null,
                 outputDevices: null,
                 contentIdentifier: null,
+                iTunesStoreIdentifier: null,
                 episodeNumber: null,
                 seasonNumber: null,
                 seriesName: null
@@ -859,6 +860,24 @@ describe('NodePyATVDevice', function () {
 
             const result = await device.getContentIdentifier();
             assert.strictEqual(result, '1234');
+        });
+    });
+
+    describe('getiTunesStoreIdentifier()', function () {
+        it('should work', async function () {
+            const device = new NodePyATVDevice({
+                name: 'My Testdevice',
+                host: '192.168.178.2',
+                spawn: createFakeSpawn(cp => {
+                    cp.end({
+                        result: 'success',
+                        itunes_store_identifier: 1234
+                    });
+                })
+            });
+
+            const result = await device.getiTunesStoreIdentifier();
+            assert.strictEqual(result, 1234);
         });
     });
 

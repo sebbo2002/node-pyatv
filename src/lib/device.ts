@@ -3,9 +3,11 @@
 import {
     NodePyATVDeviceState,
     NodePyATVExecutableType,
+    NodePyATVFocusState,
     NodePyATVInternalKeys,
     NodePyATVKeys,
     NodePyATVMediaType,
+    NodePyATVPowerState,
     NodePyATVProtocol,
     NodePyATVRepeatState,
     NodePyATVShuffleState,
@@ -393,6 +395,95 @@ export default class NodePyATVDevice implements EventEmitter{
     async getAppId(options: NodePyATVGetStateOptions = {}): Promise<string | null> {
         const state = await this.getState(options);
         return state.appId;
+    }
+
+    /**
+     * Returns the current power state (= is it on or off, see [[NodePyATVPowerState]]) of the device.
+     * @param options
+     * @category State
+     */
+    async getPowerState(options: NodePyATVGetStateOptions = {}): Promise<NodePyATVPowerState | null> {
+        return this.getState(options).then(state => state.powerState);
+    }
+
+    /**
+     * Returns the current volume of the device in percent (0 - 100)
+     * @param options
+     * @category State
+     */
+    async getVolume(options: NodePyATVGetStateOptions = {}): Promise<number | null> {
+        return this.getState(options).then(state => state.volume);
+    }
+
+    /**
+     * Returns the current focus state of the device
+     * @param options
+     * @category State
+     */
+    async getFocusState(options: NodePyATVGetStateOptions = {}): Promise<NodePyATVFocusState | null> {
+        return this.getState(options).then(state => state.focusState);
+    }
+
+    /**
+     * Returns the current output devices of the device
+     * @param options
+     * @category State
+     */
+    async getOutputDevices(options: NodePyATVGetStateOptions = {}): Promise<Array<{ name: string; identifier: string; }> | null> {
+        return this.getState(options).then(state => state.outputDevices);
+    }
+
+    /**
+     * Returns the app specific content identifier
+     * @param options
+     * @category State
+     */
+    async getContentIdentifier(options: NodePyATVGetStateOptions = {}): Promise<string | null> {
+        return this.getState(options).then(state => state.contentIdentifier);
+    }
+
+    /**
+     * Returns the iTunes Store identifier if available.
+     * Requires pyatv >= 0.16.0
+     * @param options
+     * @category State
+     * @alias getiTunesStoreIdentifier
+     */
+    async getITunesStoreIdentifier(options: NodePyATVGetStateOptions = {}): Promise<number | null> {
+        return this.getState(options).then(state => state.iTunesStoreIdentifier);
+    }
+    async getiTunesStoreIdentifier(options: NodePyATVGetStateOptions = {}): Promise<number | null> {
+        return this.getITunesStoreIdentifier(options);
+    }
+
+    /**
+     * Returns the episode number.
+     * Probably only set [if MRP is used](https://pyatv.dev/development/metadata/#currently-playing).
+     * @param options
+     * @category State
+     */
+    async getEpisodeNumber(options: NodePyATVGetStateOptions = {}): Promise<number | null> {
+        return this.getState(options).then(state => state.episodeNumber);
+    }
+
+    /**
+     * Returns the season number.
+     * Probably only set [if MRP is used](https://pyatv.dev/development/metadata/#currently-playing).
+     * @param options
+     * @category State
+     */
+    async getSeasonNumber(options: NodePyATVGetStateOptions = {}): Promise<number | null> {
+        return this.getState(options).then(state => state.seasonNumber);
+    }
+
+    /**
+     * Returns the season name.
+     * Probably only set [if MRP is used](https://pyatv.dev/development/metadata/#currently-playing).
+     * @param options
+     * @category State
+     */
+    async getSeriesName(options: NodePyATVGetStateOptions = {}): Promise<string | null> {
+        return this.getState(options).then(state => state.seriesName);
     }
 
     /**

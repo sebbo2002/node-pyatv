@@ -232,6 +232,11 @@ export interface NodePyATVInternalState {
     volume?: number | unknown;
     focus_state?: string | unknown;
     output_devices?: Array<{ name: string; identifier: string; }> | null;
+    content_identifier?: string | null;
+    itunes_store_identifier?: number | null;
+    episode_number?: number | null;
+    season_number?: number | null;
+    series_name?: string | null;
 }
 
 export interface NodePyATVState {
@@ -253,6 +258,11 @@ export interface NodePyATVState {
     volume: number | null;
     focusState: NodePyATVFocusState | null;
     outputDevices: Array<{ name: string; identifier: string; }> | null;
+    contentIdentifier: string | null;
+    iTunesStoreIdentifier: number | null;
+    episodeNumber: number | null;
+    seasonNumber: number | null;
+    seriesName: string | null;
 }
 
 export interface NodePyATVApp {

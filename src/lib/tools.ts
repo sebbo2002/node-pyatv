@@ -250,12 +250,27 @@ export function getParameters(options: NodePyATVFindAndInstanceOptions = {}): st
 function parseStateStringAttr(
     input: NodePyATVInternalState,
     output: NodePyATVState,
-    inputAttr: ('hash' | 'title' | 'album' | 'artist' | 'genre' | 'app' | 'app_id'),
-    outputAttr: ('hash' | 'title' | 'album' | 'artist' | 'genre' | 'app' | 'appId'),
+    inputAttr: ('hash' | 'title' | 'album' | 'artist' | 'genre' | 'app' | 'app_id' | 'content_identifier' | 'series_name'),
+    outputAttr: ('hash' | 'title' | 'album' | 'artist' | 'genre' | 'app' | 'appId' | 'contentIdentifier' | 'seriesName'),
     d: (msg: string) => void
 ): void {
     if (typeof input[inputAttr] === 'string') {
         output[outputAttr] = input[inputAttr] as string;
+        return;
+    }
+
+    d(`No ${outputAttr} value found in input (${JSON.stringify(input)})`);
+}
+
+function parseStateNumberAttr(
+    input: NodePyATVInternalState,
+    output: NodePyATVState,
+    inputAttr: ('total_time' | 'position' | 'volume' | 'episode_number' | 'season_number' | 'itunes_store_identifier'),
+    outputAttr: ('totalTime' | 'position' | 'volume' | 'episodeNumber' | 'seasonNumber' | 'iTunesStoreIdentifier'),
+    d: (msg: string) => void
+): void {
+    if (typeof input[inputAttr] === 'number') {
+        output[outputAttr] = input[inputAttr];
         return;
     }
 
@@ -282,7 +297,12 @@ export function parseState(input: NodePyATVInternalState, id: string, options: N
         powerState: null,
         volume: null,
         focusState: null,
-        outputDevices: null
+        outputDevices: null,
+        contentIdentifier: null,
+        iTunesStoreIdentifier: null,
+        episodeNumber: null,
+        seasonNumber: null,
+        seriesName: null
     };
     if (!input || typeof input !== 'object') {
         return result;
@@ -352,20 +372,10 @@ export function parseState(input: NodePyATVInternalState, id: string, options: N
     parseStateStringAttr(input, result, 'genre', 'genre', d);
 
     // totalTime
-    if (typeof input.total_time === 'number') {
-        result.totalTime = input.total_time;
-    }
-    else {
-        d(`No totalTime value found in input (${JSON.stringify(input)})`);
-    }
+    parseStateNumberAttr(input, result, 'total_time', 'totalTime', d);
 
     // position
-    if (typeof input.position === 'number') {
-        result.position = input.position;
-    }
-    else {
-        d(`No position value found in input (${JSON.stringify(input)})`);
-    }
+    parseStateNumberAttr(input, result, 'position', 'position', d);
 
     // shuffle
     if(typeof input.shuffle === 'string') {
@@ -411,9 +421,7 @@ export function parseState(input: NodePyATVInternalState, id: string, options: N
     }
 
     // volume
-    if (typeof input.volume === 'number') {
-        result.volume = input.volume;
-    }
+    parseStateNumberAttr(input, result, 'volume', 'volume', d);
 
     // focusState
     if(typeof input.focus_state === 'string') {
@@ -432,6 +440,21 @@ export function parseState(input: NodePyATVInternalState, id: string, options: N
     if (Array.isArray(input.output_devices)) {
         result.outputDevices = input.output_devices;
     }
+
+    // contentIdentifier
+    parseStateStringAttr(input, result, 'content_identifier', 'contentIdentifier', d);
+
+    // iTunesStoreIdentifier
+    parseStateNumberAttr(input, result, 'itunes_store_identifier', 'iTunesStoreIdentifier', d);
+
+    // episodeNumber
+    parseStateNumberAttr(input, result, 'episode_number', 'episodeNumber', d);
+
+    // seasonNumber
+    parseStateNumberAttr(input, result, 'season_number', 'seasonNumber', d);
+
+    // seriesName
+    parseStateStringAttr(input, result, 'series_name', 'seriesName', d);
 
     return result;
 }

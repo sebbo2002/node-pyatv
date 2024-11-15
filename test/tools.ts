@@ -142,7 +142,12 @@ describe('Tools', function () {
                 powerState: null,
                 focusState: null,
                 volume: null,
-                outputDevices: null
+                outputDevices: null,
+                contentIdentifier: null,
+                iTunesStoreIdentifier: null,
+                episodeNumber: null,
+                seasonNumber: null,
+                seriesName: null
             });
         });
         it('should work without data', function () {
@@ -166,7 +171,12 @@ describe('Tools', function () {
                 powerState: null,
                 focusState: null,
                 volume: null,
-                outputDevices: null
+                outputDevices: null,
+                contentIdentifier: null,
+                iTunesStoreIdentifier: null,
+                episodeNumber: null,
+                seasonNumber: null,
+                seriesName: null
             });
         });
         it('should work with example data', function () {
@@ -189,7 +199,12 @@ describe('Tools', function () {
                 power_state: null,
                 focus_state: null,
                 volume: null,
-                output_devices: null
+                output_devices: null,
+                content_identifier: null,
+                itunes_store_identifier: null,
+                episode_number: null,
+                season_number: null,
+                series_name: null
             };
             const result = parseState(input, '', {});
             assert.deepStrictEqual(result, {
@@ -210,7 +225,12 @@ describe('Tools', function () {
                 powerState: null,
                 focusState: null,
                 volume: null,
-                outputDevices: null
+                outputDevices: null,
+                contentIdentifier: null,
+                iTunesStoreIdentifier: null,
+                episodeNumber: null,
+                seasonNumber: null,
+                seriesName: null
             });
         });
         it('should throw an error for pyatv exceptions', function () {
@@ -245,7 +265,12 @@ describe('Tools', function () {
                 powerState: null,
                 focusState: null,
                 volume: null,
-                outputDevices: null
+                outputDevices: null,
+                contentIdentifier: null,
+                iTunesStoreIdentifier: null,
+                episodeNumber: null,
+                seasonNumber: null,
+                seriesName: null
             });
         });
         it('should ignore data if unsupported type', function () {
@@ -268,7 +293,12 @@ describe('Tools', function () {
                 power_state: null,
                 focus_state: null,
                 volume: null,
-                output_devices: null
+                output_devices: null,
+                content_identifier: null,
+                itunes_store_identifier: null,
+                episode_number: null,
+                season_number: null,
+                series_name: null
             };
             const result = parseState(input, '', {});
             assert.deepStrictEqual(result, {
@@ -289,7 +319,12 @@ describe('Tools', function () {
                 powerState: null,
                 focusState: null,
                 volume: null,
-                outputDevices: null
+                outputDevices: null,
+                contentIdentifier: null,
+                iTunesStoreIdentifier: null,
+                episodeNumber: null,
+                seasonNumber: null,
+                seriesName: null
             });
         });
         it('should ignore enums with unsupported valid', function () {
@@ -318,7 +353,12 @@ describe('Tools', function () {
                 powerState: null,
                 focusState: null,
                 volume: null,
-                outputDevices: null
+                outputDevices: null,
+                contentIdentifier: null,
+                iTunesStoreIdentifier: null,
+                episodeNumber: null,
+                seasonNumber: null,
+                seriesName: null
             });
         });
     });

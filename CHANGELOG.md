@@ -1,3 +1,17 @@
+# [8.1.0](https://github.com/sebbo2002/node-pyatv/compare/v8.0.0...v8.1.0) (2024-11-15)
+
+
+### Bug Fixes
+
+* Support for `seriesName` fixed ([dc5bf58](https://github.com/sebbo2002/node-pyatv/commit/dc5bf5873eb31b9703517221e7d2b8c30709c3a5))
+
+
+### Features
+
+* Add iTunes Store Identifier ([73e809e](https://github.com/sebbo2002/node-pyatv/commit/73e809ec6582c8197997357201fae70ce5884f26))
+* Add Support for `contentIdentifier`, `episodeNumber`, `seasonNumber` and `seasonName` ([fdd935d](https://github.com/sebbo2002/node-pyatv/commit/fdd935d007a74d19f05e9d868b95eeea1916fdda)), closes [#339](https://github.com/sebbo2002/node-pyatv/issues/339)
+* **Device:** Add missing state getters ([e80c4f7](https://github.com/sebbo2002/node-pyatv/commit/e80c4f7b99f7ddbcd717ffc12a2b5a0b86092249))
+
 # [8.0.0](https://github.com/sebbo2002/node-pyatv/compare/v7.4.0...v8.0.0) (2024-08-26)
 
 

@@ -1,3 +1,10 @@
+## [8.1.1](https://github.com/sebbo2002/node-pyatv/compare/v8.1.0...v8.1.1) (2025-01-09)
+
+
+### Bug Fixes
+
+* **deps:** downgrade eslint to v9.13.0 to resolve typescript-eslint issue ([e6f5a09](https://github.com/sebbo2002/node-pyatv/commit/e6f5a09df8a65caf496d75d6ff2574ac164c46d5)), closes [#10353](https://github.com/sebbo2002/node-pyatv/issues/10353) [typescript-eslint/typescript-eslint#10353](https://github.com/typescript-eslint/typescript-eslint/issues/10353)
+
 # [8.1.0](https://github.com/sebbo2002/node-pyatv/compare/v8.0.0...v8.1.0) (2024-11-15)
 
 

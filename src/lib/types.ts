@@ -167,7 +167,7 @@ export interface NodePyATVFindResponseObject {
 }
 
 export interface NodePyATVDeviceOptions extends NodePyATVFindAndInstanceOptions {
-    host: string;
+    host?: string;
     name: string;
     mac?: string;
     model?: string;

@@ -35,6 +35,10 @@ export default class NodePyATVDevice implements EventEmitter{
     private readonly events: NodePyATVDeviceEvents;
 
     constructor(options: NodePyATVDeviceOptions) {
+        if (!options.host && !options.id && !options.mac) {
+            throw new Error('Either host, id or mac must be set!');
+        }
+
         this.options = Object.assign({}, options);
         this.state = parseState({}, '', {});
         this.events = new NodePyATVDeviceEvents(this.state, this, this.options);
@@ -60,7 +64,7 @@ export default class NodePyATVDevice implements EventEmitter{
     /**
      * Get the IP address of the Apple TV.
      */
-    get host(): string {
+    get host(): string | undefined {
         return this.options.host;
     }
 
@@ -180,16 +184,17 @@ export default class NodePyATVDevice implements EventEmitter{
     }
 
     /**
-     * Returns an object with `name`, `host`, `id` and `protocol`.
+     * Returns an object with `name`, `host`, `mac`, `id` and `protocol`.
      * Can be used to initiate a new device instance.
      *
      * @category Basic
      */
-    toJSON(): { name: string; host: string; id: string | undefined; protocol: NodePyATVProtocol | undefined } {
+    toJSON(): Pick<NodePyATVDeviceOptions, 'name' | 'host' | 'id' | 'mac' | 'protocol'> {
         return {
             name: this.name,
             host: this.host,
             id: this.id,
+            mac: this.mac,
             protocol: this.protocol
         };
     }

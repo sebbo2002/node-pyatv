@@ -310,6 +310,7 @@ describe('NodePyATVDevice', function () {
             assert.deepEqual(device.toJSON(), {
                 name: 'My Testdevice',
                 host: '192.168.178.2',
+                mac: undefined,
                 id: '*****',
                 protocol: NodePyATVProtocol.airplay
             });
@@ -319,6 +320,7 @@ describe('NodePyATVDevice', function () {
                 name: 'My Testdevice',
                 host: '192.168.178.2',
                 id: '*****',
+                mac: '469943881251875',
                 protocol: NodePyATVProtocol.airplay
             };
 

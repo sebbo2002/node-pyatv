@@ -1,22 +1,27 @@
 'use strict';
 
-import semver from 'semver';
-import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
 import { promises as fsPromises } from 'fs';
+import { dirname, join } from 'path';
+import semver from 'semver';
+import { fileURLToPath } from 'url';
 
+import { NodePyATVDevice } from '../lib/index.js';
 import {
-    NodePyATVExecutableType,
+    addRequestId,
+    debug,
+    getParameters,
+    removeRequestId,
+    request,
+} from './tools.js';
+import {
     type NodePyATVDeviceOptions,
+    NodePyATVExecutableType,
     type NodePyATVFindAndInstanceOptions,
     type NodePyATVFindResponseObject,
     type NodePyATVInstanceOptions,
     type NodePyATVInternalScanDevice,
-    type NodePyATVVersionResponse
+    type NodePyATVVersionResponse,
 } from './types.js';
-
-import { addRequestId, debug, getParameters, removeRequestId, request } from './tools.js';
-import { NodePyATVDevice } from '../lib/index.js';
 
 /**
  * Default class exported by `@sebbo2002/node-pyatv`. Use [[find]] to scan for devices in your local network. Use
@@ -30,71 +35,58 @@ export default class NodePyATVInstance {
     private readonly options: NodePyATVInstanceOptions = {};
 
     /**
+     * Use this to apply [[NodePyATVInstanceOptions]]
+     * (e.g. debug log method) to all further requests
+     *
+     * ```typescript
+     * import pyatv from '@sebbo2002/node-pyatv';
+     * const myPyatv = new pyatv({debug: true});
+     * const devices = myPyatv.find();
+     * console.log(devices);
+     * ```
+     * @param options
+     */
+    public constructor(options: NodePyATVInstanceOptions = {}) {
+        this.options = Object.assign({}, options);
+    }
+
+    /**
      * Checks if pyatv is installed and ready to be used.
      * Will throw an error if not.
      *
      * @param options
      */
-    public static async check (options: NodePyATVInstanceOptions = {}): Promise<void> {
+    public static async check(
+        options: NodePyATVInstanceOptions = {},
+    ): Promise<void> {
         const versions = await this.version(options);
         if (!versions.pyatv) {
             throw new Error('Unable to find pyatv. Is it installed?');
         }
         if (semver.lt(versions.pyatv, '0.6.0')) {
-            throw new Error('Found pyatv, but unforunately it\'s too old. Please update pyatv.');
+            throw new Error(
+                "Found pyatv, but unforunately it's too old. Please update pyatv.",
+            );
         }
 
         try {
             await this.find(options);
         } catch (error) {
-            throw new Error(`Unable to scan for devices: ${String(error).replace('Error: ', '')}`);
+            throw new Error(
+                `Unable to scan for devices: ${String(error).replace('Error: ', '')}`,
+            );
         }
     }
 
     /**
-     * Resolves with the version of pyatv and of the module itself.
-     * If a value can't be found, null is returned instead.
+     * Create a [[NodePyATVDevice]] to query the state and control it.
+     * At least `host` and `name` are required.
      *
      * @param options
      */
-    public static async version (options: NodePyATVInstanceOptions = {}): Promise<NodePyATVVersionResponse> {
-        const id = addRequestId();
-        let pyatv = null;
-        let module = null;
-
-        try {
-            pyatv = await request(id, NodePyATVExecutableType.atvremote, ['--version'], options) as string;
-        } catch (error) {
-            debug(id, `Unable to get pyatv version due to ${error}`, options);
-        }
-
-        if (pyatv && pyatv.substr(0, 10) === 'atvremote ') {
-            pyatv = pyatv.substr(10);
-        }
-        if (!semver.valid(pyatv)) {
-            debug(id, `String "${pyatv}" is not a valid pyatv version, set it to null`, options);
-            pyatv = null;
-        }
-
-        try {
-            const packageJsonPath = join(dirname(fileURLToPath(import.meta.url)), '..', '..', 'package.json');
-            const json = JSON.parse(await fsPromises.readFile(packageJsonPath, 'utf8'));
-            module = json?.version || null;
-        } catch (error) {
-            debug(id, `Unable to get module version due to ${error}`, options);
-        }
-        if (module && !semver.valid(module)) {
-            debug(id, `String "${module}" is not a valid module version, set it to null`, options);
-            module = null;
-        }
-
-        removeRequestId(id);
-        return {
-            pyatv,
-            module
-        };
+    public static device(options: NodePyATVDeviceOptions): NodePyATVDevice {
+        return new NodePyATVDevice(options);
     }
-
     /**
      * Scan the network for Apple TVs by using pyatv's atvscript. See [[NodePyATVFindAndInstanceOptions]]
      * for the options allowed. Use the `host` / `hosts` attribute to filter by IP addresses. Resolves with
@@ -117,9 +109,17 @@ export default class NodePyATVInstance {
      *
      * @param options
      */
-    public static async find (options?: NodePyATVFindAndInstanceOptions): Promise<NodePyATVDevice[]>;
-    public static async find (options: NodePyATVFindAndInstanceOptions, returnDevicesAndErrors: true): Promise<NodePyATVFindResponseObject>
-    public static async find (options: NodePyATVFindAndInstanceOptions = {}, returnDevicesAndErrors?: boolean): Promise<NodePyATVDevice[]|NodePyATVFindResponseObject> {
+    public static async find(
+        options?: NodePyATVFindAndInstanceOptions,
+    ): Promise<NodePyATVDevice[]>;
+    public static async find(
+        options: NodePyATVFindAndInstanceOptions,
+        returnDevicesAndErrors: true,
+    ): Promise<NodePyATVFindResponseObject>;
+    public static async find(
+        options: NodePyATVFindAndInstanceOptions = {},
+        returnDevicesAndErrors?: boolean,
+    ): Promise<NodePyATVDevice[] | NodePyATVFindResponseObject> {
         const id = addRequestId();
         const parameters = getParameters(options);
 
@@ -129,33 +129,44 @@ export default class NodePyATVInstance {
             id,
             NodePyATVExecutableType.atvscript,
             [...parameters, 'scan'],
-            { ...(options || {}), allowMultipleResponses: true }
+            { ...(options || {}), allowMultipleResponses: true },
         );
 
         for (const item of response) {
-            if (typeof item === 'object' && 'result' in item && item.result === 'failure') {
+            if (
+                typeof item === 'object' &&
+                'result' in item &&
+                item.result === 'failure'
+            ) {
                 errors.push(item);
-            }
-            else if (typeof item === 'object' && 'result' in item && item.result === 'success' && Array.isArray(item.devices)) {
+            } else if (
+                typeof item === 'object' &&
+                'result' in item &&
+                item.result === 'success' &&
+                Array.isArray(item.devices)
+            ) {
                 devices.push(
                     ...item.devices.map((device: NodePyATVInternalScanDevice) =>
-                        this.device(Object.assign({}, options, {
-                            host: device.address,
-                            id: device.identifier,
-                            allIDs: device.all_identifiers,
-                            name: device.name,
-                            mac: device.device_info?.mac || undefined,
-                            model: device.device_info?.model,
-                            modelName: device.device_info?.model_str,
-                            os: device.device_info?.operating_system,
-                            version: device.device_info?.version,
-                            services: device.services
-                        }))
-                    )
+                        this.device(
+                            Object.assign({}, options, {
+                                allIDs: device.all_identifiers,
+                                host: device.address,
+                                id: device.identifier,
+                                mac: device.device_info?.mac || undefined,
+                                model: device.device_info?.model,
+                                modelName: device.device_info?.model_str,
+                                name: device.name,
+                                os: device.device_info?.operating_system,
+                                services: device.services,
+                                version: device.device_info?.version,
+                            }),
+                        ),
+                    ),
                 );
-            }
-            else {
-                throw new Error(`Unable to parse pyatv response: ${JSON.stringify(item, null, '  ')}`);
+            } else {
+                throw new Error(
+                    `Unable to parse pyatv response: ${JSON.stringify(item, null, '  ')}`,
+                );
             }
         }
         removeRequestId(id);
@@ -163,47 +174,13 @@ export default class NodePyATVInstance {
         if (returnDevicesAndErrors) {
             return { devices, errors };
         }
-        if(!devices.length && errors.length) {
-            throw new Error(`Unable to find any devices, but received ${errors.length} error${errors.length !== 1 ? 's' : ''}: ${JSON.stringify(errors, null, '  ')}`);
+        if (!devices.length && errors.length) {
+            throw new Error(
+                `Unable to find any devices, but received ${errors.length} error${errors.length !== 1 ? 's' : ''}: ${JSON.stringify(errors, null, '  ')}`,
+            );
         }
 
         return devices;
-    }
-
-    /**
-     * Create a [[NodePyATVDevice]] to query the state and control it.
-     * At least `host` and `name` are required.
-     *
-     * @param options
-     */
-    public static device (options: NodePyATVDeviceOptions): NodePyATVDevice {
-        return new NodePyATVDevice(options);
-    }
-
-    /**
-     * Use this to apply [[NodePyATVInstanceOptions]]
-     * (e.g. debug log method) to all further requests
-     *
-     * ```typescript
-     * import pyatv from '@sebbo2002/node-pyatv';
-     * const myPyatv = new pyatv({debug: true});
-     * const devices = myPyatv.find();
-     * console.log(devices);
-     * ```
-     * @param options
-     */
-    public constructor (options: NodePyATVInstanceOptions = {}) {
-        this.options = Object.assign({}, options);
-    }
-
-    /**
-     * Checks if pyatv is installed and ready to be used.
-     * Will throw an error if not.
-     *
-     * @param options
-     */
-    public async check (options: NodePyATVInstanceOptions = {}): Promise<void> {
-        return NodePyATVInstance.check(Object.assign({}, this.options, options));
     }
 
     /**
@@ -212,8 +189,88 @@ export default class NodePyATVInstance {
      *
      * @param options
      */
-    public async version (options: NodePyATVInstanceOptions = {}): Promise<NodePyATVVersionResponse> {
-        return NodePyATVInstance.version(Object.assign({}, this.options, options));
+    public static async version(
+        options: NodePyATVInstanceOptions = {},
+    ): Promise<NodePyATVVersionResponse> {
+        const id = addRequestId();
+        let pyatv = null;
+        let module = null;
+
+        try {
+            pyatv = (await request(
+                id,
+                NodePyATVExecutableType.atvremote,
+                ['--version'],
+                options,
+            )) as string;
+        } catch (error) {
+            debug(id, `Unable to get pyatv version due to ${error}`, options);
+        }
+
+        if (pyatv && pyatv.substr(0, 10) === 'atvremote ') {
+            pyatv = pyatv.substr(10);
+        }
+        if (!semver.valid(pyatv)) {
+            debug(
+                id,
+                `String "${pyatv}" is not a valid pyatv version, set it to null`,
+                options,
+            );
+            pyatv = null;
+        }
+
+        try {
+            const packageJsonPath = join(
+                dirname(fileURLToPath(import.meta.url)),
+                '..',
+                '..',
+                'package.json',
+            );
+            const json = JSON.parse(
+                await fsPromises.readFile(packageJsonPath, 'utf8'),
+            );
+            module = json?.version || null;
+        } catch (error) {
+            debug(id, `Unable to get module version due to ${error}`, options);
+        }
+        if (module && !semver.valid(module)) {
+            debug(
+                id,
+                `String "${module}" is not a valid module version, set it to null`,
+                options,
+            );
+            module = null;
+        }
+
+        removeRequestId(id);
+        return {
+            module,
+            pyatv,
+        };
+    }
+
+    /**
+     * Checks if pyatv is installed and ready to be used.
+     * Will throw an error if not.
+     *
+     * @param options
+     */
+    public async check(options: NodePyATVInstanceOptions = {}): Promise<void> {
+        return NodePyATVInstance.check(
+            Object.assign({}, this.options, options),
+        );
+    }
+
+    /**
+     * Create a [[NodePyATVDevice]] to query the state and control it.
+     * At least `host` and `name` are required.
+     *
+     * @param options
+     */
+    public device(options: NodePyATVDeviceOptions): NodePyATVDevice {
+        return NodePyATVInstance.device(
+            Object.assign({}, this.options, options),
+        );
     }
 
     /**
@@ -230,17 +287,23 @@ export default class NodePyATVInstance {
      *
      * @param options
      */
-    public async find (options: NodePyATVFindAndInstanceOptions = {}): Promise<NodePyATVDevice[]> {
+    public async find(
+        options: NodePyATVFindAndInstanceOptions = {},
+    ): Promise<NodePyATVDevice[]> {
         return NodePyATVInstance.find(Object.assign({}, this.options, options));
     }
 
     /**
-     * Create a [[NodePyATVDevice]] to query the state and control it.
-     * At least `host` and `name` are required.
+     * Resolves with the version of pyatv and of the module itself.
+     * If a value can't be found, null is returned instead.
      *
      * @param options
      */
-    public device (options: NodePyATVDeviceOptions): NodePyATVDevice {
-        return NodePyATVInstance.device(Object.assign({}, this.options, options));
+    public async version(
+        options: NodePyATVInstanceOptions = {},
+    ): Promise<NodePyATVVersionResponse> {
+        return NodePyATVInstance.version(
+            Object.assign({}, this.options, options),
+        );
     }
 }

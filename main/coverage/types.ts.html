@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>272/272</span>
+                <span class='fraction'>282/282</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>272/272</span>
+                <span class='fraction'>282/282</span>
             </div>
         
             
@@ -335,7 +335,17 @@
 <a name='L270'></a><a href='#L270'>270</a>
 <a name='L271'></a><a href='#L271'>271</a>
 <a name='L272'></a><a href='#L272'>272</a>
-<a name='L273'></a><a href='#L273'>273</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L273'></a><a href='#L273'>273</a>
+<a name='L274'></a><a href='#L274'>274</a>
+<a name='L275'></a><a href='#L275'>275</a>
+<a name='L276'></a><a href='#L276'>276</a>
+<a name='L277'></a><a href='#L277'>277</a>
+<a name='L278'></a><a href='#L278'>278</a>
+<a name='L279'></a><a href='#L279'>279</a>
+<a name='L280'></a><a href='#L280'>280</a>
+<a name='L281'></a><a href='#L281'>281</a>
+<a name='L282'></a><a href='#L282'>282</a>
+<a name='L283'></a><a href='#L283'>283</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -607,28 +617,21 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import {ChildProcess, type SpawnOptions} from 'child_process';
-import {FakeChildProcess} from './fake-spawn.js';
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { ChildProcess, type SpawnOptions } from 'child_process';
+&nbsp;
 import type NodePyATVDevice from './device.js';
 &nbsp;
-export enum NodePyATVExecutableType {
-    atvremote = 'atvremote',
-    atvscript = 'atvscript',
-}
-&nbsp;
-export enum NodePyATVProtocol {
-    dmap = 'dmap',
-    mrp = 'mrp',
-    airplay = 'airplay',
-    mdns = 'mdns',
-}
-&nbsp;
-export enum NodePyATVMediaType {
-    music = 'music',
-    tv = 'tv',
-    video = 'video',
-    unknown = 'unknown'
-}
+import { FakeChildProcess } from './fake-spawn.js';
 &nbsp;
 export enum NodePyATVDeviceState {
     idle = 'idle',
@@ -636,24 +639,12 @@ export enum NodePyATVDeviceState {
     paused = 'paused',
     playing = 'playing',
     seeking = 'seeking',
-    stopped = 'stopped'
+    stopped = 'stopped',
 }
 &nbsp;
-export enum NodePyATVRepeatState {
-    all = 'all',
-    track = 'track',
-    off = 'off'
-}
-&nbsp;
-export enum NodePyATVShuffleState {
-    albums = 'albums',
-    songs = 'songs',
-    off = 'off'
-}
-&nbsp;
-export enum NodePyATVPowerState {
-    on = 'on',
-    off = 'off'
+export enum NodePyATVExecutableType {
+    atvremote = 'atvremote',
+    atvscript = 'atvscript',
 }
 &nbsp;
 export enum NodePyATVFocusState {
@@ -665,33 +656,7 @@ export enum NodePyATVFocusState {
     // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
     focused = 'focused',
 &nbsp;
-    unfocused = 'unfocused'
-}
-&nbsp;
-export enum NodePyATVKeys {
-    down = 'down',
-    home = 'home',
-    homeHold = 'homeHold',
-    left = 'left',
-    menu = 'menu',
-    next = 'next',
-    pause = 'pause',
-    play = 'play',
-    playPause = 'playPause',
-    previous = 'previous',
-    right = 'right',
-    select = 'select',
-    skipBackward = 'skipBackward',
-    skipForward = 'skipForward',
-    stop = 'stop',
-    suspend = 'suspend',
-    topMenu = 'topMenu',
-    up = 'up',
-    volumeDown = 'volumeDown',
-    volumeUp = 'volumeUp',
-    wakeup = 'wakeup',
-    turnOff = 'turnOff',
-    turnOn = 'turnOn'
+    unfocused = 'unfocused',
 }
 &nbsp;
 /**
@@ -715,59 +680,119 @@ export enum NodePyATVInternalKeys {
     stop = 'stop',
     suspend = 'suspend',
     topMenu = 'top_menu',
+    turnOff = 'turn_off',
+    turnOn = 'turn_on',
     up = 'up',
     volumeDown = 'volume_down',
     volumeUp = 'volume_up',
     wakeup = 'wakeup',
-    turnOff = 'turn_off',
-    turnOn = 'turn_on'
+}
+&nbsp;
+export enum NodePyATVKeys {
+    down = 'down',
+    home = 'home',
+    homeHold = 'homeHold',
+    left = 'left',
+    menu = 'menu',
+    next = 'next',
+    pause = 'pause',
+    play = 'play',
+    playPause = 'playPause',
+    previous = 'previous',
+    right = 'right',
+    select = 'select',
+    skipBackward = 'skipBackward',
+    skipForward = 'skipForward',
+    stop = 'stop',
+    suspend = 'suspend',
+    topMenu = 'topMenu',
+    turnOff = 'turnOff',
+    turnOn = 'turnOn',
+    up = 'up',
+    volumeDown = 'volumeDown',
+    volumeUp = 'volumeUp',
+    wakeup = 'wakeup',
 }
 &nbsp;
 export enum NodePyATVListenerState {
     stopped,
     starting,
     started,
-    stopping
+    stopping,
 }
 &nbsp;
-&nbsp;
-export type NodePyATVStateIndex = keyof NodePyATVState;
-&nbsp;
-export type NodePyATVEventValueType = (string | number | NodePyATVMediaType | NodePyATVDeviceState |
-    NodePyATVShuffleState | NodePyATVRepeatState);
-&nbsp;
-&nbsp;
-export interface NodePyATVInstanceOptions {
-    atvremotePath?: string;
-    atvscriptPath?: string;
-    debug?: true | ((msg: string) =&gt; void);
-    noColors?: true;
-    spawn?: (command: string, args: Array&lt;string&gt;, options: SpawnOptions) =&gt; (ChildProcess | FakeChildProcess);
+export enum NodePyATVMediaType {
+    music = 'music',
+    tv = 'tv',
+    unknown = 'unknown',
+    video = 'video',
 }
 &nbsp;
-export interface NodePyATVRequestOptions extends NodePyATVInstanceOptions {
-    allowMultipleResponses?: boolean;
+export enum NodePyATVPowerState {
+    off = 'off',
+    on = 'on',
 }
 &nbsp;
-export interface NodePyATVVersionResponse {
-    pyatv: string | null;
-    module: string | null;
+export enum NodePyATVProtocol {
+    airplay = 'airplay',
+    dmap = 'dmap',
+    mdns = 'mdns',
+    mrp = 'mrp',
 }
+&nbsp;
+export enum NodePyATVRepeatState {
+    all = 'all',
+    off = 'off',
+    track = 'track',
+}
+&nbsp;
+export enum NodePyATVShuffleState {
+    albums = 'albums',
+    off = 'off',
+    songs = 'songs',
+}
+&nbsp;
+export interface NodePyATVApp {
+    id: string;
+    launch: () =&gt; Promise&lt;void&gt;;
+    name: string;
+}
+&nbsp;
+export interface NodePyATVDeviceOptions
+    extends NodePyATVFindAndInstanceOptions {
+    allIDs?: string[];
+    host?: string;
+    mac?: string;
+    model?: string;
+    modelName?: string;
+    name: string;
+    os?: string;
+    services?: NodePyATVService[];
+    version?: string;
+}
+&nbsp;
+export type NodePyATVEventValueType =
+    | NodePyATVDeviceState
+    | NodePyATVMediaType
+    | NodePyATVRepeatState
+    | NodePyATVShuffleState
+    | number
+    | string;
+&nbsp;
+export interface NodePyATVFindAndInstanceOptions
+    extends NodePyATVFindOptions,
+        NodePyATVInstanceOptions {}
 &nbsp;
 export interface NodePyATVFindOptions {
+    airplayCredentials?: string;
+    companionCredentials?: string;
+    dmapCredentials?: string;
     host?: string;
     hosts?: string[];
     id?: string;
-    protocol?: NodePyATVProtocol;
-    dmapCredentials?: string;
     mrpCredentials?: string;
-    airplayCredentials?: string;
-    companionCredentials?: string;
+    protocol?: NodePyATVProtocol;
     raopCredentials?: string;
-}
-&nbsp;
-export interface NodePyATVFindAndInstanceOptions extends NodePyATVInstanceOptions, NodePyATVFindOptions {
-&nbsp;
 }
 &nbsp;
 export interface NodePyATVFindResponseObject {
@@ -775,42 +800,37 @@ export interface NodePyATVFindResponseObject {
     errors: Record&lt;string, unknown&gt;[];
 }
 &nbsp;
-export interface NodePyATVDeviceOptions extends NodePyATVFindAndInstanceOptions {
-    host: string;
-    name: string;
-    mac?: string;
-    model?: string;
-    modelName?: string;
-    os?: string;
-    version?: string;
-    services?: NodePyATVService[];
-    allIDs?: string[];
-}
-&nbsp;
 export interface NodePyATVGetStateOptions {
     maxAge?: number;
 }
 &nbsp;
-export interface NodePyATVService {
-    protocol: NodePyATVProtocol;
-    port: number;
+export interface NodePyATVInstanceOptions {
+    atvremotePath?: string;
+    atvscriptPath?: string;
+    debug?: ((msg: string) =&gt; void) | true;
+    noColors?: true;
+    spawn?: (
+        command: string,
+        args: Array&lt;string&gt;,
+        options: SpawnOptions,
+    ) =&gt; ChildProcess | FakeChildProcess;
 }
 &nbsp;
 /**
  * @internal
  */
 export interface NodePyATVInternalScanDevice {
-    name: string;
     address: string;
-    identifier: string;
     all_identifiers: string[];
     device_info?: {
-        mac: string | null;
+        mac: null | string;
         model: string;
         model_str: string;
         operating_system: string;
         version: string;
     };
+    identifier: string;
+    name: string;
     services?: NodePyATVService[];
 }
 &nbsp;
@@ -818,66 +838,76 @@ export interface NodePyATVInternalScanDevice {
  * @internal
  */
 export interface NodePyATVInternalState {
-    result?: string | unknown;
-    datetime?: string | unknown;
-    hash?: string | unknown;
-    media_type?: string | unknown;
-    device_state?: string | unknown;
-    title?: string | unknown;
-    artist?: string | unknown;
     album?: string | unknown;
-    genre?: string | unknown;
-    total_time?: number | unknown;
-    position?: 1 | unknown;
-    shuffle?: string | unknown;
-    repeat?: string | unknown;
     app?: string | unknown;
     app_id?: string | unknown;
+    artist?: string | unknown;
+    connection?: string | unknown;
+    content_identifier?: null | string;
+    datetime?: string | unknown;
+    device_state?: string | unknown;
+    episode_number?: null | number;
+    exception?: string | unknown;
+    focus_state?: string | unknown;
+    genre?: string | unknown;
+    hash?: string | unknown;
+    itunes_store_identifier?: null | number;
+    media_type?: string | unknown;
+    output_devices?: Array&lt;{ identifier: string; name: string }&gt; | null;
+    position?: 1 | unknown;
     power_state?: string | unknown;
     push_updates?: string | unknown;
-    exception?: string | unknown;
+    repeat?: string | unknown;
+    result?: string | unknown;
+    season_number?: null | number;
+    series_name?: null | string;
+    shuffle?: string | unknown;
     stacktrace?: string | unknown;
-    connection?: string | unknown;
+    title?: string | unknown;
+    total_time?: number | unknown;
     volume?: number | unknown;
-    focus_state?: string | unknown;
-    output_devices?: Array&lt;{ name: string; identifier: string; }&gt; | null;
-    content_identifier?: string | null;
-    itunes_store_identifier?: number | null;
-    episode_number?: number | null;
-    season_number?: number | null;
-    series_name?: string | null;
+}
+&nbsp;
+export interface NodePyATVRequestOptions extends NodePyATVInstanceOptions {
+    allowMultipleResponses?: boolean;
+}
+&nbsp;
+export interface NodePyATVService {
+    port: number;
+    protocol: NodePyATVProtocol;
 }
 &nbsp;
 export interface NodePyATVState {
+    album: null | string;
+    app: null | string;
+    appId: null | string;
+    artist: null | string;
+    contentIdentifier: null | string;
     dateTime: Date | null;
-    hash: string | null;
-    mediaType: NodePyATVMediaType | null;
     deviceState: NodePyATVDeviceState | null;
-    title: string | null;
-    artist: string | null;
-    album: string | null;
-    genre: string | null;
-    totalTime: number | null;
-    position: number | null;
-    shuffle: NodePyATVShuffleState | null;
-    repeat: NodePyATVRepeatState | null;
-    app: string | null;
-    appId: string | null;
-    powerState: NodePyATVPowerState | null;
-    volume: number | null;
+    episodeNumber: null | number;
     focusState: NodePyATVFocusState | null;
-    outputDevices: Array&lt;{ name: string; identifier: string; }&gt; | null;
-    contentIdentifier: string | null;
-    iTunesStoreIdentifier: number | null;
-    episodeNumber: number | null;
-    seasonNumber: number | null;
-    seriesName: string | null;
+    genre: null | string;
+    hash: null | string;
+    iTunesStoreIdentifier: null | number;
+    mediaType: NodePyATVMediaType | null;
+    outputDevices: Array&lt;{ identifier: string; name: string }&gt; | null;
+    position: null | number;
+    powerState: NodePyATVPowerState | null;
+    repeat: NodePyATVRepeatState | null;
+    seasonNumber: null | number;
+    seriesName: null | string;
+    shuffle: NodePyATVShuffleState | null;
+    title: null | string;
+    totalTime: null | number;
+    volume: null | number;
 }
 &nbsp;
-export interface NodePyATVApp {
-    id: string;
-    name: string;
-    launch: () =&gt; Promise&lt;void&gt;;
+export type NodePyATVStateIndex = keyof NodePyATVState;
+&nbsp;
+export interface NodePyATVVersionResponse {
+    module: null | string;
+    pyatv: null | string;
 }
 &nbsp;</pre></td></tr></table></pre>
 
@@ -886,7 +916,7 @@ export interface NodePyATVApp {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-02-07T19:55:21.992Z
+                at 2025-05-12T16:36:51.156Z
             </div>
         <script src="prettify.js"></script>
         <script>

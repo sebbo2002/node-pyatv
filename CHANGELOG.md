@@ -1,3 +1,21 @@
+# [9.0.0](https://github.com/sebbo2002/node-pyatv/compare/v8.1.2...v9.0.0) (2025-05-12)
+
+### chore
+
+- Drop node v18 support ([3e18405](https://github.com/sebbo2002/node-pyatv/commit/3e18405ac1e1be738a414623f97169c802567f99))
+
+### Features
+
+- Connect via MAC address instead of host ([a9e6614](https://github.com/sebbo2002/node-pyatv/commit/a9e66148aa1d7805745bed3b3fef2e3b15fcb1c5)), closes [#353](https://github.com/sebbo2002/node-pyatv/issues/353)
+
+### BREAKING CHANGES
+
+- Drop node.js v18 Support
+
+This node.js version is no longer supported. For more information see https://nodejs.dev/en/about/releases/
+
+- This change means that `NodePyATVDevice.host()` no longer necessarily returns a string, but possibly `undefined`. The signature of `toJSON()` has also been adjusted accordingly.
+
 ## [8.1.2](https://github.com/sebbo2002/node-pyatv/compare/v8.1.1...v8.1.2) (2025-02-07)
 
 ## [8.1.1](https://github.com/sebbo2002/node-pyatv/compare/v8.1.0...v8.1.1) (2025-01-09)

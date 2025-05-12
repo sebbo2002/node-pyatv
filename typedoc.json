@@ -1,8 +1,6 @@
 {
     "entryPoints": ["./src/lib/index.ts"],
-    "exclude": [
-        "./lib/tools.ts"
-    ],
+    "exclude": ["./lib/tools.ts"],
     "excludeInternal": true,
     "excludePrivate": true,
     "excludeProtected": true,

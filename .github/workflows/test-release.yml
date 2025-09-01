@@ -19,6 +19,19 @@ jobs:
     steps:
       - name: ☁️ Checkout Project
         uses: actions/checkout@v5
+      - name: 🔧 Set up Python
+        uses: actions/setup-python@v5
+        with:
+          # https://github.com/aio-libs/aiohttp/issues/7739#issuecomment-1773868351
+          python-version: 3.11
+      - name: 🔧 Setup pip cache
+        uses: actions/cache@v4
+        id: pip-cache
+        with:
+          path: ~/.cache/pip
+          key: pip
+      - name: 📦 Install pyatv
+        run: pip3 install --upgrade git+https://github.com/postlund/pyatv.git
       - name: 🔧 Setup node.js
         uses: actions/setup-node@v4
         with:
@@ -36,6 +49,18 @@ jobs:
     steps:
       - name: ☁️ Checkout Project
         uses: actions/checkout@v5
+      - name: 🔧 Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11
+      - name: 🔧 Setup pip cache
+        uses: actions/cache@v4
+        id: pip-cache
+        with:
+          path: ~/.cache/pip
+          key: pip
+      - name: 📦 Install pyatv
+        run: pip3 install --upgrade git+https://github.com/postlund/pyatv.git
       - name: 🔧 Setup node.js
         uses: actions/setup-node@v4
         with:
@@ -81,6 +106,18 @@ jobs:
     steps:
       - name: ☁️ Checkout Project
         uses: actions/checkout@v5
+      - name: 🔧 Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11
+      - name: 🔧 Setup pip cache
+        uses: actions/cache@v4
+        id: pip-cache
+        with:
+          path: ~/.cache/pip
+          key: pip
+      - name: 📦 Install pyatv
+        run: pip3 install --upgrade git+https://github.com/postlund/pyatv.git
       - name: 🔧 Setup node.js
         uses: actions/setup-node@v4
         with:

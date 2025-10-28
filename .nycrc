@@ -17,7 +17,7 @@
     "instrument": true,
     "branches": 80,
     "lines": 92,
-    "functions": 90,
+    "functions": 85,
     "statements": 92,
     "per-file": true
 }

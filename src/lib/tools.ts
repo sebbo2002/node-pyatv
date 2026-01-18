@@ -47,13 +47,13 @@ export function compareOutputDevices(
 ) {
     return Boolean(
         Array.isArray(a) &&
-            Array.isArray(b) &&
+        Array.isArray(b) &&
+        JSON.stringify(
+            a.sort((a, b) => (a.identifier < b.identifier ? -1 : 1)),
+        ) ===
             JSON.stringify(
-                a.sort((a, b) => (a.identifier < b.identifier ? -1 : 1)),
-            ) ===
-                JSON.stringify(
-                    b.sort((a, b) => (a.identifier < b.identifier ? -1 : 1)),
-                ),
+                b.sort((a, b) => (a.identifier < b.identifier ? -1 : 1)),
+            ),
     );
 }
 

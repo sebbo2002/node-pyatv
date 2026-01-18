@@ -662,9 +662,9 @@ export default class NodePyATVDevice implements EventEmitter {
      * @param event
      * @category Event
      */
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-    listeners(event: string | symbol): Function[] {
-        return this.events.listeners(event);
+
+    listeners(event: string | symbol): ((...args: unknown[]) => void)[] {
+        return this.events.listeners(event) as ((...args: unknown[]) => void)[];
     }
 
     /**
@@ -824,9 +824,11 @@ export default class NodePyATVDevice implements EventEmitter {
      * @param event
      * @category Event
      */
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-    rawListeners(event: string | symbol): Function[] {
-        return this.events.rawListeners(event);
+
+    rawListeners(event: string | symbol): ((...args: unknown[]) => void)[] {
+        return this.events.rawListeners(event) as ((
+            ...args: unknown[]
+        ) => void)[];
     }
 
     /**

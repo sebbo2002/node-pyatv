@@ -129,8 +129,7 @@ export interface NodePyATVApp {
     name: string;
 }
 
-export interface NodePyATVDeviceOptions
-    extends NodePyATVFindAndInstanceOptions {
+export interface NodePyATVDeviceOptions extends NodePyATVFindAndInstanceOptions {
     allIDs?: string[];
     host?: string;
     mac?: string;
@@ -151,8 +150,7 @@ export type NodePyATVEventValueType =
     | string;
 
 export interface NodePyATVFindAndInstanceOptions
-    extends NodePyATVFindOptions,
-        NodePyATVInstanceOptions {}
+    extends NodePyATVFindOptions, NodePyATVInstanceOptions {}
 
 export interface NodePyATVFindOptions {
     airplayCredentials?: string;

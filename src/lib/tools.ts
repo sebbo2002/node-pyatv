@@ -1,5 +1,7 @@
 'use strict';
 
+import type EventEmitter from 'events';
+
 import { ChildProcess, spawn, type SpawnOptions } from 'child_process';
 
 import { FakeChildProcess } from './fake-spawn.js';
@@ -47,13 +49,13 @@ export function compareOutputDevices(
 ) {
     return Boolean(
         Array.isArray(a) &&
-            Array.isArray(b) &&
+        Array.isArray(b) &&
+        JSON.stringify(
+            a.sort((a, b) => (a.identifier < b.identifier ? -1 : 1)),
+        ) ===
             JSON.stringify(
-                a.sort((a, b) => (a.identifier < b.identifier ? -1 : 1)),
-            ) ===
-                JSON.stringify(
-                    b.sort((a, b) => (a.identifier < b.identifier ? -1 : 1)),
-                ),
+                b.sort((a, b) => (a.identifier < b.identifier ? -1 : 1)),
+            ),
     );
 }
 
@@ -115,25 +117,25 @@ export function execute(
         debug(requestId, `${executable} exited with code: ${code}`, options);
 
         if (child.stdout) {
-            child.stdout.off('data', onStdOut);
+            (child.stdout as EventEmitter).off('data', onStdOut);
         }
         if (child.stderr) {
-            child.stderr.off('data', onStdErr);
+            (child.stderr as EventEmitter).off('data', onStdErr);
         }
 
-        child.off('error', onError);
-        child.off('close', onClose);
+        (child as EventEmitter).off('error', onError);
+        (child as EventEmitter).off('close', onClose);
     };
 
     if (child.stdout) {
-        child.stdout.on('data', onStdOut);
+        (child.stdout as EventEmitter).on('data', onStdOut);
     }
     if (child.stderr) {
-        child.stderr.on('data', onStdErr);
+        (child.stderr as EventEmitter).on('data', onStdErr);
     }
 
-    child.on('error', onError);
-    child.on('close', onClose);
+    (child as EventEmitter).on('error', onError);
+    (child as EventEmitter).on('close', onClose);
 
     return child;
 }
@@ -457,26 +459,26 @@ export async function request<O extends NodePyATVRequestOptions>(
             result.code = code;
 
             if (pyatv.stdout) {
-                pyatv.stdout.off('data', onStdOut);
+                (pyatv.stdout as EventEmitter).off('data', onStdOut);
             }
             if (pyatv.stderr) {
-                pyatv.stderr.off('data', onStdErr);
+                (pyatv.stderr as EventEmitter).off('data', onStdErr);
             }
 
-            pyatv.off('error', onError);
-            pyatv.off('close', onClose);
+            (pyatv as EventEmitter).off('error', onError);
+            (pyatv as EventEmitter).off('close', onClose);
             resolve(undefined);
         };
 
         if (pyatv.stdout) {
-            pyatv.stdout.on('data', onStdOut);
+            (pyatv.stdout as EventEmitter).on('data', onStdOut);
         }
         if (pyatv.stderr) {
-            pyatv.stderr.on('data', onStdErr);
+            (pyatv.stderr as EventEmitter).on('data', onStdErr);
         }
 
-        pyatv.on('error', onError);
-        pyatv.on('close', onClose);
+        (pyatv as EventEmitter).on('error', onError);
+        (pyatv as EventEmitter).on('close', onClose);
     });
 
     if (result.stderr.length > 0) {

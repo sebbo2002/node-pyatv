@@ -379,13 +379,14 @@ export default class NodePyATVDeviceEvents extends EventEmitter {
             }
 
             if (this.pyatv.stdout) {
-                this.pyatv.stdout.off('data', onStdOut);
+                (this.pyatv.stdout as EventEmitter).off('data', onStdOut);
             }
             if (this.pyatv.stderr) {
-                this.pyatv.stderr.off('data', onStdErr);
+                (this.pyatv.stderr as EventEmitter).off('data', onStdErr);
             }
-            this.pyatv.off('error', onError);
-            this.pyatv.off('close', onClose);
+            // Use type assertion to EventEmitter for event methods
+            (this.pyatv as EventEmitter).off('error', onError);
+            (this.pyatv as EventEmitter).off('close', onClose);
 
             if (
                 this.listenerCount() > 0 &&
@@ -412,14 +413,14 @@ export default class NodePyATVDeviceEvents extends EventEmitter {
             removeRequestId(reqId);
         };
 
-        this.pyatv.on('error', onError);
-        this.pyatv.on('close', onClose);
-
+        // Use type assertion to EventEmitter for event methods
+        (this.pyatv as EventEmitter).on('error', onError);
+        (this.pyatv as EventEmitter).on('close', onClose);
         if (this.pyatv.stdout) {
-            this.pyatv.stdout.on('data', onStdOut);
+            (this.pyatv.stdout as EventEmitter).on('data', onStdOut);
         }
         if (this.pyatv.stderr) {
-            this.pyatv.stderr.on('data', onStdErr);
+            (this.pyatv.stderr as EventEmitter).on('data', onStdErr);
         }
     }
 }

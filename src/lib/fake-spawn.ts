@@ -4,6 +4,15 @@ import { EventEmitter } from 'events';
 /**
  * @internal
  */
+export class FakeChildProcessStdIn extends EventEmitter {
+    write(data: string): void {
+        this.emit('data', Buffer.from(data));
+    }
+}
+
+/**
+ * @internal
+ */
 export class FakeChildProcess extends EventEmitter {
     args: ReadonlyArray<string>;
     cmd: string;
@@ -104,15 +113,6 @@ export class FakeChildProcessController {
             typeof content === 'string' ? content : JSON.stringify(content),
         );
         return this;
-    }
-}
-
-/**
- * @internal
- */
-export class FakeChildProcessStdIn extends EventEmitter {
-    write(data: string): void {
-        this.emit('data', Buffer.from(data));
     }
 }
 

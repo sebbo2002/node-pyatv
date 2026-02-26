@@ -425,14 +425,12 @@ export async function request<O extends NodePyATVRequestOptions>(
     parameters: string[],
     options: O,
 ): Promise<NodePyATVScriptResponse<O>>;
-
 export async function request<O extends NodePyATVRequestOptions>(
     requestId: string,
     executableType: NodePyATVExecutableType.atvremote,
     parameters: string[],
     options: O,
 ): Promise<string>;
-
 export async function request<O extends NodePyATVRequestOptions>(
     requestId: string,
     executableType: NodePyATVExecutableType,
@@ -502,7 +500,9 @@ export async function request<O extends NodePyATVRequestOptions>(
         } catch (error) {
             const msg = `Unable to parse result ${requestId} json: ${error}`;
             debug(requestId, msg, options);
-            throw new Error(msg);
+            throw new Error(msg, {
+                cause: error
+            });
         }
     }
 

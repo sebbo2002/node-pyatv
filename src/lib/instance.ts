@@ -74,6 +74,7 @@ export default class NodePyATVInstance {
         } catch (error) {
             throw new Error(
                 `Unable to scan for devices: ${String(error).replace('Error: ', '')}`,
+                { cause: error }
             );
         }
     }

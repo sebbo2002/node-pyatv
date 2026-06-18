@@ -5,7 +5,7 @@
         "url": "http://github.com/sebbo2002/node-pyatv/issues"
     },
     "dependencies": {
-        "semver": "^7.8.1"
+        "semver": "^7.8.4"
     },
     "description": "A lightweight wrapper around pyatv…",
     "devDependencies": {

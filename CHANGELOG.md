@@ -1,3 +1,15 @@
+# [10.0.0](https://github.com/sebbo2002/node-pyatv/compare/v9.0.3...v10.0.0) (2026-06-22)
+
+### Features
+
+- Drop support for node.js v20 and v23 ([d949a08](https://github.com/sebbo2002/node-pyatv/commit/d949a088c82ede8768c62556cfc0da9ce2255b1b))
+
+### BREAKING CHANGES
+
+- Drop node.js v20 / v23 Support
+
+This node.js version is no longer supported. For more information see https://nodejs.dev/en/about/releases/
+
 ## [9.0.3](https://github.com/sebbo2002/node-pyatv/compare/v9.0.2...v9.0.3) (2026-02-12)
 
 ## [9.0.2](https://github.com/sebbo2002/node-pyatv/compare/v9.0.1...v9.0.2) (2025-10-28)

@@ -36,6 +36,8 @@ export default [
             'docs/**',
             'package-lock.json',
             '.nyc_output/**',
+            'venv',
+            'mochawesome-report/**',
         ],
     },
 ];

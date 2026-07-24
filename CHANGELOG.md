@@ -1,3 +1,10 @@
+## [10.0.1](https://github.com/sebbo2002/node-pyatv/compare/v10.0.0...v10.0.1) (2026-07-24)
+
+### Bug Fixes
+
+- correct NodePyATVDevice.listenerCount method signature ([bb4eacc](https://github.com/sebbo2002/node-pyatv/commit/bb4eacc8ac976aaffcd7e5b8609d42dc668a8071))
+- **device:** Fix removeAllListeners() without argument ([6354187](https://github.com/sebbo2002/node-pyatv/commit/63541879a38ce1bc9d494a43f5d4c8621360edcf)), closes [#473](https://github.com/sebbo2002/node-pyatv/issues/473)
+
 # [10.0.0](https://github.com/sebbo2002/node-pyatv/compare/v9.0.3...v10.0.0) (2026-06-22)
 
 ### Features

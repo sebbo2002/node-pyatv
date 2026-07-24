@@ -186,7 +186,11 @@ export default class NodePyATVDeviceEvents extends EventEmitter {
     }
 
     removeAllListeners(event?: string | symbol): this {
-        super.removeAllListeners(event);
+        if (event !== undefined) {
+            super.removeAllListeners(event);
+        } else {
+            super.removeAllListeners();
+        }
         this.checkListener();
         return this;
     }

@@ -501,7 +501,7 @@ export async function request<O extends NodePyATVRequestOptions>(
             const msg = `Unable to parse result ${requestId} json: ${error}`;
             debug(requestId, msg, options);
             throw new Error(msg, {
-                cause: error
+                cause: error,
             });
         }
     }

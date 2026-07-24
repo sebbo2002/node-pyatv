@@ -491,6 +491,32 @@ describe('NodePyATVDeviceEvents', function () {
         });
     });
 
+    describe('removeAllListeners()', function () {
+        it('should remove all listeners across all events when called without arguments', function () {
+            const device = new NodePyATVDevice({
+                host: '192.168.178.2',
+                name: 'My Testdevice',
+                spawn: createFakeSpawn((cp) => {
+                    cp.onStdIn(() => cp.end());
+                }),
+            });
+
+            device.on('foo', () => {});
+            device.on('bar', () => {});
+            device.on('bar', () => {});
+
+            assert.deepStrictEqual(device.listenerCount(), 3);
+            assert.deepStrictEqual(device.listenerCount('foo'), 1);
+            assert.deepStrictEqual(device.listenerCount('bar'), 2);
+
+            device.removeAllListeners();
+
+            assert.deepStrictEqual(device.listenerCount(), 0);
+            assert.deepStrictEqual(device.listenerCount('foo'), 0);
+            assert.deepStrictEqual(device.listenerCount('bar'), 0);
+        });
+    });
+
     describe('emit()', function () {
         it('should work', function (done) {
             const device = new NodePyATVDevice({

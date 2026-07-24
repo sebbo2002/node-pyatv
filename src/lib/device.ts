@@ -651,7 +651,7 @@ export default class NodePyATVDevice implements EventEmitter {
      * @param event
      * @category Event
      */
-    listenerCount(event: string | symbol): number {
+    listenerCount(event?: string | symbol): number {
         return this.events.listenerCount(event);
     }
 

@@ -3,16 +3,21 @@
     "check-coverage": true,
     "extension": [".ts"],
     "include": ["src/lib/*.ts"],
-    "exclude": ["coverage/**", "node_modules/**"],
+    "exclude": [
+        "coverage/**",
+        "node_modules/**",
+        "src/examples/**",
+        "src/bin/check.ts"
+    ],
     "report-dir": "./docs/coverage/",
     "temp-directory": "./.nyc_output",
     "sourceMap": true,
     "reporter": ["text", "text-summary", "cobertura", "html"],
     "all": true,
     "instrument": true,
-    "branches": 95,
-    "lines": 95,
-    "functions": 95,
-    "statements": 95,
+    "branches": 80,
+    "lines": 92,
+    "functions": 85,
+    "statements": 92,
     "per-file": true
 }

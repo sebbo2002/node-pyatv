@@ -1,3 +1,5 @@
+## [10.0.2](https://github.com/sebbo2002/node-pyatv/compare/v10.0.1...v10.0.2) (2026-11-11)
+
 ## [10.0.1](https://github.com/sebbo2002/node-pyatv/compare/v10.0.0...v10.0.1) (2026-07-24)
 
 ### Bug Fixes
